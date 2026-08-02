@@ -15,7 +15,8 @@ export default defineConfig({
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile", use: { ...devices["iPhone 13"] } },
+    // Chromium-based mobile emulation — CI installs only chromium.
+    { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
   ...(process.env.E2E_BASE_URL
     ? {}
