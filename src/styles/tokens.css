@@ -1,24 +1,26 @@
 /**
- * Design tokens (docs/product/design-system.md, ADR-013).
+ * Design tokens (docs/product/design-system.md v2, ADR-013).
  * Tokens ARE the Tailwind theme - a token change is one diff.
- * All colour pairs meet AA; colour never carries meaning alone.
+ * Editorial-education direction: warm paper, ink + serif display, cobalt
+ * action, terracotta accent. All colour pairs meet AA; colour never
+ * carries meaning alone.
  */
 @theme {
   /* Colour */
-  --color-ink: #1a1a2e;
-  --color-ink-muted: #5a5f6e;
-  --color-surface: #ffffff;
-  --color-surface-alt: #f5f6fa;
-  --color-primary: #2a4cc7;
-  --color-primary-strong: #1e3799;
+  --color-ink: #16161f;
+  --color-ink-muted: #565968;
+  --color-surface: #faf7f2;
+  --color-surface-alt: #f0ebe1;
+  --color-primary: #2145c4;
+  --color-primary-strong: #17338f;
+  --color-accent: #c2410c;
+  --color-accent-tint: #faede4;
   --color-success: #1e7e4e;
   --color-warning: #b45309;
   --color-danger: #b3261e;
-  --color-highlight: #eef2ff;
+  --color-highlight: #e9eefb;
 
-  /* Typography - system stack at launch, swap-ready */
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Type scale */
   --text-display: 2rem; /* 32/40, 40/48 ≥768px */
   --text-display--line-height: 2.5rem;
   --text-heading: 1.5rem; /* 24/32, 28/36 ≥768px */
@@ -30,15 +32,25 @@
   --text-caption: 0.8125rem; /* 13/20 */
   --text-caption--line-height: 1.25rem;
 
-  /* Spacing 4px scale: 4 8 12 16 24 32 48 64 (Tailwind's default 4px scale covers it) */
-
   /* Radius: 8 controls/cards · 12 modals · 999 chips */
   --radius-control: 8px;
   --radius-modal: 12px;
   --radius-chip: 999px;
 
+  /* Elevation: ink border + hard offset shadow (design-system v2) */
+  --shadow-card: 4px 4px 0 rgba(22, 22, 31, 0.12);
+  --shadow-card-hover: 6px 6px 0 rgba(33, 69, 196, 0.18);
+
   /* Motion: 120ms state / 200ms panel / 280ms route */
   --duration-state: 120ms;
   --duration-panel: 200ms;
   --duration-route: 280ms;
+}
+
+/* Font families reference next/font runtime variables, so they stay inline. */
+@theme inline {
+  --font-sans:
+    var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-serif: var(--font-display), Georgia, "Times New Roman", serif;
 }

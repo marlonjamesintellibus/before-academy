@@ -7,14 +7,19 @@ import Link from "next/link";
  */
 export function AppFooter() {
   return (
-    <footer className="mt-auto border-t border-surface-alt">
+    <footer className="mt-auto border-t-2 border-ink/80 bg-surface-alt">
       <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-6 text-caption text-ink-muted md:px-6">
-        <span>Before Academy</span>
+        <span className="font-display text-body font-semibold text-ink">
+          Before Academy
+          <span aria-hidden="true" className="text-accent">
+            .
+          </span>
+        </span>
         <span className="flex-1" />
-        <Link href="/learn" className="hover:text-primary">
+        <Link href="/learn" className="hover:text-ink">
           Pathways
         </Link>
-        <a href="mailto:feedback@intellibus.com" className="hover:text-primary">
+        <a href="mailto:feedback@intellibus.com" className="hover:text-ink">
           Report a problem
         </a>
       </div>

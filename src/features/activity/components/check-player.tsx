@@ -34,7 +34,7 @@ export function CheckPlayer({
 
   if (index === -1) {
     return (
-      <div className="rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel p-6">
         <p className="text-body">{intro}</p>
         <button
           type="button"
@@ -53,7 +53,7 @@ export function CheckPlayer({
   const question = questions[index];
   if (!question) {
     return (
-      <div className="rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel p-6">
         <h2 className="text-heading font-bold">Practice complete</h2>
         <p className="mt-3 text-body">{completion}</p>
         <div className="mt-6 flex flex-wrap gap-4">
@@ -99,7 +99,7 @@ export function CheckPlayer({
         Question {index + 1} of {questions.length}
       </p>
 
-      <div className="mt-4 rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel mt-4 p-6">
         <p className="text-body font-semibold">{question.stem}</p>
 
         <fieldset className="mt-5" disabled={Boolean(answered)}>

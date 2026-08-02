@@ -111,7 +111,7 @@ export function AssessmentFlow({
 
   if (stage.name === "intro") {
     return (
-      <div className="rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel p-6">
         {assessmentFirst ? (
           <p className="text-body font-medium">You can take this without reading the lesson.</p>
         ) : null}
@@ -230,7 +230,7 @@ export function AssessmentFlow({
 
   if (stage.name === "review") {
     return (
-      <div className="rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel p-6">
         <h2 className="text-heading font-bold">Review before you submit</h2>
         <ul className="mt-4 flex flex-col gap-2">
           {stage.payload.questions.map((question, questionIndex) => (

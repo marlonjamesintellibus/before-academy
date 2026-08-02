@@ -49,7 +49,7 @@ export function ActivityPlayer({
   const resumed = answeredCount > 0 && !state.completed;
   if (!started && !resumed) {
     return (
-      <div className="rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel p-6">
         <p className="text-body">{intro}</p>
         <p className="mt-3 text-body font-medium">{instructions}</p>
         <button
@@ -132,7 +132,7 @@ export function ActivityPlayer({
         Scenario {state.index + 1} of {total}
       </p>
 
-      <div className="mt-4 rounded-(--radius-control) border border-surface-alt p-6">
+      <div className="panel mt-4 p-6">
         <h2 className="sr-only">{scenario.title}</h2>
         <p className="text-body">{scenario.body}</p>
 
@@ -262,7 +262,7 @@ function ActivitySummary({
   const skipped = scenarios.filter((scenario) => answers[scenario.id]?.skipped);
 
   return (
-    <div className="rounded-(--radius-control) border border-surface-alt p-6">
+    <div className="panel p-6">
       <h2 className="text-heading font-bold">Nice sorting</h2>
       <p className="mt-2 text-body text-ink-muted">
         Here is how the set went, category by category.

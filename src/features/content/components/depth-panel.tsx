@@ -25,7 +25,7 @@ export function DepthPanel({
   const panelId = useId();
 
   return (
-    <div className="mt-4 rounded-(--radius-control) border border-surface-alt">
+    <div className="mt-4 rounded-(--radius-control) border border-ink/25 bg-surface">
       <button
         type="button"
         aria-expanded={open}

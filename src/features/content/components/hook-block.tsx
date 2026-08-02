@@ -16,7 +16,7 @@ export function HookBlock({
   const [answered, setAnswered] = useState<string | null>(null);
 
   return (
-    <div className="rounded-(--radius-control) bg-highlight p-6">
+    <div className="rounded-(--radius-control) border-2 border-ink bg-accent-tint p-6 shadow-(--shadow-card)">
       <p className="text-subheading font-semibold">{prompt}</p>
       {answered === null ? (
         <div className="mt-4 flex flex-wrap gap-3" role="group" aria-label={prompt}>

@@ -28,10 +28,7 @@ export function DiagramFigure({
   const selectedLayer = layers.find((layer) => layer.id === selected);
 
   return (
-    <figure
-      aria-label={altText}
-      className="rounded-(--radius-control) border border-surface-alt p-5"
-    >
+    <figure aria-label={altText} className="panel p-5">
       <figcaption>
         <span className="block text-subheading font-semibold">{title}</span>
         <span className="mt-1 block text-body text-ink-muted">{claim}</span>

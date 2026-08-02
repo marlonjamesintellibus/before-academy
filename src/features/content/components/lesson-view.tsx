@@ -97,7 +97,7 @@ function BlockView({
       return (
         <aside
           role="note"
-          className="rounded-(--radius-control) border-l-4 border-warning bg-surface-alt p-5"
+          className="rounded-(--radius-control) border-2 border-ink bg-accent-tint p-5 shadow-(--shadow-card)"
         >
           <p className="text-body font-semibold">Common misconception</p>
           <p className="mt-2 text-body italic">&ldquo;{block.claim}&rdquo;</p>
@@ -106,7 +106,7 @@ function BlockView({
       );
     case "activity_cta":
       return (
-        <div className="rounded-(--radius-control) bg-highlight p-5">
+        <div className="panel bg-highlight p-5">
           <p className="text-body">{block.body}</p>
           <Link
             href={`${lessonRoute}/activity`}
@@ -118,7 +118,7 @@ function BlockView({
       );
     case "check_cta":
       return (
-        <div className="rounded-(--radius-control) border border-surface-alt p-5">
+        <div className="panel p-5">
           <p className="text-body">{block.body}</p>
           <Link
             href={`${lessonRoute}/check`}
@@ -132,7 +132,7 @@ function BlockView({
       return (
         <section
           aria-label="Key takeaways"
-          className="rounded-(--radius-control) bg-surface-alt p-5"
+          className="rounded-(--radius-control) border-l-4 border-accent bg-surface-alt p-5"
         >
           <RichTextView body={block.body} glossary={glossary} idPrefix={block.id} />
         </section>
@@ -158,9 +158,7 @@ export function LessonView({
         aria-label="Lesson contents"
         className="sticky top-6 hidden h-fit w-56 shrink-0 self-start lg:block"
       >
-        <p className="text-caption font-semibold uppercase tracking-wide text-ink-muted">
-          In this lesson
-        </p>
+        <p className="eyebrow">In this lesson</p>
         <ul className="mt-3 flex flex-col gap-2 text-body">
           {concepts.map((concept) => (
             <li key={concept.id}>
