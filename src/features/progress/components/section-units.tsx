@@ -54,6 +54,16 @@ export function SectionUnits() {
       href: `${LESSON_ROUTE}/assessment`,
       ...state(passed, "5 min"),
     },
+    ...(hydrated && passed
+      ? [
+          {
+            label: "Capstone: audit an AI claim at work",
+            href: `${LESSON_ROUTE}/capstone`,
+            text: "Optional",
+            cls: "text-primary font-semibold",
+          },
+        ]
+      : []),
   ];
 
   return (

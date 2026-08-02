@@ -55,6 +55,7 @@ export default function PathwayPage() {
               </p>
               <SectionMicrostatus />
             </TrackedLink>
+            <SectionUnits />
           </li>
           <li>
             <TrackOnVisible event="next_preview_viewed">

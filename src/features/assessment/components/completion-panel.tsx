@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { completionContent } from "@/db/seed/completion-content";
 
 /**
@@ -36,6 +37,12 @@ export function CompletionPanel({ perfect }: { perfect: boolean }) {
           Take it into the wild
         </p>
         <p className="mt-2 text-body">{completionContent.observationActivity}</p>
+        <Link
+          href="/learn/ai-awareness/ai-automation-software/capstone"
+          className="mt-3 inline-flex min-h-11 items-center rounded-(--radius-control) border border-success px-4 py-2 text-body font-semibold text-success hover:bg-surface-alt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-success"
+        >
+          Or go deeper: audit a real AI claim
+        </Link>
       </div>
     </section>
   );

@@ -122,3 +122,29 @@ test("day-2 return offers the two-minute review and captures completion", async 
   await page.reload();
   await expect(page.getByRole("button", { name: "Start the review" })).not.toBeVisible();
 });
+
+test("capstone appears after passing and saves device-only answers", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      "ba.v1.assessment.ai-automation-software",
+      JSON.stringify({
+        version: 1,
+        attempts: 1,
+        bestScore: 6,
+        total: 6,
+        passed: true,
+        lastAttemptAt: new Date().toISOString(),
+      }),
+    );
+  });
+  await page.goto("/learn");
+  await page.getByRole("link", { name: /Capstone: audit an AI claim/ }).click();
+  await expect(page.getByRole("heading", { name: "Audit an AI claim" })).toBeVisible();
+  await expect(page.getByText(/saved? to this device only/i)).toBeVisible();
+  await page.locator("#capstone-feature").fill("Helpdesk reply suggestions");
+  await page.getByRole("button", { name: "Compare with a model audit" }).click();
+  await expect(page.getByText(/Model answers are shown under each prompt/)).toBeVisible();
+  // Answer persisted on device
+  await page.reload();
+  await expect(page.locator("#capstone-feature")).toHaveValue("Helpdesk reply suggestions");
+});
