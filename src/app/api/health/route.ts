@@ -10,7 +10,8 @@ import { getDb } from "@/lib/db";
  * Deploys gate on this returning ok before traffic shifts.
  */
 export async function GET() {
-  const version = process.env.APP_VERSION ?? "dev";
+  const version =
+    process.env.APP_VERSION ?? process.env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 7) ?? "dev";
   try {
     const start = Date.now();
     await getDb().execute(sql`select 1`);
