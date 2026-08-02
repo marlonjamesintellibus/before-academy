@@ -1,8 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(awk -F'/docs/' '{print $2}')",
-      "Bash(python3 -)"
-    ]
+    "allow": ["Bash(awk -F'/docs/' '{print $2}')", "Bash(python3 -)"]
   }
 }
