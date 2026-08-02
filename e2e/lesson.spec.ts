@@ -9,7 +9,7 @@ async function goToStage(page: Page, name: string) {
   if (await outline.isVisible()) {
     await outline.click();
   }
-  await page.getByRole("button", { name, exact: true }).click();
+  await page.getByRole("button", { name: new RegExp(`^${name}`) }).click();
 }
 
 /**

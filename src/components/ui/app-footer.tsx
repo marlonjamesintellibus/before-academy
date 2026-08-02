@@ -15,10 +15,13 @@ export function AppFooter() {
           </span>
         </span>
         <span className="flex-1" />
-        <Link href="/learn" className="hover:text-surface-card">
+        <Link href="/learn" className="inline-flex min-h-11 items-center hover:text-surface-card">
           Pathways
         </Link>
-        <a href="mailto:feedback@intellibus.com" className="hover:text-surface-card">
+        <a
+          href="mailto:feedback@intellibus.com"
+          className="inline-flex min-h-11 items-center hover:text-surface-card"
+        >
           Report a problem
         </a>
       </div>

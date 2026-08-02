@@ -29,6 +29,7 @@ export function ActivityPlayer({
   const { state, hydrated, update, retry } = useActivityState();
   const [selected, setSelected] = useState<ScenarioCategory | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [answerHint, setAnswerHint] = useState(false);
   const [started, setStarted] = useState(false);
   const feedbackRef = useRef<HTMLDivElement>(null);
   const startedEvent = useRef(false);
@@ -169,8 +170,14 @@ export function ActivityPlayer({
           <div className="mt-5 flex gap-4">
             <button
               type="button"
-              onClick={checkAnswer}
-              disabled={!selected}
+              onClick={() => {
+                if (!selected) {
+                  setAnswerHint(true);
+                  return;
+                }
+                setAnswerHint(false);
+                checkAnswer();
+              }}
               className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Check
@@ -183,6 +190,11 @@ export function ActivityPlayer({
               Skip for now
             </button>
           </div>
+        ) : null}
+        {!showFeedback && !answer ? (
+          <p role="status" className={answerHint ? "mt-2 text-body text-warning" : "sr-only"}>
+            {answerHint ? "Pick one of the five labels first." : ""}
+          </p>
         ) : null}
 
         {showFeedback || answer ? (

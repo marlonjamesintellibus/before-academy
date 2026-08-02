@@ -32,9 +32,12 @@ export function Button({
       {...rest}
     >
       {loading ? (
-        <span aria-hidden="true" className="animate-pulse">
-          …
-        </span>
+        <>
+          <span aria-hidden="true" className="animate-pulse">
+            …
+          </span>
+          <span className="sr-only">Loading</span>
+        </>
       ) : null}
       {children}
     </button>

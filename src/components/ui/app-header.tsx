@@ -30,14 +30,14 @@ export function AppHeader({ variant = "default" }: AppHeaderProps) {
           <>
             <Link
               href="/learn"
-              className="text-body font-medium text-sky underline-offset-8 hover:text-surface-card hover:underline hover:decoration-2"
+              className="inline-flex min-h-11 items-center text-body font-medium text-sky underline-offset-8 hover:text-surface-card hover:underline hover:decoration-2"
             >
               Pathways
             </Link>
             <span className="flex-1" />
             <Link
               href="/auth/sign-in"
-              className="whitespace-nowrap text-body text-sky hover:text-surface-card"
+              className="inline-flex min-h-11 items-center whitespace-nowrap text-body text-sky hover:text-surface-card"
             >
               {strings.actions.signIn}
             </Link>

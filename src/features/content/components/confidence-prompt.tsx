@@ -45,7 +45,7 @@ export function ConfidencePrompt({ stage }: { stage: "pre" | "post" }) {
         How confident do you feel telling AI, automation and traditional software apart?
       </legend>
       <div
-        className="clear-both mt-3 flex items-center gap-2 pt-2"
+        className="clear-both mt-3 flex flex-wrap items-center gap-2 pt-2"
         role="radiogroup"
         aria-label="Confidence from 1 (not yet) to 5 (very confident)"
       >

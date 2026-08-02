@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { PublishedCheckQuestion } from "@/features/content";
 import { track } from "@/lib/analytics";
 import { useCheckState } from "../use-check-state";
@@ -18,6 +18,7 @@ export function CheckPlayer({
   lessonRoute: string;
 }) {
   const { state, hydrated, update, retry } = useCheckState();
+  const [answerHint, setAnswerHint] = useState(false);
   const feedbackRef = useRef<HTMLDivElement>(null);
   const question = questions[state.index];
   const answer = question ? state.answers[question.id] : undefined;
@@ -168,12 +169,21 @@ export function CheckPlayer({
           <div className="mt-5 flex flex-wrap items-center gap-4">
             <button
               type="button"
-              onClick={checkAnswer}
-              disabled={!selectedId}
+              onClick={() => {
+                if (!selectedId) {
+                  setAnswerHint(true);
+                  return;
+                }
+                setAnswerHint(false);
+                checkAnswer();
+              }}
               className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Check answer
             </button>
+            <p role="status" className={answerHint ? "text-body text-warning" : "sr-only"}>
+              {answerHint ? "Select an answer first." : ""}
+            </p>
             {state.index > 0 ? (
               <button
                 type="button"

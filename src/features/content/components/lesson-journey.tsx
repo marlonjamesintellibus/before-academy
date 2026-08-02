@@ -151,7 +151,10 @@ function LessonProgress({
               >
                 {done ? "✓" : index + 1}
               </span>
-              <span>{stage.label}</span>
+              <span>
+                {stage.label}
+                <span className="sr-only">{done ? ", completed" : ", not started"}</span>
+              </span>
             </button>
           </li>
         );

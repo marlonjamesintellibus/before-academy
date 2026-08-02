@@ -82,6 +82,7 @@ export function AssessmentFlow({
   const [exitConfirm, setExitConfirm] = useState(false);
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [answerHint, setAnswerHint] = useState(false);
   const introViewed = useRef(false);
   const inFlight = useRef(false);
 
@@ -221,7 +222,9 @@ export function AssessmentFlow({
           6-7 questions · Pass at 80% · Retake any time with different questions · If you
           don&rsquo;t pass, we&rsquo;ll show you exactly what to review
         </p>
-        {errorMessage ? <p className="mt-3 text-body text-danger">{errorMessage}</p> : null}
+        <p role="alert" className={errorMessage ? "mt-3 text-body text-danger" : "sr-only"}>
+          {errorMessage ?? ""}
+        </p>
         <div className="mt-5 flex flex-wrap gap-4">
           <button
             type="button"
@@ -287,6 +290,11 @@ export function AssessmentFlow({
           <button
             type="button"
             onClick={() => {
+              if ((answers[question.id] ?? []).length === 0) {
+                setAnswerHint(true);
+                return;
+              }
+              setAnswerHint(false);
               track("assessment_question_answered", {
                 question_id: question.id,
                 category: question.category,
@@ -298,12 +306,16 @@ export function AssessmentFlow({
                 setIndex(index + 1);
               }
             }}
-            disabled={(answers[question.id] ?? []).length === 0}
             className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             {index + 1 === stage.payload.questions.length ? "Review answers" : "Next"}
           </button>
         </div>
+        <p role="status" className={answerHint ? "mt-2 text-body text-warning" : "sr-only"}>
+          {answerHint
+            ? "Choose an answer first - any answer can be changed before you submit."
+            : ""}
+        </p>
 
         <Modal
           open={exitConfirm}
@@ -355,24 +367,42 @@ export function AssessmentFlow({
                 }}
                 className="min-h-11 shrink-0 text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-primary"
               >
-                {(answers[question.id] ?? []).length > 0 ? "Change answer" : "Answer"}
+                <span aria-hidden="true">
+                  {(answers[question.id] ?? []).length > 0 ? "Change answer" : "Answer"}
+                </span>
+                <span className="sr-only">
+                  {(answers[question.id] ?? []).length > 0
+                    ? `Change answer to question ${questionIndex + 1}`
+                    : `Answer question ${questionIndex + 1}`}
+                </span>
               </button>
             </li>
           ))}
         </ul>
-        {errorMessage ? <p className="mt-3 text-body text-danger">{errorMessage}</p> : null}
+        <p role="alert" className={errorMessage ? "mt-3 text-body text-danger" : "sr-only"}>
+          {errorMessage ?? ""}
+        </p>
         <button
           type="button"
-          onClick={() => submit(stage.payload)}
-          disabled={
-            busy ||
-            stage.payload.questions.some((question) => (answers[question.id] ?? []).length === 0)
-          }
+          onClick={() => {
+            if (
+              stage.payload.questions.some((question) => (answers[question.id] ?? []).length === 0)
+            ) {
+              setAnswerHint(true);
+              return;
+            }
+            setAnswerHint(false);
+            submit(stage.payload);
+          }}
+          disabled={busy}
           aria-busy={busy || undefined}
           className="mt-6 inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           Submit assessment
         </button>
+        <p role="status" className={answerHint ? "mt-2 text-body text-warning" : "sr-only"}>
+          {answerHint ? "A question is still unanswered - use its Answer link above." : ""}
+        </p>
       </div>
     );
   }
@@ -449,6 +479,12 @@ function Results({
   onRetake: () => void;
   busy: boolean;
 }) {
+  const outcomeRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // The single most important state change in the app announces itself:
+    // focus lands on the outcome (WCAG 2.4.3 / review S1 finding).
+    outcomeRef.current?.focus();
+  }, []);
   const failedMisconceptions = [
     ...new Set(
       result.review.filter((entry) => !entry.correct).flatMap((entry) => entry.misconceptions),
@@ -462,7 +498,7 @@ function Results({
   const uniqueStrengths = [...new Set(strengths)];
 
   return (
-    <div>
+    <div ref={outcomeRef} tabIndex={-1} className="focus:outline-none">
       <Callout
         variant={result.passed ? "success" : "warning"}
         title={

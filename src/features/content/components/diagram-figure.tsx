@@ -185,7 +185,14 @@ export function DiagramFigure({
         <div className="mt-5 flex flex-wrap gap-3">
           <button
             type="button"
-            onClick={() => setPlaying((value) => !value)}
+            onClick={() => {
+              if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                // Reduced motion: jump to the final layer with its story beat.
+                setSelected(Math.max(0, visible.length - 1));
+                return;
+              }
+              setPlaying((value) => !value);
+            }}
             disabled={selected >= visible.length - 1}
             className="min-h-11 rounded-(--radius-control) bg-primary px-4 text-body font-semibold text-white disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >

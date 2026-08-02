@@ -7,6 +7,7 @@ import { track } from "@/lib/analytics";
 export function InlineCheck({ content }: { content: InlineCheckContent }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [answerHint, setAnswerHint] = useState(false);
   const feedbackRef = useRef<HTMLDivElement>(null);
   const option = content.options.find((entry) => entry.id === selected);
   const correct = selected === content.correctOptionId;
@@ -63,8 +64,12 @@ export function InlineCheck({ content }: { content: InlineCheckContent }) {
       {!submitted ? (
         <button
           type="button"
-          disabled={!selected}
           onClick={() => {
+            if (!selected) {
+              setAnswerHint(true);
+              return;
+            }
+            setAnswerHint(false);
             setSubmitted(true);
             track("interaction_completed", { question_id: content.id, correct });
           }}
@@ -72,6 +77,11 @@ export function InlineCheck({ content }: { content: InlineCheckContent }) {
         >
           Check answer
         </button>
+      ) : null}
+      {!submitted ? (
+        <p role="status" className={answerHint ? "mt-2 text-body text-warning" : "sr-only"}>
+          {answerHint ? "Select an answer first." : ""}
+        </p>
       ) : (
         <div
           ref={feedbackRef}

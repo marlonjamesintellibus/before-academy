@@ -56,3 +56,22 @@ test("unknown route serves the 404 with recovery links", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Go home" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Jump into the lesson" })).toBeVisible();
 });
+
+test("360px floor: no horizontal overflow on any core route", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  for (const path of [
+    "/",
+    "/learn",
+    "/learn/ai-awareness/ai-automation-software",
+    "/learn/ai-awareness/ai-automation-software/activity",
+    "/learn/ai-awareness/ai-automation-software/assessment",
+    "/learn/ai-awareness/ai-automation-software/review?categories=automation",
+    "/learn/ai-awareness/ai-automation-software/capstone",
+  ]) {
+    await page.goto(path);
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth + 1,
+    );
+    expect(overflow, `horizontal overflow on ${path}`).toBe(false);
+  }
+});
