@@ -12,8 +12,10 @@ const eslintConfig = defineConfig([
     },
   },
   // Import layering (engineering/repository.md): app → features → lib.
+  // src/db/seed is pipeline tooling, not the db layer: it may consume features.
   {
     files: ["src/lib/**/*.{ts,tsx}", "src/db/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+    ignores: ["src/db/seed/**"],
     rules: {
       "no-restricted-imports": [
         "error",

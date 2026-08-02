@@ -32,6 +32,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run format
+      - run: npm run content:lint
 
   unit:
     name: Unit (Vitest)
@@ -143,5 +144,6 @@ jobs:
             exit $CODE
           fi
       - run: npm run db:migrate
+      - run: npm run db:seed
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e

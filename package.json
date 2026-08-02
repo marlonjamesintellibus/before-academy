@@ -14,7 +14,9 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx src/db/seed/publish.ts",
+    "content:lint": "tsx src/db/seed/lint-run.ts"
   },
   "dependencies": {
     "better-auth": "^1.6.25",
@@ -44,6 +46,7 @@
     "eslint-config-next": "16.2.12",
     "prettier": "^3.9.6",
     "tailwindcss": "^4",
+    "tsx": "^4.23.4",
     "typescript": "^5",
     "vitest": "^4.1.10"
   },
