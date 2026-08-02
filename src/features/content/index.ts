@@ -5,7 +5,15 @@
  */
 export { LessonView } from "./components/lesson-view";
 export { lintSection } from "./lint";
-export { lintActivity, lintCheck } from "./activity-lint";
+export { lintActivity, lintAssessment, lintCheck } from "./activity-lint";
+export { DiagnosticProbe, readDiagnostic } from "./components/diagnostic-probe";
+export { ConfidencePrompt, readConfidence, saveConfidence } from "./components/confidence-prompt";
+export type {
+  DiagnosticSeed,
+  DiagnosticItemSeed,
+  RemediationSeed,
+  RemediationModuleSeed,
+} from "./learning-types";
 export {
   CATEGORY_LABELS,
   SCENARIO_CATEGORIES,

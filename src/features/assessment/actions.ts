@@ -115,6 +115,7 @@ const submitAttemptHandler = withAction(
           .map((option) => option.id),
         explanationCorrect: question.correctExplanation,
         explanationIncorrect: question.incorrectExplanation,
+        misconceptions: question.misconceptionTags,
       })),
       input.answers,
     );

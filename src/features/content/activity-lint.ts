@@ -1,4 +1,4 @@
-import type { AssessmentSeed } from "@/features/assessment/types";
+import type { AssessmentSeed } from "@/features/assessment";
 import type { ActivitySeed, CheckSeed, ScenarioSeed } from "./activity-types";
 import { SCENARIO_CATEGORIES } from "./activity-types";
 import type { LintIssue } from "./lint";

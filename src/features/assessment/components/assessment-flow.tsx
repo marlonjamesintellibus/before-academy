@@ -9,7 +9,8 @@ import { track } from "@/lib/analytics";
 import { readDevice, writeDevice } from "@/lib/device-store";
 import { createAttempt, submitAttempt } from "../actions";
 import type { AttemptPayload, AttemptResult, SanitizedQuestion } from "../types";
-import { CATEGORY_DISPLAY, REMEDIATION_TARGETS } from "../types";
+import { CATEGORY_DISPLAY } from "../types";
+import { ConfidencePrompt, readConfidence, readDiagnostic } from "@/features/content";
 import { useAnonymousId } from "../use-anonymous-id";
 
 /**
@@ -439,7 +440,13 @@ function Results({
   onRetake: () => void;
   busy: boolean;
 }) {
-  const [confidence, setConfidence] = useState<number | null>(null);
+  const failedMisconceptions = [
+    ...new Set(
+      result.review.filter((entry) => !entry.correct).flatMap((entry) => entry.misconceptions),
+    ),
+  ];
+  const diagnostic = readDiagnostic();
+  const storedConfidence = readConfidence();
   const strengths = result.review
     .filter((entry) => entry.correct)
     .map((entry) => CATEGORY_DISPLAY[entry.category]);
@@ -470,33 +477,23 @@ function Results({
       {result.categoriesFailed.length > 0 ? (
         <section aria-label="What to review" className="mt-6">
           <h3 className="text-subheading font-semibold">Your study plan</h3>
-          <ul className="mt-3 flex flex-col gap-3">
-            {result.categoriesFailed.map((category) => (
-              <li
-                key={category}
-                className="rounded-(--radius-control) border border-surface-alt p-4"
-              >
-                <p className="text-body font-semibold">{CATEGORY_DISPLAY[category]}</p>
-                <ul className="mt-2 flex flex-col gap-1">
-                  {REMEDIATION_TARGETS[category].map((target) => (
-                    <li key={target.href}>
-                      <Link
-                        href={
-                          target.href.startsWith("#")
-                            ? `${lessonRoute}${target.href}`
-                            : `${lessonRoute}${target.href}`
-                        }
-                        onClick={() => track("review_category_clicked", { category })}
-                        className="text-body text-primary underline-offset-4 hover:underline"
-                      >
-                        {target.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-2 text-body text-ink-muted">
+            A focused review built from exactly what tripped you up - the misconceptions behind your
+            missed questions, with a quick confirm for each.
+          </p>
+          <Link
+            href={`${lessonRoute}/review?categories=${result.categoriesFailed.join(",")}${
+              failedMisconceptions.length > 0 ? `&m=${failedMisconceptions.join(",")}` : ""
+            }`}
+            onClick={() =>
+              track("review_category_clicked", {
+                category: result.categoriesFailed.join(","),
+              })
+            }
+            className="mt-3 inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface-card shadow-(--shadow-card) hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            Start the focused review
+          </Link>
         </section>
       ) : null}
 
@@ -521,35 +518,26 @@ function Results({
         </ul>
       </section>
 
-      <section aria-label="Confidence" className="mt-6 rounded-(--radius-control) bg-highlight p-5">
-        <p className="text-body font-semibold">
-          How confident do you feel telling AI, automation and traditional software apart?
-        </p>
-        {confidence === null ? (
-          <div
-            className="mt-3 flex gap-2"
-            role="group"
-            aria-label="Confidence from 1 (not yet) to 5 (very)"
-          >
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => {
-                  setConfidence(value);
-                  track("confidence_submitted", { value, stage: "post" });
-                }}
-                className="min-h-11 min-w-11 rounded-(--radius-control) border border-primary text-body font-semibold text-primary hover:bg-surface focus-visible:outline-2 focus-visible:outline-primary"
-              >
-                {value}
-              </button>
-            ))}
-          </div>
+      <section aria-label="How your judgment changed" className="mt-6 panel p-5">
+        <h3 className="font-display text-subheading font-bold">How your judgment changed</h3>
+        {diagnostic ? (
+          <p className="mt-2 text-body">
+            Before the lesson you read {diagnostic.correct} of {diagnostic.total} situations
+            accurately on instinct. In this graded attempt you classified {result.score} of{" "}
+            {result.total} correctly - with named reasons instead of guesses.
+          </p>
         ) : (
-          <p className="mt-3 text-body" aria-live="polite">
-            Noted - thanks.
+          <p className="mt-2 text-body text-ink-muted">
+            Take the one-minute opening diagnostic before your next lesson visit and this panel will
+            show how your instincts changed.
           </p>
         )}
+        {storedConfidence.pre !== undefined ? (
+          <p className="mt-2 text-body text-ink-muted">
+            Confidence before the lesson: {storedConfidence.pre} of 5. Where is it now?
+          </p>
+        ) : null}
+        <ConfidencePrompt stage="post" />
       </section>
 
       <div className="mt-8 flex flex-wrap gap-4">

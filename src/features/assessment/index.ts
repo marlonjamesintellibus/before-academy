@@ -8,7 +8,6 @@ export { score } from "./scoring";
 export { drawQuestions, shuffle } from "./selection";
 export {
   CATEGORY_DISPLAY,
-  REMEDIATION_TARGETS,
   type AssessmentCategory,
   type AssessmentSeed,
   type AttemptPayload,

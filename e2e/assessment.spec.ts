@@ -35,12 +35,10 @@ test("full attempt: intro, six questions, review, submit, results", async ({ pag
   await expect(page.getByText(/of 6 correct; passing is/)).toBeVisible();
   await expect(page.getByRole("heading", { name: /Question by question/ })).toBeVisible();
   await expect(page.getByRole("button", { name: "Retake with new questions" })).toBeVisible();
-  // Confidence prompt (post stage)
-  await page
-    .getByRole("group", { name: /Confidence/ })
-    .getByRole("button", { name: "4" })
-    .click();
-  await expect(page.getByText("Noted - thanks.")).toBeVisible();
+  // Judgment-change panel + post confidence radiogroup
+  await expect(page.getByRole("heading", { name: "How your judgment changed" })).toBeVisible();
+  await page.getByRole("radio", { name: "4 of 5" }).click();
+  await expect(page.getByText(/Noted - you can change it any time/)).toBeVisible();
 });
 
 test("retake draws a different combination", async ({ page }) => {
@@ -70,12 +68,19 @@ test("assessment-first entry shows the standalone reassurance", async ({ page })
   await expect(page.getByText("You can take this without reading the lesson.")).toBeVisible();
 });
 
-test("S09 review filters by category and offers retake", async ({ page }) => {
+test("S09 review routes misconception modules by category and offers retake", async ({ page }) => {
   await page.goto(`${REVIEW}?categories=automation,ambiguity`);
-  await expect(page.getByRole("heading", { name: "Automation", exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Ambiguity", exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Classification" })).not.toBeVisible();
+  await expect(page.getByText("Reviewing: Automation, Ambiguity")).toBeVisible();
+  // Automation routes M2; ambiguity routes M5/M8/M9 - modules render with confirms
+  await expect(page.getByText("M2 · worth untangling")).toBeVisible();
+  await expect(page.getByText("M9 · worth untangling")).toBeVisible();
+  await expect(page.getByText("M11 · worth untangling")).not.toBeVisible();
   await expect(page.getByRole("link", { name: "Retake assessment" })).toBeVisible();
+  // Mini-confirm loop
+  const firstModule = page.locator("section").filter({ hasText: "worth untangling" }).first();
+  await firstModule.getByRole("radio").first().check();
+  await firstModule.getByRole("button", { name: "Check", exact: true }).click();
+  await expect(firstModule.getByText(/Correct\.|Not quite\./)).toBeVisible();
 });
 
 test("assessment screens pass axe", async ({ page }) => {

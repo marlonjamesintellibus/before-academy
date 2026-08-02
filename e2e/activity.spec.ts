@@ -46,6 +46,17 @@ test("wrong answers show the formula feedback with a review link", async ({ page
   await expect(page.getByText("Not quite").first()).toBeVisible();
   await expect(page.getByText("Your classification")).toBeVisible();
   await expect(page.getByText("Best-supported answer")).toBeVisible();
+  // Evidence second step: pick a detail, then the key evidence reveals
+  await expect(page.getByText("Which detail settles it?")).toBeVisible();
+  await page
+    .getByRole("group", { name: "Which detail settles it?" })
+    .getByRole("button")
+    .first()
+    .click()
+    .catch(async () => {
+      // fieldset renders as group only in some engines; fall back to the buttons
+      await page.locator("fieldset button").first().click();
+    });
   await expect(page.getByText("Key evidence:")).toBeVisible();
   await expect(page.getByRole("link", { name: "Review this concept" })).toHaveAttribute(
     "href",

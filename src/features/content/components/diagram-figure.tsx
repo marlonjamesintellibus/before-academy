@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import { track } from "@/lib/analytics";
 import { DiagramObservation } from "./diagrams/diagram-parts";
+import { PredictionGate } from "./diagrams/prediction-gate";
 
 interface Layer {
   id: string;
@@ -101,139 +102,150 @@ export function DiagramFigure({
         <span className="block font-display text-subheading font-bold">{title}</span>
         <span className="mt-1 block text-body text-ink-muted">{claim}</span>
       </figcaption>
-      <p className="mt-4 text-body font-semibold">
-        Try it: trace one request, select any layer, or remove AI and human review to see what
-        remains.
-      </p>
-      <div className="mt-4 flex flex-wrap gap-5 rounded-(--radius-control) bg-surface-alt p-3">
-        <label className="flex min-h-11 cursor-pointer items-center gap-2 text-body">
-          <input
-            type="checkbox"
-            checked={includeAi}
-            onChange={(event) => {
-              setIncludeAi(event.target.checked);
-              setSelected(0);
-            }}
-            className="h-5 w-5 accent-primary"
-          />{" "}
-          Include AI prediction
-        </label>
-        <label className="flex min-h-11 cursor-pointer items-center gap-2 text-body">
-          <input
-            type="checkbox"
-            checked={includeHuman}
-            onChange={(event) => {
-              setIncludeHuman(event.target.checked);
-              setSelected(0);
-            }}
-            className="h-5 w-5 accent-primary"
-          />{" "}
-          Include human review
-        </label>
-      </div>
-      <ol className="mt-4 grid gap-2 md:grid-cols-5" aria-label="System layers">
-        {visible.map((layer, index) => (
-          <li key={layer.id} className="relative">
-            <button
-              type="button"
-              aria-pressed={index === selected}
-              onClick={() => {
-                setPlaying(false);
-                setSelected(index);
-                track("diagram_component_opened", { component: layer.id });
-              }}
-              className={`h-full min-h-24 w-full rounded-(--radius-control) border p-3 text-left focus-visible:outline-2 focus-visible:outline-primary ${index === selected ? "border-primary bg-primary-tint" : "border-border bg-surface-card hover:border-primary"}`}
-            >
-              <span
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-caption font-bold ${index <= selected ? "bg-primary text-white" : "bg-surface-alt text-ink-muted"}`}
-              >
-                {index + 1}
-              </span>
-              <span className="mt-2 block text-body font-semibold">{layer.label}</span>
-            </button>
-            {index < visible.length - 1 ? (
-              <>
-                <span
-                  aria-hidden="true"
-                  className="absolute -bottom-3 left-1/2 z-10 text-primary md:hidden"
-                >
-                  ↓
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute -right-3 top-1/2 z-10 hidden text-primary md:block"
-                >
-                  →
-                </span>
-              </>
-            ) : null}
-          </li>
-        ))}
-      </ol>
-      <div className="mt-5 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={() => setPlaying((value) => !value)}
-          disabled={selected >= visible.length - 1}
-          className="min-h-11 rounded-(--radius-control) bg-primary px-4 text-body font-semibold text-white disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-        >
-          {playing ? "Pause trace" : "Play trace"}
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setPlaying(false);
-            setSelected((value) => Math.min(value + 1, visible.length - 1));
-          }}
-          disabled={selected >= visible.length - 1}
-          className="min-h-11 rounded-(--radius-control) border border-primary px-4 text-body font-semibold text-primary disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-primary"
-        >
-          Next layer
-        </button>
-        <button
-          type="button"
-          onClick={restart}
-          className="min-h-11 text-body font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-primary"
-        >
-          Restart
-        </button>
-      </div>
-      <aside
-        className="mt-4 rounded-(--radius-control) bg-surface-alt p-4 text-body"
-        aria-live="polite"
+      <PredictionGate
+        id="layer-diagram"
+        prompt="One customer request flows through this whole system. Which part makes the final call on what the customer receives?"
+        options={[
+          { text: "The AI component", correct: false },
+          { text: "A person", correct: true },
+          { text: "The workflow", correct: false },
+        ]}
+        revealLabel="Trace the request and check."
       >
-        {active ? (
-          <>
-            <strong>{active.label}:</strong> {STORY[originalIndex] ?? active.description}
-            <span className="mt-2 block text-ink-muted">Mechanism: {active.description}</span>
-          </>
-        ) : (
-          "No layers are selected."
-        )}
-      </aside>
-      <p className="mt-4 text-body">
-        <strong>Notice:</strong> one product can contain several mechanisms. Removing the AI layer
-        leaves a useful rule-and-workflow system; removing human review changes who handles
-        uncertainty.
-      </p>
-      {!includeAi ? (
-        <p
-          className="mt-3 rounded-(--radius-control) bg-primary-tint p-3 text-body"
+        <p className="mt-4 text-body font-semibold">
+          Try it: trace one request, select any layer, or remove AI and human review to see what
+          remains.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-5 rounded-(--radius-control) bg-surface-alt p-3">
+          <label className="flex min-h-11 cursor-pointer items-center gap-2 text-body">
+            <input
+              type="checkbox"
+              checked={includeAi}
+              onChange={(event) => {
+                setIncludeAi(event.target.checked);
+                setSelected(0);
+              }}
+              className="h-5 w-5 accent-primary"
+            />{" "}
+            Include AI prediction
+          </label>
+          <label className="flex min-h-11 cursor-pointer items-center gap-2 text-body">
+            <input
+              type="checkbox"
+              checked={includeHuman}
+              onChange={(event) => {
+                setIncludeHuman(event.target.checked);
+                setSelected(0);
+              }}
+              className="h-5 w-5 accent-primary"
+            />{" "}
+            Include human review
+          </label>
+        </div>
+        <ol className="mt-4 grid gap-2 md:grid-cols-5" aria-label="System layers">
+          {visible.map((layer, index) => (
+            <li key={layer.id} className="relative">
+              <button
+                type="button"
+                aria-pressed={index === selected}
+                onClick={() => {
+                  setPlaying(false);
+                  setSelected(index);
+                  track("diagram_component_opened", { component: layer.id });
+                }}
+                className={`h-full min-h-24 w-full rounded-(--radius-control) border p-3 text-left focus-visible:outline-2 focus-visible:outline-primary ${index === selected ? "border-primary bg-primary-tint" : "border-border bg-surface-card hover:border-primary"}`}
+              >
+                <span
+                  className={`flex h-7 w-7 items-center justify-center rounded-full text-caption font-bold ${index <= selected ? "bg-primary text-white" : "bg-surface-alt text-ink-muted"}`}
+                >
+                  {index + 1}
+                </span>
+                <span className="mt-2 block text-body font-semibold">{layer.label}</span>
+              </button>
+              {index < visible.length - 1 ? (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-3 left-1/2 z-10 text-primary md:hidden"
+                  >
+                    ↓
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute -right-3 top-1/2 z-10 hidden text-primary md:block"
+                  >
+                    →
+                  </span>
+                </>
+              ) : null}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => setPlaying((value) => !value)}
+            disabled={selected >= visible.length - 1}
+            className="min-h-11 rounded-(--radius-control) bg-primary px-4 text-body font-semibold text-white disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            {playing ? "Pause trace" : "Play trace"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setPlaying(false);
+              setSelected((value) => Math.min(value + 1, visible.length - 1));
+            }}
+            disabled={selected >= visible.length - 1}
+            className="min-h-11 rounded-(--radius-control) border border-primary px-4 text-body font-semibold text-primary disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-primary"
+          >
+            Next layer
+          </button>
+          <button
+            type="button"
+            onClick={restart}
+            className="min-h-11 text-body font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-primary"
+          >
+            Restart
+          </button>
+        </div>
+        <aside
+          className="mt-4 rounded-(--radius-control) bg-surface-alt p-4 text-body"
           aria-live="polite"
         >
-          <strong>AI off:</strong> the request can still be stored and routed, but a person must
-          sort it manually.
+          {active ? (
+            <>
+              <strong>{active.label}:</strong> {STORY[originalIndex] ?? active.description}
+              <span className="mt-2 block text-ink-muted">Mechanism: {active.description}</span>
+            </>
+          ) : (
+            "No layers are selected."
+          )}
+        </aside>
+        <p className="mt-4 text-body">
+          <strong>Notice:</strong> one product can contain several mechanisms. Removing the AI layer
+          leaves a useful rule-and-workflow system; removing human review changes who handles
+          uncertainty.
         </p>
-      ) : null}
-      {!includeHuman ? (
-        <p
-          className="mt-3 rounded-(--radius-control) bg-warning-tint p-3 text-body"
-          aria-live="polite"
-        >
-          <strong>Human review off:</strong> uncertain or high-impact predictions may be acted on
-          without a person checking them.
-        </p>
-      ) : null}
+        {!includeAi ? (
+          <p
+            className="mt-3 rounded-(--radius-control) bg-primary-tint p-3 text-body"
+            aria-live="polite"
+          >
+            <strong>AI off:</strong> the request can still be stored and routed, but a person must
+            sort it manually.
+          </p>
+        ) : null}
+        {!includeHuman ? (
+          <p
+            className="mt-3 rounded-(--radius-control) bg-warning-tint p-3 text-body"
+            aria-live="polite"
+          >
+            <strong>Human review off:</strong> uncertain or high-impact predictions may be acted on
+            without a person checking them.
+          </p>
+        ) : null}
+      </PredictionGate>
       <DiagramObservation>
         Which parts still work without AI, and where is human judgment most important?
       </DiagramObservation>

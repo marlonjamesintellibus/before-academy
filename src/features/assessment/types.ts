@@ -71,6 +71,8 @@ export interface QuestionReview {
   correct: boolean;
   correctOptionIds: string[];
   explanation: string;
+  /** Misconception ids this question probes - drives targeted remediation routing. */
+  misconceptions: string[];
 }
 
 export interface AttemptResult {
@@ -92,28 +94,4 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   classification: "Classification",
   ambiguity: "Ambiguity",
   misconceptions: "Misconceptions",
-};
-
-/** Failed category → where to review (docs/content/assessments.md remediation map). */
-export const REMEDIATION_TARGETS: Record<AssessmentCategory, { label: string; href: string }[]> = {
-  traditional_software: [{ label: "Traditional software lesson block", href: "#p1-lesson-002" }],
-  automation: [
-    { label: "Automation lesson block", href: "#p1-lesson-003" },
-    { label: "Combined systems lesson block", href: "#p1-lesson-005" },
-  ],
-  ai_characteristics: [
-    { label: "AI lesson block (probabilistic outputs)", href: "#p1-lesson-004" },
-  ],
-  combined_systems: [
-    { label: "Combined systems lesson block", href: "#p1-lesson-005" },
-    { label: "The layer diagram", href: "#p1-dgm-001" },
-  ],
-  classification: [
-    { label: "Sort the System activity", href: "/activity" },
-    { label: "Compare the three", href: "#p1-lesson-005" },
-  ],
-  ambiguity: [
-    { label: "Scenario 10: when the answer is 'not enough information'", href: "/activity" },
-  ],
-  misconceptions: [{ label: "The misconception callout", href: "#p1-lesson-005-misconception" }],
 };

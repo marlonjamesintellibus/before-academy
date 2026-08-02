@@ -18,6 +18,14 @@ async function goToStage(page: Page, name: string) {
  * (npm run db:seed) before the app starts.
  */
 
+/** Predict-first gates (Phase B): commit a prediction to reveal the interactive. */
+async function commitPrediction(page: import("@playwright/test").Page) {
+  const gate = page.getByText("Predict first").first();
+  if (await gate.isVisible().catch(() => false)) {
+    await page.locator("div", { has: gate }).last().getByRole("button").first().click();
+  }
+}
+
 test("lesson presents published content as five focused stages", async ({ page }) => {
   await page.goto(LESSON);
   await expect(
@@ -34,6 +42,7 @@ test("lesson presents published content as five focused stages", async ({ page }
   await expect(
     page.getByText("Good AI judgment includes knowing when there is not enough evidence."),
   ).toBeVisible();
+  await commitPrediction(page);
   await expect(page.getByRole("list", { name: "System layers" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Start Sort the System" })).toBeVisible();
 });
@@ -57,6 +66,7 @@ test("depth panel expands and collapses with aria-expanded", async ({ page }) =>
 test("diagram layer opens its description and the text alternative toggles", async ({ page }) => {
   await page.goto(LESSON);
   await goToStage(page, "Compare and Apply");
+  await commitPrediction(page);
   const diagram = page
     .getByRole("figure")
     .filter({ has: page.getByRole("list", { name: "System layers" }) });
@@ -71,15 +81,18 @@ test("diagram layer opens its description and the text alternative toggles", asy
 test("concept diagrams expose learner-controlled mechanisms", async ({ page }) => {
   await page.goto(LESSON);
   await goToStage(page, "Traditional Software");
+  await commitPrediction(page);
   await expect(page.getByText("Do not release")).toBeVisible();
   await page.getByRole("checkbox", { name: "Payment approved" }).check();
   await expect(page.getByText("Release item", { exact: true })).toBeVisible();
   await goToStage(page, "Automation");
+  await commitPrediction(page);
   await page.getByRole("button", { name: "Run next step" }).click();
   await expect(page.getByText(/Assign team is next|Confirm is next/)).toBeVisible();
   await page.getByRole("button", { name: "Play workflow" }).click();
   await page.getByRole("button", { name: "Pause" }).click();
   await goToStage(page, "Artificial Intelligence");
+  await commitPrediction(page);
   const initialConfidence = await page
     .getByText(/% confidence/)
     .first()
@@ -87,6 +100,7 @@ test("concept diagrams expose learner-controlled mechanisms", async ({ page }) =
   await page.getByRole("checkbox", { name: "Contains a suspicious link" }).check();
   await expect(page.getByText(/% confidence/).first()).not.toHaveText(initialConfidence ?? "");
   await goToStage(page, "Compare and Apply");
+  await commitPrediction(page);
   await page.getByRole("button", { name: "Next layer" }).click();
   const diagram = page
     .getByRole("figure")
@@ -110,6 +124,7 @@ test("tablet layout and reduced motion preserve all diagram controls", async ({ 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(LESSON);
   await goToStage(page, "Automation");
+  await commitPrediction(page);
   await page.getByRole("button", { name: "Run next step" }).click();
   await expect(page.getByText(/Confirm is next/)).toBeVisible();
   const overflow = await page.evaluate(
@@ -117,6 +132,7 @@ test("tablet layout and reduced motion preserve all diagram controls", async ({ 
   );
   expect(overflow).toBe(false);
   await goToStage(page, "Compare and Apply");
+  await commitPrediction(page);
   await page.getByRole("checkbox", { name: "Include AI prediction" }).uncheck();
   await expect(page.getByRole("list", { name: "System layers" })).not.toContainText(
     /artificial intelligence|AI prediction/i,

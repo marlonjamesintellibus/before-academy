@@ -194,6 +194,10 @@ export function ActivityPlayer({
           >
             <ScenarioFeedback
               scenario={scenario}
+              distractorClues={ordered
+                .filter((entry) => entry.id !== scenario.id)
+                .slice(0, 2)
+                .map((entry) => entry.clue)}
               chosen={(answer?.chosen as ScenarioCategory) ?? selected ?? scenario.correctCategory}
               lessonRoute={lessonRoute}
             />
@@ -215,10 +219,12 @@ function ScenarioFeedback({
   scenario,
   chosen,
   lessonRoute,
+  distractorClues,
 }: {
   scenario: PublishedScenario;
   chosen: ScenarioCategory;
   lessonRoute: string;
+  distractorClues: string[];
 }) {
   const correct = chosen === scenario.correctCategory || scenario.accepted.includes(chosen);
   return (
@@ -237,9 +243,7 @@ function ScenarioFeedback({
         </div>
       </dl>
       <p className="mt-2 text-body">{scenario.feedback[chosen]}</p>
-      <p className="mt-2 text-body">
-        <strong>Key evidence:</strong> {scenario.clue}
-      </p>
+      <EvidenceStep scenario={scenario} distractorClues={distractorClues} />
       {scenario.ambiguityNote ? (
         <p className="mt-2 text-body text-ink-muted">{scenario.ambiguityNote}</p>
       ) : null}
@@ -254,6 +258,63 @@ function ScenarioFeedback({
         </Link>
       ) : null}
     </div>
+  );
+}
+
+/**
+ * Evidence second step (experience-plan Phase B): after the verdict, the
+ * learner picks WHICH detail settles the classification - testing the
+ * judgment the lesson claims to teach, not just recognition.
+ */
+function EvidenceStep({
+  scenario,
+  distractorClues,
+}: {
+  scenario: PublishedScenario;
+  distractorClues: string[];
+}) {
+  const [picked, setPicked] = useState<string | null>(null);
+  // Deterministic order: alternate distractors around the real clue by id hash.
+  const options = [...distractorClues.slice(0, 2), scenario.clue].sort((a, b) =>
+    a.length === b.length ? a.localeCompare(b) : a.length - b.length,
+  );
+
+  if (picked !== null) {
+    const wasRight = picked === scenario.clue;
+    return (
+      <div className="mt-3 rounded-(--radius-control) bg-surface-card p-3" aria-live="polite">
+        <p className={`text-body font-semibold ${wasRight ? "text-success" : "text-warning"}`}>
+          {wasRight ? "That is the settling detail." : "Close - the settling detail is:"}
+        </p>
+        <p className="mt-1 text-body">
+          <strong>Key evidence:</strong> {scenario.clue}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <fieldset className="mt-3 rounded-(--radius-control) bg-surface-card p-3">
+      <legend className="text-body font-semibold">Which detail settles it?</legend>
+      <div className="mt-2 flex flex-col gap-2">
+        {options.map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => {
+              setPicked(option);
+              track("evidence_selected", {
+                scenario_id: scenario.id,
+                correct: option === scenario.clue,
+              });
+            }}
+            className="min-h-11 rounded-(--radius-control) border border-border bg-surface-card px-3 py-2 text-left text-body hover:border-primary focus-visible:outline-2 focus-visible:outline-primary"
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 

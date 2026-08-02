@@ -43,6 +43,9 @@ Every event answers a documented Phase 1 question (ADR-032); nothing is collecte
 | dashboard_viewed / dashboard_continue_clicked / history_item_expanded | dashboard resume value; history usefulness |
 | account_deletion_started / account_deleted | deletion friction; churn signal (fires before data removal; carries no learner data) |
 | web_vital (metric, value, rating) | LCP/CLS/INP per route against the performance budgets |
+| diagnostic_item_answered (item_id, chosen) / diagnostic_completed (correct, total) | pre-lesson baseline for the pre/post learning evidence |
+| prediction_committed (diagram, prediction, correct) | do predict-first interactions change engagement and accuracy |
+| evidence_selected (scenario_id, correct) | can learners justify classifications, not just make them |
 
 **Funnels:** F1 home→lesson→activity→check→assessment→pass · F2 assessment-first→result · F3 prompt→account→migration.
 

@@ -13,6 +13,7 @@ export interface ScorableQuestion {
   correctOptionIds: string[];
   explanationCorrect: string;
   explanationIncorrect: string;
+  misconceptions?: string[];
 }
 
 export interface ScoreOutcome {
@@ -46,6 +47,7 @@ export function score(questions: ScorableQuestion[], answers: AttemptAnswer[]): 
       correct,
       correctOptionIds: question.correctOptionIds,
       explanation: correct ? question.explanationCorrect : question.explanationIncorrect,
+      misconceptions: question.misconceptions ?? [],
     });
   }
 

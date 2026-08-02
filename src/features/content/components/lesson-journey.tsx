@@ -6,8 +6,10 @@ import type { LessonBlock, PublishedSection } from "../types";
 import { Callout } from "@/components/ui/callout";
 import { UncertaintyCallout } from "@/components/ui/uncertainty-callout";
 import { track } from "@/lib/analytics";
-import { INLINE_CHECKS } from "../inline-checks";
+import { INLINE_CHECKS, STAGE_EXTRA_CHECKS } from "../inline-checks";
+import { ConfidencePrompt } from "./confidence-prompt";
 import { ConceptDiagram } from "./diagrams/concept-diagram";
+import { DiagnosticProbe } from "./diagnostic-probe";
 import { DiagramObservation } from "./diagrams/diagram-parts";
 import { DepthPanel } from "./depth-panel";
 import { DiagramFigure } from "./diagram-figure";
@@ -227,6 +229,14 @@ function ConceptStage({
   concept: ConceptBlock;
   glossary: PublishedSection["glossary"];
 }) {
+  const stageIndex =
+    concept.title === "Traditional software"
+      ? 1
+      : concept.title === "Automation"
+        ? 2
+        : concept.title === "Artificial intelligence"
+          ? 3
+          : 4;
   const check =
     concept.title === "Traditional software"
       ? INLINE_CHECKS.rules
@@ -235,6 +245,7 @@ function ConceptStage({
         : concept.title === "Artificial intelligence"
           ? INLINE_CHECKS.ai
           : null;
+  const extraChecks = STAGE_EXTRA_CHECKS[stageIndex] ?? [];
   return (
     <section id={concept.id.toLowerCase()} aria-label={concept.title}>
       <RichTextView body={concept.quick} glossary={glossary} idPrefix={concept.id} />
@@ -283,6 +294,9 @@ function ConceptStage({
         </DepthPanel>
       ) : null}
       {check ? <InlineCheck content={check} /> : null}
+      {extraChecks.map((extra) => (
+        <InlineCheck key={extra.id} content={extra} />
+      ))}
     </section>
   );
 }
@@ -663,6 +677,9 @@ function CompareStage({
       ) : null}
       <KeyTakeaways />
       <InlineCheck content={INLINE_CHECKS.compare} />
+      {(STAGE_EXTRA_CHECKS[4] ?? []).map((extra) => (
+        <InlineCheck key={extra.id} content={extra} />
+      ))}
       <LessonScrollTracker />
     </>
   );
@@ -942,6 +959,8 @@ export function LessonJourney({
                       </details>
                     </details>
                   ) : null}
+                  <DiagnosticProbe />
+                  <ConfidencePrompt stage="pre" />
                 </>
               ) : active < 4 ? (
                 conceptByStage.get(active) ? (

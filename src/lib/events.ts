@@ -68,7 +68,11 @@ export type EventName =
   | "account_deleted"
   | "feedback_submitted"
   | "error_event"
-  | "web_vital";
+  | "web_vital"
+  | "diagnostic_item_answered"
+  | "diagnostic_completed"
+  | "prediction_committed"
+  | "evidence_selected";
 
 export interface EventProperties {
   [key: string]: string | number | boolean | undefined;

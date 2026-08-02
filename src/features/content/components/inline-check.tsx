@@ -66,7 +66,7 @@ export function InlineCheck({ content }: { content: InlineCheckContent }) {
           disabled={!selected}
           onClick={() => {
             setSubmitted(true);
-            track("check_question_answered", { question_id: content.id, correct });
+            track("interaction_completed", { question_id: content.id, correct });
           }}
           className="mt-4 inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2 text-body font-semibold text-white hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
