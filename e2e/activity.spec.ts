@@ -44,6 +44,9 @@ test("wrong answers show the formula feedback with a review link", async ({ page
   await page.getByRole("radio", { name: "AI-assisted" }).check();
   await page.getByRole("button", { name: "Check", exact: true }).click();
   await expect(page.getByText("Not quite").first()).toBeVisible();
+  await expect(page.getByText("Your classification")).toBeVisible();
+  await expect(page.getByText("Best-supported answer")).toBeVisible();
+  await expect(page.getByText("Key evidence:")).toBeVisible();
   await expect(page.getByRole("link", { name: "Review this concept" })).toHaveAttribute(
     "href",
     /#p1-lesson-002/,
@@ -56,15 +59,32 @@ test("knowledge check completes with remediation chips on wrong answers", async 
   for (let i = 1; i <= 4; i += 1) {
     await expect(page.getByText(`Question ${i} of 4`)).toBeVisible();
     await page.getByRole("radio").first().check();
-    await page.getByRole("button", { name: "Check", exact: true }).click();
+    await page.getByRole("button", { name: "Check answer", exact: true }).click();
     const chip = page.getByRole("link", { name: /Review/ });
     if (await chip.isVisible().catch(() => false)) {
       await expect(chip).toHaveAttribute("href", /#p1-lesson|#.*misconception/i);
     }
-    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByRole("button", { name: i === 4 ? "See results" : "Continue" }).click();
   }
-  await expect(page.getByRole("heading", { name: "Practice complete" })).toBeVisible();
+  await expect(page.getByText(/You got \d of 4 correct/)).toBeVisible();
+  await expect(page.getByText("Review all answers")).toBeVisible();
   await expect(page.getByRole("link", { name: "Take the Assessment" })).toBeVisible();
+});
+
+test("knowledge check preserves a selected answer and current question on refresh", async ({
+  page,
+}) => {
+  await page.goto(CHECK);
+  await page.getByRole("button", { name: "Start the check" }).click();
+  const first = page.getByRole("radio").first();
+  await first.check();
+  await page.reload();
+  await expect(page.getByText("Question 1 of 4")).toBeVisible();
+  await expect(page.getByRole("radio").first()).toBeChecked();
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await page.getByRole("button", { name: "Continue" }).click();
+  await page.reload();
+  await expect(page.getByText("Question 2 of 4")).toBeVisible();
 });
 
 test("activity is keyboard-operable", async ({ page }) => {

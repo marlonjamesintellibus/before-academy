@@ -226,7 +226,20 @@ function ScenarioFeedback({
       <p className={`text-body font-semibold ${correct ? "text-success" : "text-danger"}`}>
         <span aria-hidden="true">{correct ? "✓" : "✗"}</span> {correct ? "Correct" : "Not quite"}
       </p>
+      <dl className="mt-3 grid gap-2 rounded-(--radius-control) bg-surface-card p-3 text-body sm:grid-cols-2">
+        <div>
+          <dt className="text-caption font-semibold text-ink-muted">Your classification</dt>
+          <dd className="font-semibold">{CATEGORY_LABELS[chosen]}</dd>
+        </div>
+        <div>
+          <dt className="text-caption font-semibold text-ink-muted">Best-supported answer</dt>
+          <dd className="font-semibold">{CATEGORY_LABELS[scenario.correctCategory]}</dd>
+        </div>
+      </dl>
       <p className="mt-2 text-body">{scenario.feedback[chosen]}</p>
+      <p className="mt-2 text-body">
+        <strong>Key evidence:</strong> {scenario.clue}
+      </p>
       {scenario.ambiguityNote ? (
         <p className="mt-2 text-body text-ink-muted">{scenario.ambiguityNote}</p>
       ) : null}
@@ -295,7 +308,7 @@ function ActivitySummary({
             Take the Knowledge Check
           </Link>
           <p className="mt-2 max-w-[42ch] text-caption text-ink-muted">
-            Answer four practice questions with immediate feedback.
+            Answer four practice questions and receive immediate explanations.
           </p>
         </div>
         <button

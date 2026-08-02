@@ -6,10 +6,13 @@ import type { LessonBlock, PublishedSection } from "../types";
 import { Callout } from "@/components/ui/callout";
 import { UncertaintyCallout } from "@/components/ui/uncertainty-callout";
 import { track } from "@/lib/analytics";
+import { INLINE_CHECKS } from "../inline-checks";
 import { ConceptDiagram } from "./diagrams/concept-diagram";
+import { DiagramObservation } from "./diagrams/diagram-parts";
 import { DepthPanel } from "./depth-panel";
 import { DiagramFigure } from "./diagram-figure";
 import { HookBlock } from "./hook-block";
+import { InlineCheck } from "./inline-check";
 import { LessonScrollTracker } from "./lesson-scroll-tracker";
 import { RichTextView } from "./rich-text";
 
@@ -223,6 +226,14 @@ function ConceptStage({
   concept: ConceptBlock;
   glossary: PublishedSection["glossary"];
 }) {
+  const check =
+    concept.title === "Traditional software"
+      ? INLINE_CHECKS.rules
+      : concept.title === "Automation"
+        ? INLINE_CHECKS.automation
+        : concept.title === "Artificial intelligence"
+          ? INLINE_CHECKS.ai
+          : null;
   return (
     <section id={concept.id.toLowerCase()} aria-label={concept.title}>
       <RichTextView body={concept.quick} glossary={glossary} idPrefix={concept.id} />
@@ -270,6 +281,7 @@ function ConceptStage({
           />
         </DepthPanel>
       ) : null}
+      {check ? <InlineCheck content={check} /> : null}
     </section>
   );
 }
@@ -316,7 +328,49 @@ const COMPARISON = [
   },
 ] as const;
 
+const COMPARE_SCENARIOS = [
+  {
+    id: "invoice",
+    label: "Invoice total",
+    prompt: "A customer submits three line items and needs a total.",
+    responses: [
+      "Adds the values with written arithmetic",
+      "Could trigger a receipt after submission",
+      "Not needed from the evidence given",
+    ],
+    conclusion:
+      "The calculation itself is traditional software. If submission triggers a receipt, that separate step is automation.",
+  },
+  {
+    id: "support",
+    label: "Support sorting",
+    prompt: "A platform automatically sorts messages, but does not say how.",
+    responses: [
+      "Could follow keyword rules",
+      "Routes each message without a person",
+      "Could use learned classification",
+    ],
+    conclusion:
+      "Automation is visible, but there is not enough information to decide whether the sorting mechanism is rules or AI.",
+  },
+  {
+    id: "arrival",
+    label: "Arrival estimate",
+    prompt: "A navigation app updates an arrival prediction as traffic changes.",
+    responses: [
+      "Applies map and routing constraints",
+      "Refreshes when live data arrives",
+      "Predicts a likely arrival time from patterns",
+    ],
+    conclusion:
+      "This is a combined system: rules, automation, and a pattern-based prediction cooperate.",
+  },
+] as const;
+
 function ComparisonVisual() {
+  const [scenarioId, setScenarioId] = useState<string>(COMPARE_SCENARIOS[0].id);
+  const scenario =
+    COMPARE_SCENARIOS.find((entry) => entry.id === scenarioId) ?? COMPARE_SCENARIOS[0];
   return (
     <section aria-labelledby="comparison-title" className="mt-2">
       <h3 id="comparison-title" className="font-display text-subheading font-bold">
@@ -368,6 +422,53 @@ function ComparisonVisual() {
       <p className="mt-5 rounded-(--radius-control) bg-primary px-5 py-4 text-body font-semibold text-white">
         Automation and AI answer different questions. A system can use one, both, or neither.
       </p>
+      <section
+        className="mt-6 rounded-(--radius-hero) border border-border bg-surface-alt p-5"
+        aria-labelledby="compare-scenario-title"
+      >
+        <h4 id="compare-scenario-title" className="font-display text-subheading font-bold">
+          Compare one scenario three ways
+        </h4>
+        <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Choose a scenario">
+          {COMPARE_SCENARIOS.map((entry) => (
+            <button
+              key={entry.id}
+              type="button"
+              aria-pressed={entry.id === scenario.id}
+              onClick={() => {
+                setScenarioId(entry.id);
+                track("diagram_component_opened", { component: `compare-${entry.id}` });
+              }}
+              className={`min-h-11 rounded-(--radius-control) border px-4 text-body font-semibold focus-visible:outline-2 focus-visible:outline-primary ${entry.id === scenario.id ? "border-primary bg-primary text-white" : "border-border bg-surface-card text-ink hover:border-primary"}`}
+            >
+              {entry.label}
+            </button>
+          ))}
+        </div>
+        <p className="mt-4 text-body font-semibold">{scenario.prompt}</p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {COMPARISON.map((item, index) => (
+            <article
+              key={item.label}
+              className="rounded-(--radius-control) border border-border bg-surface-card p-4"
+            >
+              <p className="text-caption font-bold uppercase tracking-wide text-primary">
+                {item.mechanism}
+              </p>
+              <p className="mt-2 text-body">{scenario.responses[index]}</p>
+            </article>
+          ))}
+        </div>
+        <p
+          className="mt-4 rounded-(--radius-control) bg-warning-tint p-4 text-body"
+          aria-live="polite"
+        >
+          <strong>Best-supported conclusion:</strong> {scenario.conclusion}
+        </p>
+        <DiagramObservation>
+          What extra evidence would you need before calling an automatically sorted ticket AI?
+        </DiagramObservation>
+      </section>
     </section>
   );
 }
@@ -559,6 +660,7 @@ function CompareStage({
         </div>
       ) : null}
       <KeyTakeaways />
+      <InlineCheck content={INLINE_CHECKS.compare} />
       <LessonScrollTracker />
     </>
   );

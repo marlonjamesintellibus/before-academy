@@ -34,7 +34,7 @@ test("lesson presents published content as five focused stages", async ({ page }
   await expect(
     page.getByText("Good AI judgment includes knowing when there is not enough evidence."),
   ).toBeVisible();
-  await expect(page.getByRole("group", { name: "Diagram layers" })).toBeVisible();
+  await expect(page.getByRole("list", { name: "System layers" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Start Sort the System" })).toBeVisible();
 });
 
@@ -59,8 +59,8 @@ test("diagram layer opens its description and the text alternative toggles", asy
   await goToStage(page, "Compare and Apply");
   const diagram = page
     .getByRole("figure")
-    .filter({ has: page.getByRole("group", { name: "Diagram layers" }) });
-  const layers = diagram.getByRole("group", { name: "Diagram layers" }).getByRole("button");
+    .filter({ has: page.getByRole("list", { name: "System layers" }) });
+  const layers = diagram.getByRole("list", { name: "System layers" }).getByRole("button");
   await layers.first().click();
   await expect(layers.first()).toHaveAttribute("aria-pressed", "true");
   await expect(diagram.locator("[aria-live=polite]")).toContainText(":");
@@ -68,33 +68,59 @@ test("diagram layer opens its description and the text alternative toggles", asy
   await expect(page.getByRole("button", { name: "Hide the text version" })).toBeVisible();
 });
 
-test("concept diagrams run their interactions", async ({ page }) => {
+test("concept diagrams expose learner-controlled mechanisms", async ({ page }) => {
   await page.goto(LESSON);
-  // Traditional software: run twice, history proves determinism
   await goToStage(page, "Traditional Software");
-  await page.getByRole("button", { name: "Run the rules" }).click();
-  await expect(page.getByText(/Identical input gives identical output/)).toBeVisible({
-    timeout: 5000,
-  });
-  await page.getByRole("button", { name: "Run it again" }).click();
-  await expect(page.getByText("same input, same answer - guaranteed")).toBeVisible({
-    timeout: 5000,
-  });
-  // Automation: trigger the chain to completion
+  await expect(page.getByText("Do not release")).toBeVisible();
+  await page.getByRole("checkbox", { name: "Payment approved" }).check();
+  await expect(page.getByText("Release item", { exact: true })).toBeVisible();
   await goToStage(page, "Automation");
-  await page.getByRole("button", { name: "Trigger it now" }).click();
-  await expect(page.getByText(/no decisions were made anywhere/)).toBeVisible({ timeout: 5000 });
-  // AI: pick a message card, verdict lands with confidence (allow thinking delay)
+  await page.getByRole("button", { name: "Run next step" }).click();
+  await expect(page.getByText(/Assign team is next|Confirm is next/)).toBeVisible();
+  await page.getByRole("button", { name: "Play workflow" }).click();
+  await page.getByRole("button", { name: "Pause" }).click();
   await goToStage(page, "Artificial Intelligence");
-  await page.getByRole("button", { name: /^Classify: You won a FREE prize/ }).click();
-  await expect(page.getByText(/96% confident/).first()).toBeVisible({ timeout: 5000 });
-  // Canonical diagram: trace a request selects the final layer
+  const initialConfidence = await page
+    .getByText(/% confidence/)
+    .first()
+    .textContent();
+  await page.getByRole("checkbox", { name: "Contains a suspicious link" }).check();
+  await expect(page.getByText(/% confidence/).first()).not.toHaveText(initialConfidence ?? "");
   await goToStage(page, "Compare and Apply");
-  await page.getByRole("button", { name: "Trace a request through the layers" }).click();
+  await page.getByRole("button", { name: "Next layer" }).click();
   const diagram = page
     .getByRole("figure")
-    .filter({ has: page.getByRole("group", { name: "Diagram layers" }) });
+    .filter({ has: page.getByRole("list", { name: "System layers" }) });
   await expect(diagram.locator("[aria-live=polite]")).toContainText(":", { timeout: 8000 });
+});
+
+test("inline micro-check gives immediate feedback and supports retry", async ({ page }) => {
+  await page.goto(LESSON);
+  await goToStage(page, "Traditional Software");
+  const check = page.getByRole("heading", { name: /password-strength checker/ }).locator("..");
+  await check.getByRole("radio", { name: "Patterns learned from examples" }).check();
+  await check.getByRole("button", { name: "Check answer" }).click();
+  await expect(check.getByText("✗ Not quite", { exact: true })).toBeVisible();
+  await check.getByRole("button", { name: "Try a different answer" }).click();
+  await expect(check.getByRole("radio", { name: "Written rules" })).not.toBeChecked();
+});
+
+test("tablet layout and reduced motion preserve all diagram controls", async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(LESSON);
+  await goToStage(page, "Automation");
+  await page.getByRole("button", { name: "Run next step" }).click();
+  await expect(page.getByText(/Confirm is next/)).toBeVisible();
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(overflow).toBe(false);
+  await goToStage(page, "Compare and Apply");
+  await page.getByRole("checkbox", { name: "Include AI prediction" }).uncheck();
+  await expect(page.getByRole("list", { name: "System layers" })).not.toContainText(
+    /artificial intelligence|AI prediction/i,
+  );
 });
 
 test("glossary chip opens a definition panel on tap", async ({ page }) => {
