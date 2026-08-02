@@ -1,5 +1,15 @@
 /**
  * progress feature public API. Cross-feature imports go through this index only
- * (lint-enforced, docs/engineering/repository.md). Populated from M1 onward.
+ * (lint-enforced, docs/engineering/repository.md).
  */
-export {};
+export { ResumeBanner } from "./components/resume-banner";
+export { StorageNotice } from "./components/storage-notice";
+export { SectionStatusChip, SectionMicrostatus } from "./components/section-status";
+export { useDeviceStore } from "./use-device-store";
+export { buildSnapshot, readSnapshot, resumeTarget, sectionStatus } from "./snapshot";
+export type {
+  ProgressSnapshot,
+  ResumeTarget,
+  SectionStatus as SectionStatusValue,
+  StoredAssessmentOutcome,
+} from "./types";

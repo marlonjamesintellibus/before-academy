@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TrackOnMount, TrackedLink } from "@/components/track";
+import { ResumeBanner } from "@/features/progress";
 import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
 
@@ -11,6 +12,7 @@ import { strings } from "@/lib/strings";
 export default function HomePage() {
   return (
     <main id="main" className="flex-1">
+      <ResumeBanner />
       <div className="shell-gradient">
         <div className="mx-auto w-full max-w-[880px] px-4 py-16 md:py-24">
           <TrackOnMount event="home_viewed" />

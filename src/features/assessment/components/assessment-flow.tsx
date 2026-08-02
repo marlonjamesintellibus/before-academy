@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Callout } from "@/components/ui/callout";
 import { Modal } from "@/components/ui/modal";
 import { track } from "@/lib/analytics";
+import { readDevice, writeDevice } from "@/lib/device-store";
 import { createAttempt, submitAttempt } from "../actions";
 import type { AttemptPayload, AttemptResult, SanitizedQuestion } from "../types";
 import { CATEGORY_DISPLAY, REMEDIATION_TARGETS } from "../types";
@@ -102,6 +103,29 @@ export function AssessmentFlow({
       return;
     }
     setStage({ name: "results", result: result.data });
+    // Guest completion state (ADR-025): outcome summary only - no answers, no PII.
+    const outcomeKey = "ba.v1.assessment.ai-automation-software";
+    const previous = readDevice<{
+      version: 1;
+      attempts: number;
+      bestScore: number;
+      passed: boolean;
+    } | null>(
+      outcomeKey,
+      null,
+      (value) =>
+        typeof value === "object" &&
+        value !== null &&
+        (value as { version?: number }).version === 1,
+    );
+    writeDevice(outcomeKey, {
+      version: 1,
+      attempts: result.data.attemptNumber,
+      bestScore: Math.max(previous?.bestScore ?? 0, result.data.score),
+      total: result.data.total,
+      passed: (previous?.passed ?? false) || result.data.passed,
+      lastAttemptAt: new Date().toISOString(),
+    });
     track("assessment_submitted", {});
     track("assessment_result_viewed", {
       passed: result.data.passed,

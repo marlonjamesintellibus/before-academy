@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { AppFooter } from "@/components/ui/app-footer";
 import { AppHeader } from "@/components/ui/app-header";
+import { StorageNotice } from "@/features/progress";
 import { PostHogInit } from "@/lib/analytics";
 
 const display = Bricolage_Grotesque({
@@ -41,6 +42,7 @@ export default function RootLayout({
         </a>
         <PostHogInit />
         <AppHeader />
+        <StorageNotice />
         {children}
         <AppFooter />
       </body>
