@@ -7,6 +7,7 @@ export { StorageNotice } from "./components/storage-notice";
 export { SectionStatusChip, SectionMicrostatus } from "./components/section-status";
 export { SectionUnits } from "./components/section-units";
 export { SkillMap } from "./components/skill-map";
+export { ReviewSession } from "./components/review-session";
 export { useDeviceStore } from "./use-device-store";
 export { buildSnapshot, readSnapshot, resumeTarget, sectionStatus } from "./snapshot";
 export type {

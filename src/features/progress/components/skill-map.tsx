@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { readDevice } from "@/lib/device-store";
 import { track } from "@/lib/analytics";
+import { reviewDue } from "../review-schedule";
 import type { StoredAssessmentOutcome } from "../types";
 
 /**
@@ -24,21 +25,24 @@ const ASSESSMENT_KEY = "ba.v1.assessment.ai-automation-software";
 
 export function SkillMap() {
   const fired = useRef(false);
-  const outcome = readDevice<StoredAssessmentOutcome | null>(
-    ASSESSMENT_KEY,
-    null,
-    (value) =>
-      typeof value === "object" &&
-      value !== null &&
-      (value as StoredAssessmentOutcome).version === 1,
-  );
+  const [outcome, setOutcome] = useState<StoredAssessmentOutcome | null>(null);
 
   useEffect(() => {
-    if (outcome?.categories && !fired.current) {
+    const stored = readDevice<StoredAssessmentOutcome | null>(
+      ASSESSMENT_KEY,
+      null,
+      (value) =>
+        typeof value === "object" &&
+        value !== null &&
+        (value as StoredAssessmentOutcome).version === 1,
+    );
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount device-storage hydration
+    setOutcome(stored);
+    if (stored?.categories && !fired.current) {
       fired.current = true;
       track("skill_map_viewed", {});
     }
-  }, [outcome]);
+  }, []);
 
   if (!outcome?.categories) return null;
 
@@ -49,6 +53,12 @@ export function SkillMap() {
         Built from your latest graded attempt. Retakes update it - the questions rotate, the skills
         stay comparable.
       </p>
+      {reviewDue([outcome.lastAttemptAt]).rusty ? (
+        <p className="mt-2 rounded-(--radius-control) bg-primary-tint px-3 py-2 text-caption font-medium text-primary">
+          It has been a while since these were exercised - the two-minute review below keeps them
+          sharp.
+        </p>
+      ) : null}
       <ul className="mt-4 flex flex-col gap-3">
         {SKILLS.map((skill) => {
           let correct = 0;

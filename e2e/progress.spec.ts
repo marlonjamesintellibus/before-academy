@@ -92,3 +92,33 @@ test("mid-assessment refresh restores the attempt", async ({ page }) => {
   await expect(page.getByText(/Question \d of 6/)).toBeVisible();
   await expect(page.getByRole("button", { name: "Start assessment" })).not.toBeVisible();
 });
+
+test("day-2 return offers the two-minute review and captures completion", async ({ page }) => {
+  const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
+  await page.addInitScript((stamp) => {
+    window.localStorage.setItem(
+      "ba.v1.assessment.ai-automation-software",
+      JSON.stringify({
+        version: 1,
+        attempts: 1,
+        bestScore: 5,
+        total: 6,
+        passed: true,
+        lastAttemptAt: stamp,
+      }),
+    );
+  }, twoDaysAgo);
+  await page.goto("/learn");
+  await expect(page.getByText("Two-minute review")).toBeVisible();
+  await page.getByRole("button", { name: "Start the review" }).click();
+  for (let i = 1; i <= 4; i += 1) {
+    await expect(page.getByText(`Review ${i} of 4`)).toBeVisible();
+    await page.getByRole("radio").first().check();
+    await page.getByRole("button", { name: "Check", exact: true }).click();
+    await page.getByRole("button", { name: i === 4 ? "Finish" : "Next", exact: true }).click();
+  }
+  await expect(page.getByText(/of 4 from memory/)).toBeVisible();
+  // Completing the session reschedules it: reload shows no immediate offer
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Start the review" })).not.toBeVisible();
+});

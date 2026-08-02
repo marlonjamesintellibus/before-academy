@@ -82,3 +82,19 @@ describe("progress snapshot", () => {
     }
   });
 });
+
+describe("review schedule", () => {
+  it("computes due and rusty states from anchors", async () => {
+    const { reviewDue } = await import("@/features/progress/review-schedule");
+    const now = Date.parse("2026-08-10T12:00:00Z");
+    // No anchors: never due
+    expect(reviewDue([null, undefined], now).due).toBe(false);
+    // Yesterday: due, not rusty
+    const yesterday = reviewDue(["2026-08-09T10:00:00Z"], now);
+    expect(yesterday).toEqual({ due: true, dayOffset: 1, rusty: false });
+    // Two hours ago: not due yet
+    expect(reviewDue(["2026-08-10T10:00:00Z"], now).due).toBe(false);
+    // Eight days ago: rusty
+    expect(reviewDue(["2026-08-02T10:00:00Z"], now).rusty).toBe(true);
+  });
+});

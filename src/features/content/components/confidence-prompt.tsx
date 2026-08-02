@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { readDevice, writeDevice } from "@/lib/device-store";
 import { track } from "@/lib/analytics";
 
@@ -32,7 +32,12 @@ export function saveConfidence(stage: "pre" | "post", value: number): void {
 }
 
 export function ConfidencePrompt({ stage }: { stage: "pre" | "post" }) {
-  const [value, setValue] = useState<number | null>(() => readConfidence()[stage] ?? null);
+  const [value, setValue] = useState<number | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount device-storage hydration
+    setValue(readConfidence()[stage] ?? null);
+  }, [stage]);
 
   return (
     <fieldset className="mt-6 rounded-(--radius-card) bg-primary-tint p-5">

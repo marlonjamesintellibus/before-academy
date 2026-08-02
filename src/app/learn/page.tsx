@@ -6,6 +6,7 @@ import {
   SectionStatusChip,
   SectionUnits,
   SkillMap,
+  ReviewSession,
 } from "@/features/progress";
 import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
@@ -86,6 +87,7 @@ export default function PathwayPage() {
             </TrackOnVisible>
           </li>
         </ol>
+        <ReviewSession />
         <SkillMap />
       </div>
     </main>
