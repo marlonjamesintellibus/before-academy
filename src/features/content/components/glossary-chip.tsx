@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { track } from "@/lib/analytics";
 
 /**
  * GlossaryChip (docs/product/components.md): inline term, tap-to-open panel,
@@ -25,8 +26,12 @@ export function GlossaryChip({
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
-        className="rounded-(--radius-chip) border-b border-dashed border-primary font-medium text-primary hover:bg-highlight focus-visible:outline-2 focus-visible:outline-primary"
+        onClick={() => {
+          const next = !open;
+          setOpen(next);
+          if (next) track("glossary_term_opened", { term });
+        }}
+        className="rounded-sm border-b-2 border-dotted border-primary/70 font-medium text-primary decoration-clone hover:border-primary hover:bg-highlight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {term}
       </button>

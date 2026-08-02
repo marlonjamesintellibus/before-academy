@@ -287,15 +287,23 @@ function ActivitySummary({
         </p>
       ) : null}
       <div className="mt-6 flex flex-wrap gap-4">
-        <Link
-          href={`${lessonRoute}/check`}
-          className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-        >
-          Continue to the knowledge check
-        </Link>
+        <div>
+          <Link
+            href={`${lessonRoute}/check`}
+            className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            Take the Knowledge Check
+          </Link>
+          <p className="mt-2 max-w-[42ch] text-caption text-ink-muted">
+            Answer four practice questions with immediate feedback.
+          </p>
+        </div>
         <button
           type="button"
-          onClick={onRetry}
+          onClick={() => {
+            track("interaction_retry_selected", { interaction: "sort-the-system" });
+            onRetry();
+          }}
           className="min-h-11 text-body text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-primary"
         >
           Try the set again

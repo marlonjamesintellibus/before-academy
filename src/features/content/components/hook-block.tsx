@@ -16,29 +16,57 @@ export function HookBlock({
   const [answered, setAnswered] = useState<string | null>(null);
 
   return (
-    <div className="rounded-(--radius-card) border border-primary/30 bg-primary-tint p-6 shadow-(--shadow-card)">
-      <p className="text-subheading font-semibold">{prompt}</p>
-      {answered === null ? (
-        <div className="mt-4 flex flex-wrap gap-3" role="group" aria-label={prompt}>
-          {choices.map((choice) => (
-            <button
-              key={choice}
-              type="button"
-              onClick={() => {
-                setAnswered(choice);
-                track("hook_answered", { chosen: choice });
-              }}
-              className="min-h-11 rounded-(--radius-control) border border-primary bg-surface-card px-4 py-2 text-body font-semibold text-primary hover:bg-sky/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            >
-              {choice}
-            </button>
-          ))}
+    <div className="rounded-(--radius-hero) border border-primary/30 bg-primary-tint p-5 shadow-(--shadow-card) sm:p-6">
+      <p className="text-caption font-bold uppercase tracking-wider text-primary">
+        Opening question
+      </p>
+      <p className="mt-2 text-subheading font-semibold">{prompt}</p>
+      <div className="mt-4 flex flex-wrap gap-3" role="group" aria-label={prompt}>
+        {choices.map((choice) => (
+          <button
+            key={choice}
+            type="button"
+            aria-pressed={answered === choice}
+            disabled={answered !== null}
+            onClick={() => {
+              setAnswered(choice);
+              track("hook_answered", { chosen: choice });
+              track("interaction_completed", { interaction: "opening-question", chosen: choice });
+            }}
+            className={`min-h-11 rounded-(--radius-control) border px-4 py-2 text-body font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-default disabled:opacity-70 ${
+              answered === choice
+                ? "border-primary bg-primary text-white disabled:opacity-100"
+                : "border-primary bg-surface-card text-primary hover:bg-sky/40"
+            }`}
+          >
+            {choice}
+          </button>
+        ))}
+      </div>
+      {answered !== null ? (
+        <div
+          aria-live="polite"
+          className="mt-5 rounded-(--radius-control) bg-surface-card p-4 text-body"
+        >
+          <p className="font-semibold text-success">
+            <span aria-hidden="true">✓</span>{" "}
+            {answered === "Can't tell"
+              ? "Exactly. That description does not provide enough information."
+              : "That is a reasonable first instinct - now test it against the evidence."}
+          </p>
+          <p className="mt-2 text-ink-muted">{reveal}</p>
+          <button
+            type="button"
+            onClick={() => {
+              setAnswered(null);
+              track("interaction_retry_selected", { interaction: "opening-question" });
+            }}
+            className="mt-3 min-h-11 text-body font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-primary"
+          >
+            Change my answer
+          </button>
         </div>
-      ) : (
-        <p aria-live="polite" className="mt-4 text-body">
-          {reveal}
-        </p>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -87,18 +87,25 @@ export function AiDiagram() {
 
   function classify(entry: Case) {
     if (thinking) return;
-    if (!revealed) track("diagram_component_opened", { component: "ai-classify" });
+    if (!revealed) {
+      track("diagram_component_opened", { component: "ai-classify" });
+      track("interaction_started", { interaction: "ai-classify" });
+    } else {
+      track("interaction_retry_selected", { interaction: "ai-classify" });
+    }
     setSelected(entry.id);
     setRevealed(null);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       setRevealed(entry);
+      track("interaction_completed", { interaction: "ai-classify", case_id: entry.id });
       return;
     }
     setThinking(true);
     timer.current = setTimeout(() => {
       setThinking(false);
       setRevealed(entry);
+      track("interaction_completed", { interaction: "ai-classify", case_id: entry.id });
     }, 800);
   }
 

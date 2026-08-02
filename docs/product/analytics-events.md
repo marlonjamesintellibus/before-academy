@@ -14,12 +14,16 @@ Every event answers a documented Phase 1 question (ADR-032); nothing is collecte
 | Event (properties) | Decision supported |
 |---|---|
 | lesson_viewed / lesson_completed_scroll | completion & pacing |
+| lesson_stage_started / lesson_stage_completed (stage, stage_number) / lesson_resumed (stage) | staged lesson pacing, completion, and resume value |
+| glossary_term_opened (term) | which inline definitions reduce lesson friction |
+| interaction_started / interaction_completed / interaction_retry_selected | embedded learning interaction engagement and recovery |
 | layer_expanded (layer, concept) | do Explore Further / Go Deeper earn their place |
 | diagram_component_opened / diagram_text_alt_opened | diagram comprehension value |
 | hook_answered (chosen) | hook engagement |
 | activity_started / scenario_answered (scenario_id, chosen, correct, attempt) / activity_completed | which distinctions are misunderstood; scenario quality |
 | check_question_answered / check_completed / remediation_chip_clicked | immediate comprehension; chip usefulness |
 | assessment_intro_viewed / assessment_started (route, attempt_number) | assessment-first adoption |
+| assessment_selected (source) | which learning step sends learners to the graded assessment |
 | assessment_question_answered (question_id, category, difficulty, chosen, time_to_answer) | question performance; threshold validation |
 | assessment_submitted / assessment_result_viewed (passed, score, categories_failed) | first-attempt pass rate |
 | assessment_abandoned (question_index) | attempt friction/length |

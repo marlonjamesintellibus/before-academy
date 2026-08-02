@@ -21,7 +21,7 @@ test("activity completes end to end with per-category summary", async ({ page })
   }
   await expect(page.getByRole("heading", { name: "Nice sorting" })).toBeVisible();
   await expect(page.getByText(/of \d+ correct/).first()).toBeVisible();
-  await expect(page.getByRole("link", { name: "Continue to the knowledge check" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Take the Knowledge Check" })).toBeVisible();
 });
 
 test("mid-activity progress survives a refresh", async ({ page }) => {
@@ -64,7 +64,7 @@ test("knowledge check completes with remediation chips on wrong answers", async 
     await page.getByRole("button", { name: "Continue" }).click();
   }
   await expect(page.getByRole("heading", { name: "Practice complete" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Start the assessment" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Take the Assessment" })).toBeVisible();
 });
 
 test("activity is keyboard-operable", async ({ page }) => {

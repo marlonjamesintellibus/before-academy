@@ -37,12 +37,18 @@ export function RulesDiagram() {
 
   function run() {
     if (animating) return;
-    if (history.length === 0) track("diagram_component_opened", { component: "rules-run" });
+    if (history.length === 0) {
+      track("diagram_component_opened", { component: "rules-run" });
+      track("interaction_started", { interaction: "rules-run" });
+    } else {
+      track("interaction_retry_selected", { interaction: "rules-run" });
+    }
     const commit = () => {
       setHistory((entries) => {
         const repeat = entries.some((entry) => entry.bill === bill && entry.tip === tip);
         return [{ bill, tip, total, repeat }, ...entries].slice(0, 4);
       });
+      track("interaction_completed", { interaction: "rules-run" });
     };
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {

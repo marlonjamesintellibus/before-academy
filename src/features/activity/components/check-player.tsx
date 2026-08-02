@@ -59,15 +59,16 @@ export function CheckPlayer({
         <div className="mt-6 flex flex-wrap gap-4">
           <Link
             href={`${lessonRoute}/assessment`}
+            onClick={() => track("assessment_selected", { source: "knowledge-check" })}
             className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
-            Start the assessment
+            Take the Assessment
           </Link>
           <Link
             href={lessonRoute}
             className="inline-flex min-h-11 items-center text-body text-primary underline-offset-4 hover:underline"
           >
-            Review a lesson first
+            Review the lesson again
           </Link>
         </div>
       </div>

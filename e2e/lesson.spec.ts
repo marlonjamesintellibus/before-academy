@@ -1,7 +1,16 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 const LESSON = "/learn/ai-awareness/ai-automation-software";
+
+async function goToStage(page: Page, name: string) {
+  const outline = page.getByRole("button", { name: "Outline", exact: true });
+  if (await outline.isVisible()) {
+    await outline.click();
+  }
+  await page.getByRole("button", { name, exact: true }).click();
+}
 
 /**
  * M2 exit criterion: full lesson readable from versioned seeds
@@ -9,19 +18,24 @@ const LESSON = "/learn/ai-awareness/ai-automation-software";
  * (npm run db:seed) before the app starts.
  */
 
-test("lesson renders all template blocks from published content", async ({ page }) => {
+test("lesson presents published content as five focused stages", async ({ page }) => {
   await page.goto(LESSON);
   await expect(
     page.getByRole("heading", { level: 1, name: "AI, Automation and Traditional Software" }),
   ).toBeVisible();
-  // Concept headings (h2) from seeded records
-  await expect(page.getByRole("heading", { level: 2 }).first()).toBeVisible();
-  // Objectives accordion, misconception callout, diagram figure
-  await expect(page.getByText(/What you.ll learn/)).toBeVisible();
-  await expect(page.getByText("Common misconception")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "Look past the label" })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Lesson progress" })).toBeVisible();
+  await expect(page.getByText("Stage 1 of 5 · Start Here")).toBeVisible();
+
+  await goToStage(page, "Compare and Apply");
+  await expect(
+    page.getByRole("heading", { level: 3, name: "Three mechanisms at a glance" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Good AI judgment includes knowing when there is not enough evidence."),
+  ).toBeVisible();
   await expect(page.getByRole("group", { name: "Diagram layers" })).toBeVisible();
-  // Activity and check CTAs
-  await expect(page.getByRole("link", { name: "Try it: Sort the System" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Start Sort the System" })).toBeVisible();
 });
 
 test("hook answers reveal the tease response", async ({ page }) => {
@@ -33,6 +47,7 @@ test("hook answers reveal the tease response", async ({ page }) => {
 
 test("depth panel expands and collapses with aria-expanded", async ({ page }) => {
   await page.goto(LESSON);
+  await goToStage(page, "Traditional Software");
   const panel = page.getByRole("button", { name: /min read/ }).first();
   await expect(panel).toHaveAttribute("aria-expanded", "false");
   await panel.click();
@@ -41,6 +56,7 @@ test("depth panel expands and collapses with aria-expanded", async ({ page }) =>
 
 test("diagram layer opens its description and the text alternative toggles", async ({ page }) => {
   await page.goto(LESSON);
+  await goToStage(page, "Compare and Apply");
   const diagram = page
     .getByRole("figure")
     .filter({ has: page.getByRole("group", { name: "Diagram layers" }) });
@@ -55,6 +71,7 @@ test("diagram layer opens its description and the text alternative toggles", asy
 test("concept diagrams run their interactions", async ({ page }) => {
   await page.goto(LESSON);
   // Traditional software: run twice, history proves determinism
+  await goToStage(page, "Traditional Software");
   await page.getByRole("button", { name: "Run the rules" }).click();
   await expect(page.getByText(/Identical input gives identical output/)).toBeVisible({
     timeout: 5000,
@@ -64,12 +81,15 @@ test("concept diagrams run their interactions", async ({ page }) => {
     timeout: 5000,
   });
   // Automation: trigger the chain to completion
+  await goToStage(page, "Automation");
   await page.getByRole("button", { name: "Trigger it now" }).click();
   await expect(page.getByText(/no decisions were made anywhere/)).toBeVisible({ timeout: 5000 });
   // AI: pick a message card, verdict lands with confidence (allow thinking delay)
+  await goToStage(page, "Artificial Intelligence");
   await page.getByRole("button", { name: /^Classify: You won a FREE prize/ }).click();
   await expect(page.getByText(/96% confident/).first()).toBeVisible({ timeout: 5000 });
   // Canonical diagram: trace a request selects the final layer
+  await goToStage(page, "Compare and Apply");
   await page.getByRole("button", { name: "Trace a request through the layers" }).click();
   const diagram = page
     .getByRole("figure")
@@ -79,6 +99,7 @@ test("concept diagrams run their interactions", async ({ page }) => {
 
 test("glossary chip opens a definition panel on tap", async ({ page }) => {
   await page.goto(LESSON);
+  await goToStage(page, "Traditional Software");
   const chip = page.locator("article p button[aria-controls]").first();
   await chip.scrollIntoViewIfNeeded();
   const term = (await chip.textContent())?.trim() ?? "";
@@ -89,8 +110,10 @@ test("glossary chip opens a definition panel on tap", async ({ page }) => {
 
 test("seeded lesson passes axe with no critical or serious violations", async ({ page }) => {
   await page.goto(LESSON);
-  const results = await new AxeBuilder({ page }).analyze();
-  const blocking = results.violations.filter((violation) =>
+  const startResults = await new AxeBuilder({ page }).analyze();
+  await goToStage(page, "Compare and Apply");
+  const compareResults = await new AxeBuilder({ page }).analyze();
+  const blocking = [...startResults.violations, ...compareResults.violations].filter((violation) =>
     ["critical", "serious"].includes(violation.impact ?? ""),
   );
   expect(blocking.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);

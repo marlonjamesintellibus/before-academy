@@ -31,14 +31,28 @@ export function AutomationDiagram() {
   function trigger() {
     if (running) return;
     track("diagram_component_opened", { component: "automation-trigger", odd_data: oddData });
+    track(done ? "interaction_retry_selected" : "interaction_started", {
+      interaction: "automation-trigger",
+    });
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       setStage(STEPS.length);
+      track("interaction_completed", { interaction: "automation-trigger" });
       return;
     }
     setStage(0);
     STEPS.forEach((_, index) => {
-      timers.current.push(setTimeout(() => setStage(index + 1), (index + 1) * 600));
+      timers.current.push(
+        setTimeout(
+          () => {
+            setStage(index + 1);
+            if (index === STEPS.length - 1) {
+              track("interaction_completed", { interaction: "automation-trigger" });
+            }
+          },
+          (index + 1) * 600,
+        ),
+      );
     });
   }
 
