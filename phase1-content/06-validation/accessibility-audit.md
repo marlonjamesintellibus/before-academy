@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-VAL-002
 content_type: validation-audit
-title: Accessibility audit — content-side, Phase 1 package
+title: Accessibility audit - content-side, Phase 1 package
 phase: 6
 section: ai-automation-traditional-software
 content_status: audit-complete
@@ -25,9 +25,9 @@ source_of_truth: CS §12 obligations; interface accessibility remains canonical 
 | Colour independence | Pass | Every state pairs word + icon; colour reinforces only |
 | Motion alternatives | Pass | No meaning in motion anywhere; reduced-motion behaviour specified per surface |
 | Error messaging | Pass | Names the event, states what's preserved, gives a recovery action; assertive announcements |
-| Time limits | Pass | None anywhere — activity, checks, assessment, reflections |
+| Time limits | Pass | None anywhere - activity, checks, assessment, reflections |
 | Mobile presentation | Pass | Single-column specs for activity and both diagrams; no landscape dependency; no swipe-only |
-| Cognitive load | Pass with note | Layered model + one-idea blocks; two watch items: L004 Explore at word-budget ceiling (fallback documented) and 15 glossary chips across four lessons vs CS ~9 recommendation (≤6 per lesson; trim candidates: algorithm, trigger, workflow, model, training) — both pilot-validated |
+| Cognitive load | Pass with note | Layered model + one-idea blocks; two watch items: L004 Explore at word-budget ceiling (fallback documented) and 15 glossary chips across four lessons vs CS ~9 recommendation (≤6 per lesson; trim candidates: algorithm, trigger, workflow, model, training) - both pilot-validated |
 | Content length | Pass | Core path ≈20 minutes; every optional layer labelled with reading time |
 | Repetition | Pass with note | S04 payroll repeat is deliberate spaced retrieval, labelled in learner copy and flagged with a swap candidate |
 | Language clarity | Pass | No idioms failing translation, no culture-locked references, no ability or violence metaphors; corrected item C1 logged |

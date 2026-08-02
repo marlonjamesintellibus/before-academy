@@ -21,8 +21,8 @@ All contracts are Server Actions returning `Result<T>` ([error-handling.md](erro
 | submitFeedback | type, message, route, contentVersion, email? | ack | rate-limited 5/min |
 | requestNotify | target, email \| session | ack | guest email path = conversion moment |
 | deleteAccount | confirmation literal, idempotencyKey | ack | registered only; transactional hard delete + auth rows + analytics deletion request ([auth.md](auth.md), ADR-022) |
-| /api/auth/* | BetterAuth-defined | — | configured in [auth.md](auth.md) |
-| GET /api/health | — | status, db ms, version | Railway health check |
+| /api/auth/* | BetterAuth-defined | - | configured in [auth.md](auth.md) |
+| GET /api/health | - | status, db ms, version | Railway health check |
 
 **Contract rules:** inputs never include learner_id (actor from session); outputs never include is_correct outside submitAttempt review; retried mutations accept idempotencyKey; changing a contract updates schema + this index in one PR.
 

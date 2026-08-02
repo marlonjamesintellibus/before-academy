@@ -35,4 +35,4 @@ Steps are **nested routes, not page sections** (ADR-011): deep-linkable remediat
 
 ## Related Documents
 - [screens/README.md](screens/README.md)
-- [../engineering/frontend.md](../engineering/frontend.md) — rendering strategy per route
+- [../engineering/frontend.md](../engineering/frontend.md) - rendering strategy per route

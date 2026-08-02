@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 /**
  * Banner (docs/product/components.md): Resume / Guest storage / Content updated;
  * role=status; dismissal persists per type (persistence key handled by the caller's
- * device store — this component stays storage-agnostic).
+ * device store - this component stays storage-agnostic).
  */
 export interface BannerProps {
   onDismiss?: () => void;

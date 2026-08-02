@@ -9,7 +9,7 @@ last_updated: 2026-07-31
 
 # Decision Register
 
-Master index: every major decision has an ADR; each ADR names its owning spec doc. Full reasoning lives in [../adr/](../adr/README.md) — this table is for lookup.
+Master index: every major decision has an ADR; each ADR names its owning spec doc. Full reasoning lives in [../adr/](../adr/README.md) - this table is for lookup.
 
 | Area | Decisions | ADRs |
 |---|---|---|
@@ -25,4 +25,4 @@ Master index: every major decision has an ADR; each ADR names its owning spec do
 | Deferrals | Multi-tenancy, AI tutor, mobile, personalization, certificates, offline, CMS | 035–041 |
 
 ## Related Documents
-- [../adr/README.md](../adr/README.md) — full records
+- [../adr/README.md](../adr/README.md) - full records

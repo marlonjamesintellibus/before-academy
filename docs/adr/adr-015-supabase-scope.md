@@ -8,7 +8,7 @@ related: [adr-016-betterauth-in-app.md, adr-019-drizzle-orm.md, adr-024-app-laye
 last_updated: 2026-07-31
 ---
 
-# ADR-015 — Supabase as hosted PostgreSQL and Storage only
+# ADR-015 - Supabase as hosted PostgreSQL and Storage only
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Backend
 
@@ -23,7 +23,7 @@ Full Supabase platform incl. Auth (rejected: BetterAuth is mandated and dual ide
 
 ## Consequences
 - **Positive:** One database vendor, clear responsibility boundary, no unused surface pretending to be load-bearing.
-- **Negative:** Foregoes PostgREST/RLS-per-user conveniences — consequence accepted and handled in ADR-024.
+- **Negative:** Foregoes PostgREST/RLS-per-user conveniences - consequence accepted and handled in ADR-024.
 
 ## Related Documents
 - [ADR-016](adr-016-betterauth-in-app.md)

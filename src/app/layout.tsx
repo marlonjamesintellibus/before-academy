@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s · Before Academy",
   },
   description:
-    "Learn to tell AI, automation, and traditional software apart — free, about twenty minutes.",
+    "Learn to tell AI, automation, and traditional software apart - free, about twenty minutes.",
 };
 
 export default function RootLayout({

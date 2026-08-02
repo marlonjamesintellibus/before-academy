@@ -8,7 +8,7 @@ related: [adr-020-canonical-content-records.md, adr-034-isr-dual-rollback.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-021 — Immutable snapshot versioning; published content is never edited in place
+# ADR-021 - Immutable snapshot versioning; published content is never edited in place
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Data/Content
 
@@ -23,7 +23,7 @@ Mutable rows with updated_at (rejected: results become uninterpretable, rollback
 
 ## Consequences
 - **Positive:** Auditable history satisfies governance; 'lesson updated' UX and result integrity come free.
-- **Negative:** Storage grows with versions — negligible at this scale.
+- **Negative:** Storage grows with versions - negligible at this scale.
 
 ## Related Documents
 - [ADR-020](adr-020-canonical-content-records.md)

@@ -4,7 +4,7 @@ import { feedbackType } from "./enums";
 
 /**
  * Ops tables (docs/engineering/database.md).
- * feedback_reports keep no learner FK — authorship is anonymized, not deleted,
+ * feedback_reports keep no learner FK - authorship is anonymized, not deleted,
  * on account deletion (docs/engineering/auth.md).
  */
 
@@ -18,7 +18,7 @@ export const feedbackReports = pgTable(
     contentVersion: integer("content_version"),
     /** Optional, provided by the reporter; cleared on account deletion. */
     email: text("email"),
-    /** Anonymized actor kind for triage — never a raw id. */
+    /** Anonymized actor kind for triage - never a raw id. */
     actorKind: text("actor_kind").notNull(),
     ...timestamps,
   },

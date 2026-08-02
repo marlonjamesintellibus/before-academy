@@ -8,7 +8,7 @@ related: [adr-003-competency-progression.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-006 — Layered depth via inline progressive disclosure
+# ADR-006 - Layered depth via inline progressive disclosure
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** UX
 
@@ -23,7 +23,7 @@ Tabs per layer (rejected: hides depth's existence, resets scroll); separate page
 
 ## Consequences
 - **Positive:** Depth is discoverable exactly where relevant; the Quick layer stays a complete standalone lesson (Content §3.2 standalone test).
-- **Negative:** Writers must satisfy a hard constraint — Quick layers alone must be pass-sufficient.
+- **Negative:** Writers must satisfy a hard constraint - Quick layers alone must be pass-sufficient.
 
 ## Related Documents
 - [ADR-003](adr-003-competency-progression.md)

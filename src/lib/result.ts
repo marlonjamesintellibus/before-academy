@@ -1,7 +1,7 @@
 /**
  * Closed error taxonomy and Result type (docs/engineering/error-handling.md).
  * Expected domain outcomes (assessment not passed, storage unavailable) are NOT
- * errors — they belong in success payloads. Additions to ErrorCode are reviewed changes.
+ * errors - they belong in success payloads. Additions to ErrorCode are reviewed changes.
  */
 export const ERROR_CODES = [
   "VALIDATION",

@@ -15,5 +15,5 @@ last_updated: 2026-07-31
 **Done when** the screen doc's states/events/a11y are all demonstrable on a preview deploy.
 
 ## Related Documents
-- [../product/ux-copy.md](../product/ux-copy.md) — strings the screen renders
-- [../roadmap/delivery-process.md](../roadmap/delivery-process.md) — DoD this workflow must satisfy
+- [../product/ux-copy.md](../product/ux-copy.md) - strings the screen renders
+- [../roadmap/delivery-process.md](../roadmap/delivery-process.md) - DoD this workflow must satisfy

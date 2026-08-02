@@ -8,7 +8,7 @@ related: [adr-015-supabase-scope.md, adr-024-app-layer-authorization.md, adr-025
 last_updated: 2026-07-31
 ---
 
-# ADR-016 — BetterAuth runs in-app with its tables in the application database
+# ADR-016 - BetterAuth runs in-app with its tables in the application database
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Backend
 

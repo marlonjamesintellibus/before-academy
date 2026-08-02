@@ -8,7 +8,7 @@ related: [adr-012-nextjs-rsc-server-actions.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-013 — Strict TypeScript, Tailwind tokens, and wrapped shadcn/ui primitives
+# ADR-013 - Strict TypeScript, Tailwind tokens, and wrapped shadcn/ui primitives
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Frontend
 
@@ -23,7 +23,7 @@ Component library as-is throughout features (rejected: token changes become code
 
 ## Consequences
 - **Positive:** Design changes are single-file; agents inherit constraints from types and lint rather than review comments.
-- **Negative:** Wrapper indirection adds a thin layer — accepted for the single-point-of-change property.
+- **Negative:** Wrapper indirection adds a thin layer - accepted for the single-point-of-change property.
 
 ## Related Documents
 - [ADR-012](adr-012-nextjs-rsc-server-actions.md)

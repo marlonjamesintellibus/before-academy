@@ -21,7 +21,7 @@ import {
 
 /**
  * Assessment entities (docs/engineering/database.md, assessment-engine.md).
- * kind separates check (practice) from assessment (graded) — ADR-029.
+ * kind separates check (practice) from assessment (graded) - ADR-029.
  * Every question resolves a remediation_block_id (content-lint, Eng §14).
  */
 

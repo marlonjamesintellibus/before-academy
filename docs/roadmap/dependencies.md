@@ -29,7 +29,7 @@ flowchart LR
 | D7 | M7 exit: surface complete | M8 audit validity | product owner |
 | D8 | privacy review of guest analytics + migration payload actioned | M9 production | product owner + privacy reviewer |
 
-**Critical path:** M0→M1→M2→M3→M4→M5→M6→M9 (M7/M8 ≈ 0.5wk slack each). D4 is the only external-pace dependency — tracked weekly. Rule: no milestone starts before its D-row is green; red → shift to parallel work (content, diagram, tests, docs, pilot recruitment from M6, presentation assembly at M8), never partial starts against unfrozen interfaces.
+**Critical path:** M0→M1→M2→M3→M4→M5→M6→M9 (M7/M8 ≈ 0.5wk slack each). D4 is the only external-pace dependency - tracked weekly. Rule: no milestone starts before its D-row is green; red → shift to parallel work (content, diagram, tests, docs, pilot recruitment from M6, presentation assembly at M8), never partial starts against unfrozen interfaces.
 
 ## Related Documents
-- [risks-and-raci.md](risks-and-raci.md) — what happens when D4 slips
+- [risks-and-raci.md](risks-and-raci.md) - what happens when D4 slips

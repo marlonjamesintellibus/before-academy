@@ -2,7 +2,7 @@ import Link from "next/link";
 
 /**
  * AppFooter (docs/product/components.md): contentinfo landmark; About,
- * Report a problem (S13b feedback modal lands at its milestone — mailto
+ * Report a problem (S13b feedback modal lands at its milestone - mailto
  * placeholder until then), Privacy.
  */
 export function AppFooter() {

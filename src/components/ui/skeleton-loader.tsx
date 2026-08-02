@@ -1,5 +1,5 @@
 /**
- * SkeletonLoader (docs/product/components.md): text/card variants; aria-hidden —
+ * SkeletonLoader (docs/product/components.md): text/card variants; aria-hidden -
  * the surrounding container announces loading once (caller supplies the live region).
  */
 export interface SkeletonLoaderProps {

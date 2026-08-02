@@ -6,7 +6,7 @@ import type { EventName, EventProperties } from "@/lib/events";
 
 /**
  * Client analytics (ADR-031: explicit events only; docs/engineering/analytics.md).
- * Initializes only when a key is configured — dev without PostHog logs to console.
+ * Initializes only when a key is configured - dev without PostHog logs to console.
  * autocapture stays off: every event is an explicit taxonomy row (ADR-032).
  */
 let initialized = false;

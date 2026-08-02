@@ -8,7 +8,7 @@ related: []
 last_updated: 2026-07-31
 ---
 
-# ADR-039 — Certificates & credentials deferred
+# ADR-039 - Certificates & credentials deferred
 
 **Status:** Accepted (deferral) · **Date:** 2026-07-31 · **Category:** Future Architecture
 
@@ -19,4 +19,4 @@ A credential is only as honest as its assessment; validity is unproven across se
 after assessment validity evidence in Phase 2+.
 
 ## Related Documents
-- [README.md](README.md) — deferral register and future decision backlog
+- [README.md](README.md) - deferral register and future decision backlog

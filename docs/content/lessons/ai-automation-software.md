@@ -8,7 +8,7 @@ used_by: [../../product/screens/lesson.md, ../../engineering/content-engine.md]
 last_updated: 2026-07-31
 ---
 
-# AI, Automation and Traditional Software — Lesson Specification
+# AI, Automation and Traditional Software - Lesson Specification
 
 Writers produce final copy from this spec; nothing may be skipped; additions need education-lead approval.
 
@@ -25,17 +25,17 @@ Writers produce final copy from this spec; nothing may be skipped; additions nee
 10. Avoid the misconception that AI thinks like a person.
 
 ## Block requirements (summary)
-- **Hook:** one-tap tease — "Your bank flags a purchase as suspicious. Is that AI?" → "It might be — by the end you'll know how to tell." Doubt, not fear. (LO7, LO9)
-- **Concepts:** Traditional software (rules; same input→same output; required contrast: complex tax calculator is still rules — LO8) · Automation (describes *how work flows*, not how decisions are made; must state automation ≠ AI and may contain AI) · AI (pattern-based; outputs vary; one "sometimes wrong by design" example: spam false positive) · Combined systems (support-request walkthrough mirroring the diagram's five layers: interface → routing → AI classification → human decision → traditional software records).
-- **Diagram:** "How Rules, Automation and AI Work Together" — five layers, ≤4-word plain labels matching lesson terminology exactly, one caption stating the claim (AI is one component among rules, automation, and people — attacks M6). Full prose alternative versioned with it. Reused unchanged in the presentation export.
-- **Misconception callout:** M1 featured. **Takeaway:** rules are written; automation chains tasks; AI learns patterns — and most real products combine them.
-- **Confidence prompts:** pre (hook area) + post (results). **Optional reflection** after the activity summary (never graded): "Think of one system you use daily — which category, and what would you need to know to be sure?"
+- **Hook:** one-tap tease - "Your bank flags a purchase as suspicious. Is that AI?" → "It might be - by the end you'll know how to tell." Doubt, not fear. (LO7, LO9)
+- **Concepts:** Traditional software (rules; same input→same output; required contrast: complex tax calculator is still rules - LO8) · Automation (describes *how work flows*, not how decisions are made; must state automation ≠ AI and may contain AI) · AI (pattern-based; outputs vary; one "sometimes wrong by design" example: spam false positive) · Combined systems (support-request walkthrough mirroring the diagram's five layers: interface → routing → AI classification → human decision → traditional software records).
+- **Diagram:** "How Rules, Automation and AI Work Together" - five layers, ≤4-word plain labels matching lesson terminology exactly, one caption stating the claim (AI is one component among rules, automation, and people - attacks M6). Full prose alternative versioned with it. Reused unchanged in the presentation export.
+- **Misconception callout:** M1 featured. **Takeaway:** rules are written; automation chains tasks; AI learns patterns - and most real products combine them.
+- **Confidence prompts:** pre (hook area) + post (results). **Optional reflection** after the activity summary (never graded): "Think of one system you use daily - which category, and what would you need to know to be sure?"
 
 ## Approved anchor analogies (one per concept; anthropomorphic analogies banned)
 | Concept | Analogy | Boundary to state |
 |---|---|---|
 | Traditional software | vending machine (B4 → same snack) | bigger machine is still a machine (LO8) |
-| Automation | row of dominoes | dominoes decide nothing — a person or an AI sets them up |
+| Automation | row of dominoes | dominoes decide nothing - a person or an AI sets them up |
 | AI | weather forecast (patterns, likelihoods, sometimes wrong) | the forecast doesn't "understand" your picnic (M3) |
 | Combined systems | restaurant (menu / kitchen line / chef + judgment) | you can't see the kitchen from your table (LO9) |
 
@@ -53,7 +53,7 @@ Writers produce final copy from this spec; nothing may be skipped; additions nee
 | 9 | platform sorts messages; person answers | Combination | automation routes, AI classifies, human decides |
 | 10 | "our app uses smart technology…" | Not enough information | marketing describes the interface, not the mechanism |
 
-**6/7 are a deliberate minimal pair** (same interface, different mechanism) — the most efficient teacher of LO5/LO9 and the M5 counter; order fixed, 7's feedback references 6.
+**6/7 are a deliberate minimal pair** (same interface, different mechanism) - the most efficient teacher of LO5/LO9 and the M5 counter; order fixed, 7's feedback references 6.
 
 ## Knowledge check
 4 practice questions: definition (LO1–3) · automation-vs-AI comparison (LO4/5) · real-world classification (LO7) · misconception rejection (LO8/10). `kind=check`; never in graded attempts.

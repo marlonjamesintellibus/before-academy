@@ -8,10 +8,10 @@ last_updated: 2026-07-31
 
 # Architecture Decision Records
 
-Why the system is the way it is. Each record is self-contained. Full records (001–034) carry context, decision, alternatives with rejection reasons, consequences, references. Deferral records (035–041) use a lighter template — merged context-and-decision plus a revisit trigger — because the decision is "not yet", not a choice among alternatives. Implementation mechanics live in the specs — ADRs answer only "why".
+Why the system is the way it is. Each record is self-contained. Full records (001–034) carry context, decision, alternatives with rejection reasons, consequences, references. Deferral records (035–041) use a lighter template - merged context-and-decision plus a revisit trigger - because the decision is "not yet", not a choice among alternatives. Implementation mechanics live in the specs - ADRs answer only "why".
 
 ## Practice
-New decisions and deviations create new records numbered from **ADR-042** (`adr-{nnn}-{slug}.md`, template = any existing record). Superseding sets the old record's status to *Superseded* with a forward reference — records are never rewritten. Provisional values inside accepted decisions are marked. Reference format elsewhere in the docs: link the ADR by number.
+New decisions and deviations create new records numbered from **ADR-042** (`adr-{nnn}-{slug}.md`, template = any existing record). Superseding sets the old record's status to *Superseded* with a forward reference - records are never rewritten. Provisional values inside accepted decisions are marked. Reference format elsewhere in the docs: link the ADR by number.
 
 ## Register
 
@@ -66,4 +66,4 @@ New decisions and deviations create new records numbered from **ADR-042** (`adr-
 Phase 2 authoring at volume (reopens 027/041) · adaptive selection on calibration data (028/038) · AI Literacy localization runtime · enterprise org model + authorization revisit (024/035) · AI tutor activation via the reserved seam (018/036) · mobile/offline (037/040) · scale items: rate-limiter swap, revalidation fan-out, queue introduction · credentials once validity is proven (039).
 
 ## Related Documents
-- [../shared/decision-register.md](../shared/decision-register.md) — one-table lookup by area
+- [../shared/decision-register.md](../shared/decision-register.md) - one-table lookup by area

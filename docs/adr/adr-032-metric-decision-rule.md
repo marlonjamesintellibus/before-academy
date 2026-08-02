@@ -8,7 +8,7 @@ related: [adr-031-posthog-explicit-events.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-032 — Every metric maps to a documented decision
+# ADR-032 - Every metric maps to a documented decision
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Analytics
 
@@ -23,7 +23,7 @@ Collect-everything-decide-later (rejected: the named anti-pattern); dashboards-o
 
 ## Consequences
 - **Positive:** Small, legible event surface; privacy review is tractable; pilot readouts are pre-designed.
-- **Negative:** Adding a question later may require shipping an event first — deliberate friction.
+- **Negative:** Adding a question later may require shipping an event first - deliberate friction.
 
 ## Related Documents
 - [ADR-031](adr-031-posthog-explicit-events.md)

@@ -18,5 +18,5 @@ Per-milestone context lives at `docs/context/m{n}.md` (created when the mileston
 - Refactor: "Within features/assessment only, reduce duplication introduced during M4. No behaviour change; tests stay green; note anything needing an ADR."
 
 ## Related Documents
-- [../roadmap/milestones.md](../roadmap/milestones.md) — the milestone definitions packages slice
-- [../engineering/standards.md](../engineering/standards.md) — always-loaded conventions
+- [../roadmap/milestones.md](../roadmap/milestones.md) - the milestone definitions packages slice
+- [../engineering/standards.md](../engineering/standards.md) - always-loaded conventions

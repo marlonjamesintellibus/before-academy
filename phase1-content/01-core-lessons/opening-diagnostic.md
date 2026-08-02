@@ -3,11 +3,11 @@
 ```yaml
 content_id: P1-DIAG-001
 content_type: diagnostic
-title: Opening diagnostic — What's your read right now?
+title: Opening diagnostic - What's your read right now?
 phase: 2
 competency_level: 1
 section: ai-automation-traditional-software
-learning_outcomes: [LO7, LO8, LO9 — probed, not taught]
+learning_outcomes: [LO7, LO8, LO9 - probed, not taught]
 estimated_time: 2 minutes
 required_or_optional: optional (skippable; never graded; never gating)
 prerequisites: none
@@ -23,15 +23,15 @@ Design rule (per reconciliation A1): the diagnostic never affects any score, is 
 
 ## Introductory copy (learner-facing)
 
-**Before we start — what's your read right now?**
+**Before we start - what's your read right now?**
 
-Five quick situations. Pick whatever seems right; guessing is welcome, and nothing here counts toward anything. At the end of the section we'll show you how your answers compare — most people are surprised by at least one.
+Five quick situations. Pick whatever seems right; guessing is welcome, and nothing here counts toward anything. At the end of the section we'll show you how your answers compare - most people are surprised by at least one.
 
 ## Instructions
 
 For each situation, pick the option that matches your current read. There are no trick items, and you can skip this entirely.
 
-*(Controls: five items, one selection each · Skip this — labelled button, always visible)*
+*(Controls: five items, one selection each · Skip this - labelled button, always visible)*
 
 ## Diagnostic items
 
@@ -45,7 +45,7 @@ Every item uses the same three options: **AI is involved** · **No AI involved**
 ### P1-DIAG-001-S02
 **Scenario:** Your email app moves a message into the spam folder.
 **Accepted answer:** Can't tell from this.
-**What it probes:** whether learners assume a mechanism from an outcome — the move could be a learned filter or a written "block this sender" rule (M9/LO9 baseline).
+**What it probes:** whether learners assume a mechanism from an outcome - the move could be a learned filter or a written "block this sender" rule (M9/LO9 baseline).
 
 ### P1-DIAG-001-S03
 **Scenario:** A thermostat turns the heat on whenever the temperature drops below 20°C.
@@ -73,11 +73,11 @@ Noted. We'll come back to this one at the end of the section.
 
 **Remember your first-read answers? Here's how they landed.**
 
-- **The spreadsheet formula** — no AI. Arithmetic is written rules; the same numbers produce the same total every time.
-- **The spam move** — can't tell from that description alone. It could be a learned filter or a written "block this sender" rule. You've now got the habit of asking which.
-- **The thermostat** — automation with no AI. A trigger (below 20°C) fires an action (heat on). Nothing is learned; nothing varies.
-- **The "made for you" playlist** — the label alone doesn't say. Learned ranking is common in music apps, but "made for you" describes the promise, not the mechanism.
-- **The AI-powered toothbrush** — the ad tells you what the marketing team chose, not how the product works. That's exactly the evidence habit this section is about.
+- **The spreadsheet formula** - no AI. Arithmetic is written rules; the same numbers produce the same total every time.
+- **The spam move** - can't tell from that description alone. It could be a learned filter or a written "block this sender" rule. You've now got the habit of asking which.
+- **The thermostat** - automation with no AI. A trigger (below 20°C) fires an action (heat on). Nothing is learned; nothing varies.
+- **The "made for you" playlist** - the label alone doesn't say. Learned ranking is common in music apps, but "made for you" describes the promise, not the mechanism.
+- **The AI-powered toothbrush** - the ad tells you what the marketing team chose, not how the product works. That's exactly the evidence habit this section is about.
 
 If your read changed on any of these, that's the section working.
 
@@ -91,7 +91,7 @@ Items are standard radio-button groups reachable by keyboard in reading order; n
 
 ## Completion transition (learner-facing)
 
-That's the last one. Now let's build the distinctions — starting with the software you already know.
+That's the last one. Now let's build the distinctions - starting with the software you already know.
 
 *(CTA: Continue to the lesson)*
 

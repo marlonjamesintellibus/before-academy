@@ -24,4 +24,4 @@ Budgets are release gates, checked in CI and monitored per route.
 **Database:** indexes per [database.md](database.md); one composed query per screen (no N+1); pooled connections; prepared statements on createAttempt/submitAttempt.
 
 ## Related Documents
-- [testing.md](testing.md) — Lighthouse CI wiring
+- [testing.md](testing.md) - Lighthouse CI wiring

@@ -9,7 +9,7 @@ last_updated: 2026-07-31
 
 # System Architecture
 
-One Next.js (App Router) application on Railway; Supabase-hosted PostgreSQL + Storage; BetterAuth for identity; PostHog for analytics. No microservices, queues, realtime, or edge functions in Phase 1 — one deployable, one database (ADR-017).
+One Next.js (App Router) application on Railway; Supabase-hosted PostgreSQL + Storage; BetterAuth for identity; PostHog for analytics. No microservices, queues, realtime, or edge functions in Phase 1 - one deployable, one database (ADR-017).
 
 ```mermaid
 flowchart TD
@@ -36,7 +36,7 @@ flowchart TD
 
 ## Request lifecycle
 1. Middleware: resolve BetterAuth cookie, guard `/dashboard`, set security headers.
-2. Content routes render as Server Components (ISR — [performance.md](performance.md)).
+2. Content routes render as Server Components (ISR - [performance.md](performance.md)).
 3. Client islands hydrate for interactive steps.
 4. Mutations: Server Action → Zod validate → resolve Actor → authorize → Drizzle transaction → server analytics → typed Result.
 
@@ -44,4 +44,4 @@ flowchart TD
 Web app → [frontend.md](frontend.md) · Content engine → [content-engine.md](content-engine.md) · Assessment & progress → [assessment-engine.md](assessment-engine.md) · Identity → [auth.md](auth.md) · Analytics → [analytics.md](analytics.md) · Ops → [deployment.md](deployment.md).
 
 ## Related Documents
-- [../adr/README.md](../adr/README.md) — ADR-012–019 for stack composition reasoning
+- [../adr/README.md](../adr/README.md) - ADR-012–019 for stack composition reasoning

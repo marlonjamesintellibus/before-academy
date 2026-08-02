@@ -17,7 +17,7 @@ import { sections } from "./content";
  * Learner state (docs/engineering/database.md).
  * learner_id ALWAYS resolves from the session, never client input (ADR-024).
  * All learner rows hard-delete on account deletion via cascade (ADR-022);
- * guests store nothing here — device-only (ADR-025).
+ * guests store nothing here - device-only (ADR-025).
  * Rows record the content_version the learner experienced (ADR-021).
  */
 
@@ -31,7 +31,7 @@ export const sectionProgress = pgTable(
     sectionId: uuid("section_id")
       .notNull()
       .references(() => sections.id),
-    /** ProgressSnapshot steps — shape frozen at M5 exit (roadmap D5). */
+    /** ProgressSnapshot steps - shape frozen at M5 exit (roadmap D5). */
     steps: jsonb("steps").notNull(),
     contentVersion: integer("content_version").notNull(),
     completed: boolean("completed").notNull().default(false),

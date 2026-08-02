@@ -8,7 +8,7 @@ related: [adr-017-railway-single-deployable.md, adr-034-isr-dual-rollback.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-023 — Forward-only migrations with expand–migrate–contract
+# ADR-023 - Forward-only migrations with expand–migrate–contract
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Data/Content
 
@@ -23,7 +23,7 @@ Down-migrations (rejected: rarely tested, dangerous under data); blue-green data
 
 ## Consequences
 - **Positive:** Code rollback is always safe; schema changes are reviewable diffs from one source.
-- **Negative:** Contract steps require release discipline — enforced in review checklist.
+- **Negative:** Contract steps require release discipline - enforced in review checklist.
 
 ## Related Documents
 - [ADR-017](adr-017-railway-single-deployable.md)

@@ -8,7 +8,7 @@ related: [adr-010-buttons-not-drag.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-008 — Accessibility is a release gate, not a polish task
+# ADR-008 - Accessibility is a release gate, not a polish task
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** UX
 

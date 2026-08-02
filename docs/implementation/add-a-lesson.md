@@ -15,5 +15,5 @@ last_updated: 2026-07-31
 **Done when** the lesson renders from published, versioned records and the governance sign-offs are on the PR. Human gates in [../content/governance.md](../content/governance.md) cannot be self-certified by an agent.
 
 ## Related Documents
-- [../content/glossary.md](../content/glossary.md) — chip terms and definition standards
-- [../content/misconceptions.md](../content/misconceptions.md) — IDs lessons reference
+- [../content/glossary.md](../content/glossary.md) - chip terms and definition standards
+- [../content/misconceptions.md](../content/misconceptions.md) - IDs lessons reference

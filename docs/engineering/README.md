@@ -20,4 +20,4 @@ Ops: [deployment.md](deployment.md)
 New server behaviour → api-contracts.md + the owning engine doc + security.md. Schema change → database.md + deployment.md (migrations). Any story → standards.md applies; testing.md defines the layers.
 
 ## Related Documents
-- [../implementation/README.md](../implementation/README.md) — task-shaped entry points
+- [../implementation/README.md](../implementation/README.md) - task-shaped entry points

@@ -28,7 +28,7 @@ Tokens are implemented as the Tailwind theme; a token change is one diff (ADR-01
 All pairs meet AA (4.5:1 body, 3:1 large/UI). Colour never carries meaning alone.
 
 ## Typography
-System font stack at launch (swap-ready via tokens). display 32/40→40/48 700 (h1) · heading 24/32→28/36 700 (h2) · subheading 18/28 600 · body 16/26→17/28 (reading comfort first) · caption 13/20. Reading column max 680px (~70ch). Must survive 200% zoom and font-size overrides — no fixed-height text containers.
+System font stack at launch (swap-ready via tokens). display 32/40→40/48 700 (h1) · heading 24/32→28/36 700 (h2) · subheading 18/28 600 · body 16/26→17/28 (reading comfort first) · caption 13/20. Reading column max 680px (~70ch). Must survive 200% zoom and font-size overrides - no fixed-height text containers.
 
 ## Space, radius, elevation, breakpoints, motion
 - Spacing 4px scale: 4 8 12 16 24 32 48 64; blocks separate by 32; page padding 16/24.

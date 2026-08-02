@@ -42,4 +42,4 @@ Every event answers a documented Phase 1 question (ADR-032); nothing is collecte
 **Funnels:** F1 home→lesson→activity→check→assessment→pass · F2 assessment-first→result · F3 prompt→account→migration.
 
 ## Related Documents
-- [../engineering/analytics.md](../engineering/analytics.md) — implementation, aliasing, server capture
+- [../engineering/analytics.md](../engineering/analytics.md) - implementation, aliasing, server capture

@@ -39,7 +39,7 @@ before-academy/
 └─ drizzle.config.ts · next.config.ts · .env.example
 ```
 
-**Import layering (lint-enforced):** app → features → lib; features never import another feature's internals — only its `index.ts`.
+**Import layering (lint-enforced):** app → features → lib; features never import another feature's internals - only its `index.ts`.
 
 ## Environment variables
 `DATABASE_URL` (pooled) · `DIRECT_DATABASE_URL` (migrations) · `BETTER_AUTH_SECRET/URL` · `GOOGLE_CLIENT_ID/SECRET` · `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (server-only, Storage) · `GUEST_TOKEN_SECRET` (guest attempt HMAC, [assessment-engine.md](assessment-engine.md)) · `NEXT_PUBLIC_POSTHOG_KEY/HOST` · `OPENROUTER_API_KEY` (reserved) · `APP_ENV`. `.env.example` is the canonical inventory, updated in the same PR as any new variable.

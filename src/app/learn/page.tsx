@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Pathways" };
  * S02 Pathway Overview + S12 Next-Step Preview anchor
  * (docs/product/screens/marketing-and-pathway.md). Static for M1; per-step
  * microstatus and progress states arrive with guest progress (M5). Sections
- * never lock (ADR-003) — future ones are previews, not gates.
+ * never lock (ADR-003) - future ones are previews, not gates.
  */
 export default function PathwayPage() {
   return (

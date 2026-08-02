@@ -9,7 +9,7 @@ last_updated: 2026-07-31
 
 # Misconceptions (M1–M6) & Remediation
 
-Canonical register: callouts, feedback, and questions reference IDs, never restate. Each entry names why the belief is *reasonable* — respect is what makes correction land.
+Canonical register: callouts, feedback, and questions reference IDs, never restate. Each entry names why the belief is *reasonable* - respect is what makes correction land.
 
 | ID | Misconception | Why it's held | Corrective strategy |
 |---|---|---|---|
@@ -21,10 +21,10 @@ Canonical register: callouts, feedback, and questions reference IDs, never resta
 | M6 | AI works alone | media framing as autonomous agent | the diagram is the counter-argument: AI as one layer among five, human review explicit |
 
 ## Remediation principles
-1. **Reteach differently** — lead with the example/analogy the first pass held back; never repeat failed sentences.
-2. **Name the confusion, not the error** — "these two are easy to mix up because…" precedes correction.
-3. **One concept at a time** — multi-category failures present sequentially, worst first.
-4. **Close the loop** — each remediation block ends with an optional mini-confirm targeting the exact confusion; correct answers named as progress.
+1. **Reteach differently** - lead with the example/analogy the first pass held back; never repeat failed sentences.
+2. **Name the confusion, not the error** - "these two are easy to mix up because…" precedes correction.
+3. **One concept at a time** - multi-category failures present sequentially, worst first.
+4. **Close the loop** - each remediation block ends with an optional mini-confirm targeting the exact confusion; correct answers named as progress.
 
 Reinforcement inside Phase 1 = retrieval spacing (concept → activity → check → assessment → takeaway); cross-lesson spaced review is Phase 2 (category tags already support it).
 

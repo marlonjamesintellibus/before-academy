@@ -29,7 +29,7 @@ Formats: multiple choice, multiple select, matching, sorting, scenario decision.
 Foundational (Quick-layer answerable, single concept) ~40% · Applied (transfer to unseen scenario) ~45% · Challenging (combine concepts / spot insufficient evidence) ~15%.
 
 ## Passing, retakes, remediation mapping
-Threshold **80% — provisional, configuration not code**; reviewed from pilot question analytics. Retakes unlimited: different combination, rotated answers, preserved coverage; never punitive framing. Remediation map (category → blocks): traditional→its block · automation→automation+combined · AI characteristics→AI block (probabilistic passage) · combined→combined+diagram · classification→activity summary+concept · ambiguity→scenario-10 explanation · misconceptions→callout+[misconceptions.md](misconceptions.md) corrective. Every question's remediation link must resolve (content-lint).
+Threshold **80% - provisional, configuration not code**; reviewed from pilot question analytics. Retakes unlimited: different combination, rotated answers, preserved coverage; never punitive framing. Remediation map (category → blocks): traditional→its block · automation→automation+combined · AI characteristics→AI block (probabilistic passage) · combined→combined+diagram · classification→activity summary+concept · ambiguity→scenario-10 explanation · misconceptions→callout+[misconceptions.md](misconceptions.md) corrective. Every question's remediation link must resolve (content-lint).
 
 ## Related Documents
-- [../engineering/assessment-engine.md](../engineering/assessment-engine.md) — selection/scoring mechanics
+- [../engineering/assessment-engine.md](../engineering/assessment-engine.md) - selection/scoring mechanics

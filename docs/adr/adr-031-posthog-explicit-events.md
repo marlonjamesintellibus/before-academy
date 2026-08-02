@@ -8,7 +8,7 @@ related: [adr-025-device-only-guests.md, adr-032-metric-decision-rule.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-031 — PostHog with explicit typed events only; identity aliased at conversion
+# ADR-031 - PostHog with explicit typed events only; identity aliased at conversion
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Analytics
 
@@ -23,7 +23,7 @@ Autocapture (rejected: noise without decisions, privacy surface); self-hosted an
 
 ## Consequences
 - **Positive:** Every event maps to a documented decision; funnels survive conversion; drift-proof naming.
-- **Negative:** Unanticipated questions may lack retroactive data — accepted trade of the explicit-only stance.
+- **Negative:** Unanticipated questions may lack retroactive data - accepted trade of the explicit-only stance.
 
 ## Related Documents
 - [ADR-025](adr-025-device-only-guests.md)

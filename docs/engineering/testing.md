@@ -20,8 +20,8 @@ CI order = fastest feedback first; merge requires all green + one review.
 | Accessibility | axe in Playwright + manual gate | zero critical/serious per screen; scripted keyboard-only J1; manual SR passes pre-release |
 | Performance | Lighthouse CI + bundle check | budgets on lesson + assessment routes; fails PR on regression |
 
-**Content QA is a test layer:** content-lint (automated) + human gates (standalone test, feedback formula, terminology) gate the seed pipeline exactly as code tests gate merges — see [../content/governance.md](../content/governance.md). Content seed PRs run content-lint in CI.
+**Content QA is a test layer:** content-lint (automated) + human gates (standalone test, feedback formula, terminology) gate the seed pipeline exactly as code tests gate merges - see [../content/governance.md](../content/governance.md). Content seed PRs run content-lint in CI.
 Cumulative regression: each milestone's journeys join the permanent suite.
 
 ## Related Documents
-- [../roadmap/delivery-process.md](../roadmap/delivery-process.md) — QA inside milestones, Definition of Done
+- [../roadmap/delivery-process.md](../roadmap/delivery-process.md) - QA inside milestones, Definition of Done

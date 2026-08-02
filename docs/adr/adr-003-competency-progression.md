@@ -8,7 +8,7 @@ related: [adr-005-assessment-first-route.md, adr-028-blueprint-metadata.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-003 — Progression is competency-based, not consumption-based
+# ADR-003 - Progression is competency-based, not consumption-based
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Product
 
@@ -23,7 +23,7 @@ Page-completion tracking (rejected: measures attendance, not ability); hybrid co
 
 ## Consequences
 - **Positive:** Honest completion signal; respects prior knowledge; makes remediation meaningful.
-- **Negative:** Assessment quality becomes load-bearing — weak questions corrupt the whole model (mitigated by ADR-028/030 and pilot analytics).
+- **Negative:** Assessment quality becomes load-bearing - weak questions corrupt the whole model (mitigated by ADR-028/030 and pilot analytics).
 
 ## Related Documents
 - [ADR-005](adr-005-assessment-first-route.md)

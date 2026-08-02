@@ -15,5 +15,5 @@ last_updated: 2026-07-31
 **Done when** the inventory row exists and every state renders in a demo/preview.
 
 ## Related Documents
-- [../product/accessibility.md](../product/accessibility.md) — the gate component states serve
-- [../engineering/standards.md](../engineering/standards.md) — file/type conventions
+- [../product/accessibility.md](../product/accessibility.md) - the gate component states serve
+- [../engineering/standards.md](../engineering/standards.md) - file/type conventions

@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-FND-003
 content_type: terminology-guide
-title: Approved terminology — AI, Automation and Traditional Software
+title: Approved terminology - AI, Automation and Traditional Software
 phase: 1
 section: ai-automation-traditional-software
 content_status: draft-for-validation
@@ -31,28 +31,28 @@ Quick Explanation · Explore Further · Go Deeper · Apply It
 ### Traditional software
 - **Learner-facing definition [CS approved]:** Software that follows rules people wrote, so the same input always produces the same output.
 - **Internal definition:** Deterministic software whose behaviour is fully specified by explicitly programmed rules, conditions, calculations, and workflows; complexity does not change its nature.
-- **Avoid:** "dumb software", "basic software", "old software" — age and simplicity are not the distinction.
+- **Avoid:** "dumb software", "basic software", "old software" - age and simplicity are not the distinction.
 - **Common misconception:** complexity or impressiveness signals AI (M1).
 - **Related:** rule-based system, deterministic output, algorithm.
 
 ### Software
 - **Learner-facing definition [new draft]:** The programs and instructions that make computers and devices do things.
 - **Internal definition:** Umbrella term covering all program types, including AI systems; used when the rule-based/pattern-based distinction is not at stake.
-- **Avoid:** using "software" and "traditional software" interchangeably — AI is still software (LO context), but "traditional software" is the specific rule-based category.
+- **Avoid:** using "software" and "traditional software" interchangeably - AI is still software (LO context), but "traditional software" is the specific rule-based category.
 - **Common misconception:** AI is something other than software (M6).
 - **Related:** traditional software, artificial intelligence.
 
 ### Automation
 - **Learner-facing definition [CS approved]:** Using technology to run or connect repeatable tasks with less manual effort.
-- **Internal definition:** A property of how work is carried out — tasks chained, triggered, or scheduled with reduced human intervention. Describes process, not decision-making method; may contain traditional software, AI, or both.
+- **Internal definition:** A property of how work is carried out - tasks chained, triggered, or scheduled with reduced human intervention. Describes process, not decision-making method; may contain traditional software, AI, or both.
 - **Avoid:** "automation means AI", "smart automation" without evidence; never present automation and AI as mutually exclusive.
 - **Common misconception:** automation is AI (M2).
 - **Related:** trigger, workflow, AI-assisted system.
 
 ### Artificial intelligence (AI)
-- **Learner-facing definition [CS approved]:** Systems that find patterns in data to classify, predict, or generate things — instead of only following written rules.
+- **Learner-facing definition [CS approved]:** Systems that find patterns in data to classify, predict, or generate things - instead of only following written rules.
 - **Internal definition:** Pattern-based systems whose outputs are probabilistic, depend on training data and human-set goals, and can vary or be wrong by design. Always delivered inside a larger product of software, automation, and often human review.
-- **Avoid:** anthropomorphic verbs — AI systems detect, classify, generate, flag; never think, know, understand, believe, want, feel (CS §12.2, lintable). Never "magic", never "the AI decides like a person".
+- **Avoid:** anthropomorphic verbs - AI systems detect, classify, generate, flag; never think, know, understand, believe, want, feel (CS §12.2, lintable). Never "magic", never "the AI decides like a person".
 - **Common misconception:** AI thinks and understands like a person (M3).
 - **Related:** machine learning, model, pattern-based system, generative AI.
 
@@ -78,7 +78,7 @@ Quick Explanation · Explore Further · Go Deeper · Apply It
 - **Related:** training data, input, output.
 
 ### Input
-- **Learner-facing definition [new draft]:** What you give a system to work with — a tap, a question, a form, a photo.
+- **Learner-facing definition [new draft]:** What you give a system to work with - a tap, a question, a form, a photo.
 - **Internal definition:** Any signal a system receives; for AI, the thing the trained model processes at use time (inference), distinct from training examples.
 - **Avoid:** confusing giving a model an input with training the model.
 - **Common misconception:** every input teaches the AI (M13).
@@ -87,14 +87,14 @@ Quick Explanation · Explore Further · Go Deeper · Apply It
 ### Output
 - **Learner-facing definition [CS approved]:** What a system produces in response to an input.
 - **Internal definition:** The observable result. Deterministic for rule-based systems; probabilistic for pattern-based systems.
-- **Avoid:** "answer" when the output may be non-textual; "the truth" — outputs can be wrong.
+- **Avoid:** "answer" when the output may be non-textual; "the truth" - outputs can be wrong.
 - **Common misconception:** AI outputs are always correct (M7).
 - **Related:** deterministic output, probabilistic output.
 
 ### Pattern
-- **Learner-facing definition [new draft]:** A regularity found across many examples — like most spam emails sharing certain features.
+- **Learner-facing definition [new draft]:** A regularity found across many examples - like most spam emails sharing certain features.
 - **Internal definition:** The statistical regularities a model captures from training data; the basis of prediction, classification, recognition, and generation.
-- **Avoid:** "the AI sees patterns like you do" — pattern-matching is not comprehension.
+- **Avoid:** "the AI sees patterns like you do" - pattern-matching is not comprehension.
 - **Common misconception:** finding patterns equals understanding (M3).
 - **Related:** pattern-based system, machine learning, training.
 
@@ -107,27 +107,27 @@ Quick Explanation · Explore Further · Go Deeper · Apply It
 
 ### Classification
 - **Learner-facing definition [CS approved]:** Sorting things into categories, like marking an email as spam or not spam.
-- **Internal definition:** Assigning inputs to discrete categories; a core AI task, though rule-based systems also sort by written criteria — the learned/written distinction decides which is which.
+- **Internal definition:** Assigning inputs to discrete categories; a core AI task, though rule-based systems also sort by written criteria - the learned/written distinction decides which is which.
 - **Avoid:** treating any sorting as AI.
 - **Common misconception:** fixed rules and learned patterns are the same kind of sorting (M11).
 - **Related:** prediction, recognition, pattern-based system.
 
 ### Recommendation
-- **Learner-facing definition [new draft]:** A suggestion a system makes for you — like products you might want or shows you might like — usually based on patterns in behaviour.
-- **Internal definition:** A ranking/selection task typically driven by learned behaviour patterns; personalization alone does not prove AI — rule-based personalization exists ("people who bought X see Y" as a written rule).
+- **Learner-facing definition [new draft]:** A suggestion a system makes for you - like products you might want or shows you might like - usually based on patterns in behaviour.
+- **Internal definition:** A ranking/selection task typically driven by learned behaviour patterns; personalization alone does not prove AI - rule-based personalization exists ("people who bought X see Y" as a written rule).
 - **Avoid:** "personalized, therefore AI".
 - **Common misconception:** personalization proves AI is being used (M8).
 - **Related:** prediction, classification.
 
 ### Recognition
-- **Learner-facing definition [new draft]:** A system identifying what something is — a face in a photo, words in speech, a song from a clip.
+- **Learner-facing definition [new draft]:** A system identifying what something is - a face in a photo, words in speech, a song from a clip.
 - **Internal definition:** Classification applied to rich signals (images, audio, speech); characteristically pattern-based.
 - **Avoid:** "the system sees/hears" without the pattern framing; "recognition" implying certainty.
 - **Common misconception:** recognition implies human-like perception (M3).
 - **Related:** classification, pattern.
 
 ### Generative AI
-- **Learner-facing definition [CS approved]:** AI that creates new content — text, images, or audio — based on learned patterns.
+- **Learner-facing definition [CS approved]:** AI that creates new content - text, images, or audio - based on learned patterns.
 - **Internal definition:** Pattern-based systems producing novel outputs; outputs vary run to run and can be confidently wrong (hallucination).
 - **Avoid:** "it writes like a person because it understands"; "creativity" claims without the pattern boundary.
 - **Common misconception:** fluent output implies understanding (M3) or correctness (M7).
@@ -148,7 +148,7 @@ Quick Explanation · Explore Further · Go Deeper · Apply It
 - **Related:** traditional software, deterministic output.
 
 ### Trigger
-- **Learner-facing definition [new draft]:** The event that starts an automated step — like a form being submitted or a date arriving.
+- **Learner-facing definition [new draft]:** The event that starts an automated step - like a form being submitted or a date arriving.
 - **Internal definition:** The initiating condition in an automation chain (event, schedule, threshold).
 - **Avoid:** implying triggers involve judgment.
 - **Common misconception:** reacting to events looks like deciding (M2).

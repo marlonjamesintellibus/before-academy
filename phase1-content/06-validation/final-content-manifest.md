@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-VAL-004
 content_type: package-manifest
-title: Final content manifest — Phase 1 learner content package
+title: Final content manifest - Phase 1 learner content package
 phase: 6
 section: ai-automation-traditional-software
 version: 0.6.0
@@ -12,7 +12,7 @@ content_status: draft-for-validation → ready for implementation validation
 
 ## Package
 
-**Before Academy — Phase 1 vertical slice: AI, Automation and Traditional Software.** Version 0.6.0 (all six generation phases complete). Subordinate canon: Content Specification v1.0, UX Specification v1.0, Engineering Specification v1.0, Phase 0/1 documents.
+**Before Academy - Phase 1 vertical slice: AI, Automation and Traditional Software.** Version 0.6.0 (all six generation phases complete). Subordinate canon: Content Specification v1.0, UX Specification v1.0, Engineering Specification v1.0, Phase 0/1 documents.
 
 ## Folder structure and file purposes
 
@@ -20,47 +20,47 @@ content_status: draft-for-validation → ready for implementation validation
 phase-1-ai-automation-traditional-software/
 ├── README.md                                  package orientation and usage rules
 ├── 00-content-foundation/
-│   ├── canonical-reconciliation.md            conflict resolutions R1–R9, approvals A1–A5, change log — P1-FND-001
-│   ├── section-metadata.md                    section definition, thresholds, entry/exit — P1-SEC-001
-│   ├── learning-outcomes.md                   LO1–LO10 + supporting objectives, evidence, methods — P1-FND-002
-│   ├── terminology-guide.md                   fixed labels, layer names, approved terms — P1-FND-003
-│   ├── voice-and-tone.md                      voice, tone-by-situation, banned list, exemplars — P1-FND-004
-│   ├── misconception-map.md                   register M1–M14 with strategies — P1-FND-005
-│   ├── assessment-blueprint.md                instruments, categories, difficulty, rules — P1-FND-006
-│   ├── content-id-registry.md                 ID rules, assignments, reservations — P1-FND-007
-│   └── learner-journey.md                     16 stages × 8 dimensions, three routes — P1-FND-008
+│   ├── canonical-reconciliation.md            conflict resolutions R1–R9, approvals A1–A5, change log - P1-FND-001
+│   ├── section-metadata.md                    section definition, thresholds, entry/exit - P1-SEC-001
+│   ├── learning-outcomes.md                   LO1–LO10 + supporting objectives, evidence, methods - P1-FND-002
+│   ├── terminology-guide.md                   fixed labels, layer names, approved terms - P1-FND-003
+│   ├── voice-and-tone.md                      voice, tone-by-situation, banned list, exemplars - P1-FND-004
+│   ├── misconception-map.md                   register M1–M14 with strategies - P1-FND-005
+│   ├── assessment-blueprint.md                instruments, categories, difficulty, rules - P1-FND-006
+│   ├── content-id-registry.md                 ID rules, assignments, reservations - P1-FND-007
+│   └── learner-journey.md                     16 stages × 8 dimensions, three routes - P1-FND-008
 ├── 01-core-lessons/
-│   ├── section-welcome.md                     welcome + hook/why/objectives blocks — P1-LESSON-001
-│   ├── opening-diagnostic.md                  5 ungraded items, deferred reveal — P1-DIAG-001
-│   ├── traditional-software.md                four-layer lesson — P1-LESSON-002
-│   ├── automation.md                          four-layer lesson — P1-LESSON-003
-│   ├── artificial-intelligence.md             four-layer lesson — P1-LESSON-004
-│   ├── compare-the-three.md                   comparison + combined systems + callout — P1-LESSON-005
+│   ├── section-welcome.md                     welcome + hook/why/objectives blocks - P1-LESSON-001
+│   ├── opening-diagnostic.md                  5 ungraded items, deferred reveal - P1-DIAG-001
+│   ├── traditional-software.md                four-layer lesson - P1-LESSON-002
+│   ├── automation.md                          four-layer lesson - P1-LESSON-003
+│   ├── artificial-intelligence.md             four-layer lesson - P1-LESSON-004
+│   ├── compare-the-three.md                   comparison + combined systems + callout - P1-LESSON-005
 │   └── reflection-prompts.md                  P1-REF-001..007
 ├── 02-diagrams-and-activities/
 │   ├── diagrams.md                            P1-DGM-001 (canonical), P1-DGM-002 (A2)
-│   ├── classification-activity.md             Sort the System, 10 scenarios, 50 feedbacks — P1-ACT-001
-│   └── activity-accessibility.md              interaction accessibility spec — P1-FND-009
+│   ├── classification-activity.md             Sort the System, 10 scenarios, 50 feedbacks - P1-ACT-001
+│   └── activity-accessibility.md              interaction accessibility spec - P1-FND-009
 ├── 03-assessment/
-│   ├── assessment.md                          graded instrument + core bank — P1-ASM-001, P1-QB-001..010
-│   ├── knowledge-check.md                     4 practice items — P1-KC-001
-│   ├── question-bank.md                       30 extended items — P1-QB-013..042
-│   ├── assessment-results.md                  14 result states — P1-RES-001..014
-│   └── assessment-mapping.md                  coverage matrix and gaps — P1-FND-010
+│   ├── assessment.md                          graded instrument + core bank - P1-ASM-001, P1-QB-001..010
+│   ├── knowledge-check.md                     4 practice items - P1-KC-001
+│   ├── question-bank.md                       30 extended items - P1-QB-013..042
+│   ├── assessment-results.md                  14 result states - P1-RES-001..014
+│   └── assessment-mapping.md                  coverage matrix and gaps - P1-FND-010
 ├── 04-remediation-and-completion/
-│   ├── remediation.md                         14 modules — P1-REM-001..014
-│   ├── completion.md                          5 states — P1-COM-001..005
-│   └── progress-and-next-steps.md             13 states — P1-PRG-001..013
+│   ├── remediation.md                         14 modules - P1-REM-001..014
+│   ├── completion.md                          5 states - P1-COM-001..005
+│   └── progress-and-next-steps.md             13 states - P1-PRG-001..013
 ├── 05-supporting-content/
-│   ├── glossary.md                            23 entries — P1-GLO-001..023
+│   ├── glossary.md                            23 entries - P1-GLO-001..023
 │   ├── guest-and-account-copy.md              13 account/guest states
-│   ├── system-and-interface-copy.md           36 proposed strings — P1-UI-001..036
-│   └── presentation-reuse.md                  8 deck units — P1-PRS-001..008
+│   ├── system-and-interface-copy.md           36 proposed strings - P1-UI-001..036
+│   └── presentation-reuse.md                  8 deck units - P1-PRS-001..008
 └── 06-validation/
-    ├── content-validation-checklist.md        24-point audit, corrections C1–C5 — P1-VAL-001
-    ├── accessibility-audit.md                 19-area audit — P1-VAL-002
-    ├── assessment-audit.md                    16-area audit — P1-VAL-003
-    └── final-content-manifest.md              this file — P1-VAL-004
+    ├── content-validation-checklist.md        24-point audit, corrections C1–C5 - P1-VAL-001
+    ├── accessibility-audit.md                 19-area audit - P1-VAL-002
+    ├── assessment-audit.md                    16-area audit - P1-VAL-003
+    └── final-content-manifest.md              this file - P1-VAL-004
 ```
 
 ## Cross-file dependencies (load-bearing)

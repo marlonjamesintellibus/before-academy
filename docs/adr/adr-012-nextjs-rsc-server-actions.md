@@ -8,7 +8,7 @@ related: [adr-017-railway-single-deployable.md, adr-024-app-layer-authorization.
 last_updated: 2026-07-31
 ---
 
-# ADR-012 — Next.js App Router with RSC and Server Actions as the only mutation path
+# ADR-012 - Next.js App Router with RSC and Server Actions as the only mutation path
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Frontend
 
@@ -16,7 +16,7 @@ last_updated: 2026-07-31
 The product is content-heavy, guest-first, and needs server-held assessment integrity with minimal API surface.
 
 ## Decision
-Server Components render published content; client islands handle interactivity; Server Actions are the sole mutation path — no REST/GraphQL layer in Phase 1.
+Server Components render published content; client islands handle interactivity; Server Actions are the sole mutation path - no REST/GraphQL layer in Phase 1.
 
 ## Alternatives considered
 SPA + separate API service (rejected: a second deployable and contract layer for one team, and shipping question data to a client-heavy app fights assessment integrity); Remix/SvelteKit (rejected: comparable fit, smaller ecosystem overlap with the mandated stack and agent familiarity).

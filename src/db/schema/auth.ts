@@ -5,7 +5,7 @@ import { learnerRole } from "./enums";
 /**
  * BetterAuth core tables (docs/engineering/auth.md, ADR-016).
  * Singular names are BetterAuth-defined and exempt from the plural convention
- * (docs/engineering/database.md). App fields never go on auth tables —
+ * (docs/engineering/database.md). App fields never go on auth tables -
  * they live on learner_profiles.
  */
 export const user = pgTable("user", {

@@ -8,7 +8,7 @@ related: [adr-017-railway-single-deployable.md, adr-023-forward-only-migrations.
 last_updated: 2026-07-31
 ---
 
-# ADR-033 — Trunk-based development delivering milestone increments to a continuous staging
+# ADR-033 - Trunk-based development delivering milestone increments to a continuous staging
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** DevOps
 
@@ -23,7 +23,7 @@ Milestone branches (rejected: big-bang merges, drift); release trains (rejected:
 
 ## Consequences
 - **Positive:** Integration problems surface within days; staging always demonstrates current truth.
-- **Negative:** Demands small-slice discipline — enforced by story sizing (Roadmap §7).
+- **Negative:** Demands small-slice discipline - enforced by story sizing (Roadmap §7).
 
 ## Related Documents
 - [ADR-017](adr-017-railway-single-deployable.md)

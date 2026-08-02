@@ -1,6 +1,6 @@
 /**
  * Design tokens (docs/product/design-system.md, ADR-013).
- * Tokens ARE the Tailwind theme — a token change is one diff.
+ * Tokens ARE the Tailwind theme - a token change is one diff.
  * All colour pairs meet AA; colour never carries meaning alone.
  */
 @theme {
@@ -16,7 +16,7 @@
   --color-danger: #b3261e;
   --color-highlight: #eef2ff;
 
-  /* Typography — system stack at launch, swap-ready */
+  /* Typography - system stack at launch, swap-ready */
   --font-sans:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --text-display: 2rem; /* 32/40, 40/48 ≥768px */

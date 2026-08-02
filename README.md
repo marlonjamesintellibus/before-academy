@@ -1,6 +1,6 @@
 # Before Academy
 
-Learn to tell AI, automation, and traditional software apart. Phase 1 is one vertical slice — the AI Awareness lesson _AI, Automation and Traditional Software_ — built per the canonical knowledge base in [docs/](docs/README.md).
+Learn to tell AI, automation, and traditional software apart. Phase 1 is one vertical slice - the AI Awareness lesson _AI, Automation and Traditional Software_ - built per the canonical knowledge base in [docs/](docs/README.md).
 
 ## Stack
 

@@ -17,5 +17,5 @@ last_updated: 2026-07-31
 **Done when** the bank satisfies the blueprint table and every question's remediation link resolves.
 
 ## Related Documents
-- [../content/misconceptions.md](../content/misconceptions.md) — misconception-category targets
-- [../product/screens/assessment.md](../product/screens/assessment.md) — how questions render
+- [../content/misconceptions.md](../content/misconceptions.md) - misconception-category targets
+- [../product/screens/assessment.md](../product/screens/assessment.md) - how questions render

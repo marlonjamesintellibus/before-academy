@@ -8,7 +8,7 @@ related: [adr-033-trunk-based-delivery.md, adr-034-isr-dual-rollback.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-017 — Railway hosts a single deployable
+# ADR-017 - Railway hosts a single deployable
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Backend
 
@@ -23,7 +23,7 @@ Vercel (rejected: stack mandates Railway; serverless function limits complicate 
 
 ## Consequences
 - **Positive:** Minutes-level deploys and rollbacks; environment parity; no orchestration tax.
-- **Negative:** Less edge/CDN sophistication than Vercel for Next.js — acceptable at pilot scale, revisit with traffic data.
+- **Negative:** Less edge/CDN sophistication than Vercel for Next.js - acceptable at pilot scale, revisit with traffic data.
 
 ## Related Documents
 - [ADR-033](adr-033-trunk-based-delivery.md)

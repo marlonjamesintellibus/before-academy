@@ -8,7 +8,7 @@ related: [adr-020-canonical-content-records.md, adr-021-immutable-versioning.md,
 last_updated: 2026-07-31
 ---
 
-# ADR-027 — PR-reviewed JSON seed files are the Phase 1 authoring and publishing system
+# ADR-027 - PR-reviewed JSON seed files are the Phase 1 authoring and publishing system
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Data/Content
 
@@ -23,7 +23,7 @@ Minimal admin UI (rejected: scope Phase 1 forbids); headless CMS (rejected per A
 
 ## Consequences
 - **Positive:** Approval, diff history, and publication are one auditable mechanism; content-lint gates ride the same CI.
-- **Negative:** Editors need Git — acceptable for one section and a small team; revisit at Phase 2 volume (ADR-041).
+- **Negative:** Editors need Git - acceptable for one section and a small team; revisit at Phase 2 volume (ADR-041).
 
 ## Related Documents
 - [ADR-020](adr-020-canonical-content-records.md)

@@ -9,7 +9,7 @@ import * as schema from "@/db/schema";
 function createClient() {
   const url = process.env.DATABASE_URL;
   if (!url) {
-    throw new Error("DATABASE_URL is not set — see .env.example");
+    throw new Error("DATABASE_URL is not set - see .env.example");
   }
   return drizzle(postgres(url, { prepare: false }), { schema });
 }

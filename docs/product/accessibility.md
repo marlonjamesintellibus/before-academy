@@ -9,7 +9,7 @@ last_updated: 2026-07-31
 
 # Accessibility
 
-Target: **WCAG 2.1 AA** on all screens. Accessibility is per-story (Definition of Done) and audited at milestone M8 — never retrofitted (ADR-008). Severity-1 findings stop ship.
+Target: **WCAG 2.1 AA** on all screens. Accessibility is per-story (Definition of Done) and audited at milestone M8 - never retrofitted (ADR-008). Severity-1 findings stop ship.
 
 ## Release gate (blocking)
 - Automated scan (axe): zero critical/serious on every screen
@@ -21,5 +21,5 @@ Target: **WCAG 2.1 AA** on all screens. Accessibility is per-story (Definition o
 Interaction-level rules: [interaction-patterns.md](interaction-patterns.md). Content-side obligations (plain language, alt text, anthropomorphism ban): [../content/editorial-style.md](../content/editorial-style.md).
 
 ## Related Documents
-- [../roadmap/milestones.md](../roadmap/milestones.md) — M8 audit scope
-- [../engineering/testing.md](../engineering/testing.md) — axe-in-CI wiring
+- [../roadmap/milestones.md](../roadmap/milestones.md) - M8 audit scope
+- [../engineering/testing.md](../engineering/testing.md) - axe-in-CI wiring

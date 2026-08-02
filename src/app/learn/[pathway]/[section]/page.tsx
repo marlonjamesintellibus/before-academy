@@ -14,7 +14,7 @@ interface SectionPageProps {
 
 /**
  * S03 Lesson shell (docs/product/screens/lesson.md). M1 ships the navigable
- * shell — reading column, breadcrumbs, block scaffold; real content renders
+ * shell - reading column, breadcrumbs, block scaffold; real content renders
  * from versioned records at M2. Unknown slugs → 404 (IA deep-link rule).
  */
 export default async function SectionPage({ params }: SectionPageProps) {
@@ -35,8 +35,8 @@ export default async function SectionPage({ params }: SectionPageProps) {
       <p className="mt-3 text-body text-ink-muted">{strings.pathway.sectionOneDescription}</p>
 
       <div className="mt-10 rounded-(--radius-control) border border-dashed border-surface-alt p-6 text-body text-ink-muted">
-        The lesson content renders here from versioned content records (milestone M2). The shell —
-        routing, breadcrumbs, reading column, and analytics — is in place.
+        The lesson content renders here from versioned content records (milestone M2). The shell -
+        routing, breadcrumbs, reading column, and analytics - is in place.
       </div>
 
       <div className="mt-8">

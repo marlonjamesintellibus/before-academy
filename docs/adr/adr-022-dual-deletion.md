@@ -8,7 +8,7 @@ related: [adr-021-immutable-versioning.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-022 — Two deletion mechanisms: archive content, hard-delete learner data
+# ADR-022 - Two deletion mechanisms: archive content, hard-delete learner data
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Data/Content
 
@@ -23,7 +23,7 @@ Universal soft delete (rejected: privacy deletion becomes a lie); universal hard
 
 ## Consequences
 - **Positive:** Each domain gets the semantics it actually needs; no ambiguous zombie rows.
-- **Negative:** Two rules to remember — mitigated by keeping them exactly two.
+- **Negative:** Two rules to remember - mitigated by keeping them exactly two.
 
 ## Related Documents
 - [ADR-021](adr-021-immutable-versioning.md)

@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-FND-009
 content_type: accessibility-specification
-title: Activity accessibility — Sort the System and lesson interactions
+title: Activity accessibility - Sort the System and lesson interactions
 phase: 3
 section: ai-automation-traditional-software
 content_status: draft-for-validation
@@ -31,7 +31,7 @@ Per scenario: progress ("Scenario 4 of 10") → scenario title → scenario text
 
 ## Alternative to drag-and-drop
 
-The primary mechanic is select-and-confirm — there is no drag mechanic to substitute for. If a future variant introduces drag-to-sort, select-and-confirm remains available as an equal, discoverable method, per the standing rule that drag-and-drop is never the only method.
+The primary mechanic is select-and-confirm - there is no drag mechanic to substitute for. If a future variant introduces drag-to-sort, select-and-confirm remains available as an equal, discoverable method, per the standing rule that drag-and-drop is never the only method.
 
 ## Alternative to colour coding
 
@@ -51,7 +51,7 @@ Feedback renders in a polite live region announced after Check answer: verdict f
 
 ## Touch-target considerations
 
-Answer options, Check answer, Skip, and Continue meet the UX §6 minimum touch-target size with adequate spacing; the five options never shrink below target size to fit one screen — the list scrolls instead.
+Answer options, Check answer, Skip, and Continue meet the UX §6 minimum touch-target size with adequate spacing; the five options never shrink below target size to fit one screen - the list scrolls instead.
 
 ## Mobile layout
 

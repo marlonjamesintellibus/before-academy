@@ -17,7 +17,7 @@ export const timestamps = {
     .$onUpdateFn(() => new Date()),
 };
 
-/** Learner-facing content tables carry locale, default 'en' — reserved shape, no runtime i18n in Phase 1. */
+/** Learner-facing content tables carry locale, default 'en' - reserved shape, no runtime i18n in Phase 1. */
 export const locale = {
   locale: text("locale").notNull().default("en"),
 };

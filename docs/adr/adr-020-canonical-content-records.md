@@ -8,7 +8,7 @@ related: [adr-021-immutable-versioning.md, adr-027-pr-seed-publishing.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-020 — Canonical content records are the single source of truth
+# ADR-020 - Canonical content records are the single source of truth
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Data/Content
 
@@ -23,7 +23,7 @@ Content authored per surface (rejected: the drift problem this platform exists t
 
 ## Consequences
 - **Positive:** Lesson and presentation provably share definitions; future pathways inherit approved meaning.
-- **Negative:** Writers work through record structure rather than free-form pages — the cost of consistency.
+- **Negative:** Writers work through record structure rather than free-form pages - the cost of consistency.
 
 ## Related Documents
 - [ADR-021](adr-021-immutable-versioning.md)

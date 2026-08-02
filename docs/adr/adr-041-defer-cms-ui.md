@@ -8,7 +8,7 @@ related: [adr-027-pr-seed-publishing.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-041 — CMS UI deferred
+# ADR-041 - CMS UI deferred
 
 **Status:** Accepted (deferral) · **Date:** 2026-07-31 · **Category:** Future Architecture
 
@@ -16,7 +16,7 @@ last_updated: 2026-07-31
 PR-reviewed seeds (ADR-027) satisfy governance at one-section volume.
 
 ## Revisit trigger
-when Phase 2 content velocity or non-Git editors make Git the bottleneck — measured by review-cycle metrics.
+when Phase 2 content velocity or non-Git editors make Git the bottleneck - measured by review-cycle metrics.
 
 ## Related Documents
-- [README.md](README.md) — deferral register and future decision backlog
+- [README.md](README.md) - deferral register and future decision backlog

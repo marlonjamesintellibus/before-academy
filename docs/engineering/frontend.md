@@ -20,12 +20,12 @@ Component behaviour/states/copy are canonical in [../product/](../product/README
 | Assessment attempt state | Client island over server-selected question set |
 
 ## Server vs client
-Default Server Component. The complete client-island list: depth panels, diagram layers, activity player, check player, assessment player, confidence scale, conversion/feedback/exit modals, resume banner, toasts, auth forms. Islands receive serialized, authorized data as props — no fetching on mount except the analytics client. shadcn primitives are wrapped once in `components/ui` with tokens ([../product/design-system.md](../product/design-system.md)); features consume wrappers only.
+Default Server Component. The complete client-island list: depth panels, diagram layers, activity player, check player, assessment player, confidence scale, conversion/feedback/exit modals, resume banner, toasts, auth forms. Islands receive serialized, authorized data as props - no fetching on mount except the analytics client. shadcn primitives are wrapped once in `components/ui` with tokens ([../product/design-system.md](../product/design-system.md)); features consume wrappers only.
 
 ## State (ADR-014: no global store)
 Local state + two hooks:
-- `useDeviceStore` — namespaced `ba.v1.*` localStorage, schema-versioned payloads (readers migrate or discard mismatches); powers guest progress, resume, depth persistence; single `canWriteStorage()` check drives the private-browsing degradation.
-- `useAttempt` — reducer for the in-flight attempt, mirrored to sessionStorage for refresh-resume.
+- `useDeviceStore` - namespaced `ba.v1.*` localStorage, schema-versioned payloads (readers migrate or discard mismatches); powers guest progress, resume, depth persistence; single `canWriteStorage()` check drives the private-browsing degradation.
+- `useAttempt` - reducer for the in-flight attempt, mirrored to sessionStorage for refresh-resume.
 Components never touch storage APIs directly.
 
 ## Forms, validation, boundaries

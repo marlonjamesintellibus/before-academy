@@ -8,7 +8,7 @@ related: [adr-016-betterauth-in-app.md, adr-012-nextjs-rsc-server-actions.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-024 — Application-layer authorization with RLS as a deny-all backstop
+# ADR-024 - Application-layer authorization with RLS as a deny-all backstop
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Security
 
@@ -23,7 +23,7 @@ Full per-user RLS (rejected: two sources of authorization truth); no RLS (reject
 
 ## Consequences
 - **Positive:** One audited authorization path; leaked public keys read nothing; probes are testable (Eng §17).
-- **Negative:** Database is not independently self-protecting for the app role — accepted with the single-write-path design.
+- **Negative:** Database is not independently self-protecting for the app role - accepted with the single-write-path design.
 
 ## Related Documents
 - [ADR-016](adr-016-betterauth-in-app.md)

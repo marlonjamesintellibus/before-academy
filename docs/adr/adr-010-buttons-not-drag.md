@@ -8,7 +8,7 @@ related: [adr-008-accessibility-release-gate.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-010 — Button-based interactions; no drag-and-drop
+# ADR-010 - Button-based interactions; no drag-and-drop
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** UX
 
@@ -23,7 +23,7 @@ Drag with keyboard fallback (rejected: two interaction models to build, test, an
 
 ## Consequences
 - **Positive:** Keyboard/touch parity by construction; roughly half the interaction build and QA cost.
-- **Negative:** Marginally less tactile delight — irrelevant to the measured objectives.
+- **Negative:** Marginally less tactile delight - irrelevant to the measured objectives.
 
 ## Related Documents
 - [ADR-008](adr-008-accessibility-release-gate.md)

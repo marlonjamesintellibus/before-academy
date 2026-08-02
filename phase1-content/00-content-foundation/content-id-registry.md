@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-FND-007
 content_type: id-registry
-title: Content ID registry — Phase 1
+title: Content ID registry - Phase 1
 phase: 1
 section: ai-automation-traditional-software
 content_status: draft-for-validation
@@ -11,7 +11,7 @@ content_status: draft-for-validation
 
 ## Naming rules
 
-1. Package IDs use `P1-<TYPE>-<NNN>` — uppercase type code, zero-padded three-digit number.
+1. Package IDs use `P1-<TYPE>-<NNN>` - uppercase type code, zero-padded three-digit number.
 2. Child items append a typed suffix: scenario `-S01`, question `-Q01`, state `-R01` (result state), string `-U001`.
 2a. The number `000` is reserved per type for a **set definition** (the file-level unit that defines a collection, e.g. `P1-QB-000`, `P1-RES-000`); a set definition may carry a letter suffix for sub-sets (e.g. `P1-UI-000-A`). Set definitions are internal and never learner-facing.
 3. Canonical spec IDs keep their native format and are never re-prefixed: **LO1–LO10** (CS §5.1) and **M1–M14** (CS §8.1 + this package). Package files reference them as-is.

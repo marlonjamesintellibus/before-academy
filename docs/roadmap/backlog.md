@@ -9,7 +9,7 @@ last_updated: 2026-07-31
 
 # Backlog
 
-Hierarchy: **Epic (BA-M{n}) → Feature (BA-{n}.{f}) → Story (BA-{n}.{f}.{s}) → tasks inside the story** (eng/QA/content/docs — no orphan testing epics). Stories phrased as capability; every story carries ≥1 spec-ref label (a story with none is a scope alarm). Board columns: Backlog → Ready → In progress → In review → Verified (staging) → Done.
+Hierarchy: **Epic (BA-M{n}) → Feature (BA-{n}.{f}) → Story (BA-{n}.{f}.{s}) → tasks inside the story** (eng/QA/content/docs - no orphan testing epics). Stories phrased as capability; every story carries ≥1 spec-ref label (a story with none is a scope alarm). Board columns: Backlog → Ready → In progress → In review → Verified (staging) → Done.
 
 ## Epic → feature map
 - **BA-M0 Foundation:** 0.1 repo & CI · 0.2 environments · 0.3 data layer · 0.4 design foundation · 0.5 lib core
@@ -24,4 +24,4 @@ Hierarchy: **Epic (BA-M{n}) → Feature (BA-{n}.{f}) → Story (BA-{n}.{f}.{s}) 
 - **BA-M9 Launch:** 9.1 regression & security · 9.2 ops readiness · 9.3 production release · 9.4 pilot · 9.5 revision cycle · 9.6 completion report
 
 ## Related Documents
-- [milestones.md](milestones.md) — what each epic must exit with
+- [milestones.md](milestones.md) - what each epic must exit with

@@ -1,7 +1,7 @@
-# Before Academy — Phase 1 learner content package
+# Before Academy - Phase 1 learner content package
 
 **Section:** AI, Automation and Traditional Software
-**Competency level:** Level 1 — AI Awareness
+**Competency level:** Level 1 - AI Awareness
 **Content status:** draft-for-validation
 **Package version:** 0.6.0 (all six generation phases complete)
 
@@ -17,24 +17,24 @@ The package is produced in six generation phases. This version contains **all si
 
 This package is subordinate to the approved Before Academy documents. Where this package and a canonical document disagree, the canonical document wins and the discrepancy is a defect here.
 
-1. Phase 0 — Alignment and Foundations
-2. Phase 1 — AI Awareness Vertical Slice
-3. Product & UX Specification v1.0 (cited as "UX §n") — canonical for interface behaviour and verbatim UI strings
-4. Engineering Specification v1.0 (cited as "Eng §n") — canonical for storage, delivery, and content lint
-5. **Content Specification v1.0 (cited as "CS §n") — the primary canon for this package:** learning model, knowledge model, lesson spec, interactions, assessment blueprint, misconceptions, feedback, glossary, accessibility, governance
+1. Phase 0 - Alignment and Foundations
+2. Phase 1 - AI Awareness Vertical Slice
+3. Product & UX Specification v1.0 (cited as "UX §n") - canonical for interface behaviour and verbatim UI strings
+4. Engineering Specification v1.0 (cited as "Eng §n") - canonical for storage, delivery, and content lint
+5. **Content Specification v1.0 (cited as "CS §n") - the primary canon for this package:** learning model, knowledge model, lesson spec, interactions, assessment blueprint, misconceptions, feedback, glossary, accessibility, governance
 
 Conflicts between the original generation brief and the Content Specification, and how each was resolved, are recorded in `00-content-foundation/canonical-reconciliation.md`. That file is part of the change record required by the phase rules and must be read before reviewing anything else.
 
 ## Target learner
 
-Complete beginners — adults who have heard about AI but cannot yet reliably distinguish AI from automation or traditional software. No coding, math, or technical background is assumed. Reading level target: Grade 8–10 (CS §12.1). The Phase 1 promise: after roughly twenty minutes, a learner can explain the distinctions in their own words, classify familiar systems, and recognize when they don't have enough information to judge (CS §1.1).
+Complete beginners - adults who have heard about AI but cannot yet reliably distinguish AI from automation or traditional software. No coding, math, or technical background is assumed. Reading level target: Grade 8–10 (CS §12.1). The Phase 1 promise: after roughly twenty minutes, a learner can explain the distinctions in their own words, classify familiar systems, and recognize when they don't have enough information to judge (CS §1.1).
 
 ## Folder structure
 
 ```text
 phase-1-ai-automation-traditional-software/
 ├── README.md
-├── 00-content-foundation/        Phase 1 — system of truth (this delivery)
+├── 00-content-foundation/        Phase 1 - system of truth (this delivery)
 │   ├── canonical-reconciliation.md
 │   ├── section-metadata.md
 │   ├── learning-outcomes.md
@@ -44,12 +44,12 @@ phase-1-ai-automation-traditional-software/
 │   ├── assessment-blueprint.md
 │   ├── content-id-registry.md
 │   └── learner-journey.md
-├── 01-core-lessons/              Phase 2 — learner-facing lessons
-├── 02-diagrams-and-activities/   Phase 3 — diagram specs + Sort the System
-├── 03-assessment/                Phase 4 — assessment, bank, results, mapping
-├── 04-remediation-and-completion/ Phase 5 — remediation + completion states
-├── 05-supporting-content/        Phase 6 — glossary, account copy, UI copy, presentation reuse
-└── 06-validation/                Phase 6 — audits and final manifest
+├── 01-core-lessons/              Phase 2 - learner-facing lessons
+├── 02-diagrams-and-activities/   Phase 3 - diagram specs + Sort the System
+├── 03-assessment/                Phase 4 - assessment, bank, results, mapping
+├── 04-remediation-and-completion/ Phase 5 - remediation + completion states
+├── 05-supporting-content/        Phase 6 - glossary, account copy, UI copy, presentation reuse
+└── 06-validation/                Phase 6 - audits and final manifest
 ```
 
 ## How to use these files

@@ -8,7 +8,7 @@ related: []
 last_updated: 2026-07-31
 ---
 
-# ADR-038 — Personalization & adaptive difficulty deferred
+# ADR-038 - Personalization & adaptive difficulty deferred
 
 **Status:** Accepted (deferral) · **Date:** 2026-07-31 · **Category:** Future Architecture
 
@@ -19,4 +19,4 @@ Adaptation needs calibration data Phase 1 exists to collect; premature personali
 after question-performance data across ≥ 3 sections (metadata already supports it).
 
 ## Related Documents
-- [README.md](README.md) — deferral register and future decision backlog
+- [README.md](README.md) - deferral register and future decision backlog

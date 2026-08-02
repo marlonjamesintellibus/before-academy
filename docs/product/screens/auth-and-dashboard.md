@@ -23,5 +23,5 @@ An account menu (header, registered only) offers **Sign out** and **Delete accou
 Events: `account_deletion_started`, `account_deleted`.
 
 ## Related Documents
-- [../personas-and-journeys.md](../personas-and-journeys.md) — J3 conversion flow
-- [../../engineering/auth.md](../../engineering/auth.md) — BetterAuth, sessions, migration
+- [../personas-and-journeys.md](../personas-and-journeys.md) - J3 conversion flow
+- [../../engineering/auth.md](../../engineering/auth.md) - BetterAuth, sessions, migration

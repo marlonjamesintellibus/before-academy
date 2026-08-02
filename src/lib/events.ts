@@ -1,6 +1,6 @@
 /**
  * Analytics events stub (ADR-031, ADR-032; docs/product/analytics-events.md).
- * Every event name must exist in the taxonomy — extending analytics means adding
+ * Every event name must exist in the taxonomy - extending analytics means adding
  * the taxonomy row in the same PR (docs/implementation/extend-analytics.md).
  * PostHog wiring lands in a later milestone; this stub keeps call sites typed
  * and logs events in development so funnels can be traced before wiring.

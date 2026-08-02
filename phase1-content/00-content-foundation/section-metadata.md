@@ -25,11 +25,11 @@ AI, Automation and Traditional Software
 
 ## Section description (learner-facing)
 
-"AI" gets used as a label for almost everything. In this section you'll learn what actually separates artificial intelligence from automation and traditional software — and how to tell which one you're looking at. By the end, you'll be able to classify systems you use every day, spot when a product combines several approaches, and recognize when a description doesn't give you enough information to judge.
+"AI" gets used as a label for almost everything. In this section you'll learn what actually separates artificial intelligence from automation and traditional software - and how to tell which one you're looking at. By the end, you'll be able to classify systems you use every day, spot when a product combines several approaches, and recognize when a description doesn't give you enough information to judge.
 
 ## Competency level
 
-Level 1 — AI Awareness, within Before Academy's seven-level competency architecture (CS §3.1). Competency means demonstrated ability: a learner holds the competency when they pass the assessment, regardless of how much content they consumed.
+Level 1 - AI Awareness, within Before Academy's seven-level competency architecture (CS §3.1). Competency means demonstrated ability: a learner holds the competency when they pass the assessment, regardless of how much content they consumed.
 
 ## Intended audience
 
@@ -52,13 +52,13 @@ None. No prerequisites exist within Level 1 (CS §3.1).
 
 | Content | Status |
 |---|---|
-| Quick Explanation layer of each concept block | Required reading surface (always visible; must stand alone — CS §3.2) |
+| Quick Explanation layer of each concept block | Required reading surface (always visible; must stand alone - CS §3.2) |
 | Explore Further, Go Deeper layers | Optional, labelled with reading time, never required to pass |
 | Sort the System activity | Required for completion via the standard route; advanced by completion, not score |
 | Knowledge check (4 practice questions) | Optional practice, never graded |
 | Assessment (6–7 questions per attempt) | The only completion condition, on any route |
 | Reflection and confidence prompts | Optional, never graded, never gating |
-| Opening diagnostic (proposed, A1) | Optional, ungraded, skippable — pending approval |
+| Opening diagnostic (proposed, A1) | Optional, ungraded, skippable - pending approval |
 
 ## Passing threshold
 
@@ -84,7 +84,7 @@ None. No prerequisites exist within Level 1 (CS §3.1).
 
 1. 80% passing threshold (CS §7.4).
 2. Layer word budgets: Quick 80–120, Explore 150–250, Deeper 180–300 (CS §3.2).
-3. Assessment size: bank 10–13, 6–7 per attempt (corrected from CS §7.2's 8–12 / 5–7 — see reconciliation R10); knowledge check 4 questions (CS §6.2, §7.2).
+3. Assessment size: bank 10–13, 6–7 per attempt (corrected from CS §7.2's 8–12 / 5–7 - see reconciliation R10); knowledge check 4 questions (CS §6.2, §7.2).
 4. Estimated completion times (this file).
 5. Whether layered content reduces or increases confusion for true beginners (named Phase 1 research question; standalone test is the guard).
 6. Opening diagnostic addition A1; second diagram A2; extended bank A3; reflection pool A5 (see `canonical-reconciliation.md`).

@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-FND-006
 content_type: assessment-blueprint
-title: Assessment blueprint — AI, Automation and Traditional Software
+title: Assessment blueprint - AI, Automation and Traditional Software
 phase: 1
 section: ai-automation-traditional-software
 content_status: draft-for-validation
@@ -12,7 +12,7 @@ source_of_truth: CS §6.2 (knowledge check), §7 (assessment specification); del
 
 ## Purpose and philosophy
 
-Assessments measure whether a learner can **use** the distinction, not whether they memorized wording. Every question presents a decision a real person could face. Recall-only questions ("Which of these is the definition of...") are capped at two per bank. Passing must be achievable from Quick layers alone — the standalone test (CS §3.2, verified in Appendix B mapping). Failure output is diagnostic by design: every question's category tag converts a failed attempt into a targeted study plan.
+Assessments measure whether a learner can **use** the distinction, not whether they memorized wording. Every question presents a decision a real person could face. Recall-only questions ("Which of these is the definition of...") are capped at two per bank. Passing must be achievable from Quick layers alone - the standalone test (CS §3.2, verified in Appendix B mapping). Failure output is diagnostic by design: every question's category tag converts a failed attempt into a targeted study plan.
 
 ## Instrument structure
 
@@ -20,7 +20,7 @@ Assessments measure whether a learner can **use** the distinction, not whether t
 |---|---|---|---|
 | **Assessment** (P1-ASM-001) | The only completion condition, on any route | 6–7 questions drawn per attempt from the core bank (10–13 items) | Graded; 80% provisional threshold |
 | **Knowledge check** (P1-KC-001) | In-lesson practice, "practice, not graded" framing | 4 questions: one definition (LO1–LO3), one automation-vs-AI comparison (LO4/LO5), one real-world classification (LO7), one misconception rejection (LO8 or LO10) | Never graded; wrong answers surface the category's remediation chip |
-| **Opening diagnostic** (P1-DIAG-001, addition A1 — approval pending) | Ungraded pre-lesson probe; pre/post comparison | 5 items tagged `kind=diagnostic` | Never graded, never gating; feedback deferred until after the lesson so answers aren't taught in advance |
+| **Opening diagnostic** (P1-DIAG-001, addition A1 - approval pending) | Ungraded pre-lesson probe; pre/post comparison | 5 items tagged `kind=diagnostic` | Never graded, never gating; feedback deferred until after the lesson so answers aren't taught in advance |
 
 Knowledge-check and diagnostic items live in the same bank as assessment items but are tagged by kind and never appear in graded attempts (CS §6.2, Eng §9.1).
 
@@ -75,7 +75,7 @@ Every LO is assessed via its category (see `learning-outcomes.md`, assessment-me
 
 ## Misconception coverage
 
-Each of M1–M14 must be tested by at least one bank item (core or extended) via distractors or misconception-rejection stems, and each must have a resolving remediation link. M1, M2, M3, M5, and M9 (highest-frequency in beginner populations) must be testable within a single attempt draw. M5 coverage note: no core item carries M5; it enters draws via extended items QB-019 and QB-038 (the QB-009 ambiguity swap) in graded rotation — this depends on A3 approval (granted 2026-08-02, see `canonical-reconciliation.md`) and means a learner's first attempt tests M5 only when the rotation selects it; flag for pilot review whether M5 warrants a core item.
+Each of M1–M14 must be tested by at least one bank item (core or extended) via distractors or misconception-rejection stems, and each must have a resolving remediation link. M1, M2, M3, M5, and M9 (highest-frequency in beginner populations) must be testable within a single attempt draw. M5 coverage note: no core item carries M5; it enters draws via extended items QB-019 and QB-038 (the QB-009 ambiguity swap) in graded rotation - this depends on A3 approval (granted 2026-08-02, see `canonical-reconciliation.md`) and means a learner's first attempt tests M5 only when the rotation selects it; flag for pilot review whether M5 warrants a core item.
 
 ## Remediation mapping (per CS §7.4)
 
@@ -89,7 +89,7 @@ Each of M1–M14 must be tested by at least one bank item (core or extended) via
 | Ambiguity | Scenario-10 explanation + LO9 passage |
 | Misconceptions | Misconception callout + register corrective |
 
-Every question's `remediation_block_id` must resolve — content-lint rule (Eng §14).
+Every question's `remediation_block_id` must resolve - content-lint rule (Eng §14).
 
 ## Rules for avoiding trick questions
 
@@ -102,12 +102,12 @@ Every question's `remediation_block_id` must resolve — content-lint rule (Eng 
 
 ## Rules for "Not enough information" scenarios
 
-- "Not enough information" appears as an option only where it is sometimes the keyed answer across the bank — it must never be a throwaway distractor that is always wrong.
+- "Not enough information" appears as an option only where it is sometimes the keyed answer across the bank - it must never be a throwaway distractor that is always wrong.
 - When keyed, the stem must genuinely describe interface or marketing language without mechanism evidence, and the feedback must name what would settle the classification.
 - When not keyed, the stem must contain a decisive clue, and feedback for learners who chose it names that clue ("Not enough information" overuse is a monitored analytics signal, CS §6.3).
 - Genuinely debatable items say so in feedback and name what would settle it (honest-ambiguity principle, CS §9.1).
 
-## Extended bank (addition A3 — approval pending)
+## Extended bank (addition A3 - approval pending)
 
 Target 30 items beyond the core bank, following this same blueprint, difficulty model, and review lifecycle, distributed across: definitions (capped), basic recognition, comparison, everyday classification, workplace classification, combined systems, marketing claims, rules-vs-patterns, AI limitations, applied reasoning, not-enough-information, misconception correction, and vendor-evaluation questions. Tags: `check`, `diagnostic`, `remediation` (mini-confirms), `retake-rotation`. No near-duplicate wordings; industry variants are the approved way to multiply an item.
 
@@ -117,4 +117,4 @@ Target 30 items beyond the core bank, following this same blueprint, difficulty 
 2. Difficulty split ~40/45/15.
 3. Diagnostic size (5 items) and its deferred-feedback design (A1).
 4. Extended-bank size of 30 (A3).
-5. Analytics review thresholds: items with first-attempt accuracy <40% or >95% reviewed for ambiguity or triviality; the 6/7 pair monitored for order effects; "Not enough information" overuse triggers instruction-wording review (CS §6.3 — content QA rules, not engineering rules).
+5. Analytics review thresholds: items with first-attempt accuracy <40% or >95% reviewed for ambiguity or triviality; the 6/7 pair monitored for order effects; "Not enough information" overuse triggers instruction-wording review (CS §6.3 - content QA rules, not engineering rules).

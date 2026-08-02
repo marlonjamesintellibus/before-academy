@@ -8,7 +8,7 @@ related: [adr-025-device-only-guests.md, adr-011-step-per-url.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-029 — Server-scored assessment; client-scored practice
+# ADR-029 - Server-scored assessment; client-scored practice
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Assessment
 
@@ -23,7 +23,7 @@ Server round-trips for practice (rejected: 10–15 latency-sensitive calls for u
 
 ## Consequences
 - **Positive:** Stakes-appropriate integrity and speed; offline-tolerant practice.
-- **Negative:** A motivated guest can read practice answers in devtools — affects nothing graded, accepted.
+- **Negative:** A motivated guest can read practice answers in devtools - affects nothing graded, accepted.
 
 ## Related Documents
 - [ADR-025](adr-025-device-only-guests.md)

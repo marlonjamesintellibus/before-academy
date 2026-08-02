@@ -8,7 +8,7 @@ related: [adr-017-railway-single-deployable.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-026 — Secrets in platform env config; Postgres-backed rate limiting
+# ADR-026 - Secrets in platform env config; Postgres-backed rate limiting
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Security
 
@@ -23,7 +23,7 @@ Redis/Upstash limiter (rejected: a second datastore for pilot-scale counters; sw
 
 ## Consequences
 - **Positive:** One datastore; limits testable in CI; secret scanning enforceable.
-- **Negative:** Counter table is coarse under extreme load — a measured trigger for the Redis swap.
+- **Negative:** Counter table is coarse under extreme load - a measured trigger for the Redis swap.
 
 ## Related Documents
 - [ADR-017](adr-017-railway-single-deployable.md)

@@ -8,7 +8,7 @@ related: [adr-038-defer-personalization.md, adr-036-defer-ai-tutor.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-018 — OpenRouter is a reserved seam with zero Phase 1 runtime use
+# ADR-018 - OpenRouter is a reserved seam with zero Phase 1 runtime use
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Backend
 
@@ -23,7 +23,7 @@ Integrate behind a feature flag now (rejected: latency/cost/review burden with n
 
 ## Consequences
 - **Positive:** Zero runtime cost or risk; future activation touches one seam, not the architecture.
-- **Negative:** The adapter is untested against real traffic until activated — accepted; activation gets its own ADR.
+- **Negative:** The adapter is untested against real traffic until activated - accepted; activation gets its own ADR.
 
 ## Related Documents
 - [ADR-038](adr-038-defer-personalization.md)

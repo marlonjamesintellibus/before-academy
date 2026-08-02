@@ -1,11 +1,11 @@
 # One-time environment provisioning (M0)
 
-The repo carries all deploy configuration; these steps need account access and are done once per environment (docs/engineering/deployment.md — dev, staging, production each get their own Supabase project and PostHog key; previews share one reseedable project).
+The repo carries all deploy configuration; these steps need account access and are done once per environment (docs/engineering/deployment.md - dev, staging, production each get their own Supabase project and PostHog key; previews share one reseedable project).
 
 ## Supabase (per environment)
 
 1. Create a project (region close to Railway's). Note the **pooled** connection string (port 6543) → `DATABASE_URL`, and the **direct** string (5432) → `DIRECT_DATABASE_URL`.
-2. Copy `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (server-only — never exposed to the client).
+2. Copy `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` (server-only - never exposed to the client).
 3. RLS backstop (docs/engineering/security.md): enable RLS deny-all on learner tables; the app connects with the service role and authorizes in `withAction()` (ADR-024).
 
 ## Railway
@@ -20,7 +20,7 @@ The repo carries all deploy configuration; these steps need account access and a
 
 ## PostHog (per environment)
 
-Create a project per environment; set `NEXT_PUBLIC_POSTHOG_KEY/HOST`. Event wiring lands at the analytics milestone — the key can wait until then.
+Create a project per environment; set `NEXT_PUBLIC_POSTHOG_KEY/HOST`. Event wiring lands at the analytics milestone - the key can wait until then.
 
 ## Google OAuth (deferred to M6)
 

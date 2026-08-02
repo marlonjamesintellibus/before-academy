@@ -8,7 +8,7 @@ related: [adr-015-supabase-scope.md, adr-023-forward-only-migrations.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-019 — Drizzle ORM for data access; supabase-js only for Storage
+# ADR-019 - Drizzle ORM for data access; supabase-js only for Storage
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Backend
 
@@ -23,7 +23,7 @@ supabase-js/PostgREST (rejected: its authorization model is unusable here); Pris
 
 ## Consequences
 - **Positive:** Schema, types, and migrations from one source; queries readable as SQL; no runtime engine.
-- **Negative:** Team owns query performance discipline (indexes, N+1 review — Eng §12.4).
+- **Negative:** Team owns query performance discipline (indexes, N+1 review - Eng §12.4).
 
 ## Related Documents
 - [ADR-015](adr-015-supabase-scope.md)

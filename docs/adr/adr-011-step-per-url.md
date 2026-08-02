@@ -8,7 +8,7 @@ related: [adr-005-assessment-first-route.md]
 last_updated: 2026-07-31
 ---
 
-# ADR-011 — One focused step per URL and one question per view
+# ADR-011 - One focused step per URL and one question per view
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** UX
 

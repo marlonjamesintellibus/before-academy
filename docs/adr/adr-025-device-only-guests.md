@@ -8,7 +8,7 @@ related: [adr-004-guest-first-access.md, adr-016-betterauth-in-app.md, adr-029-s
 last_updated: 2026-07-31
 ---
 
-# ADR-025 — Guests are device-only: anonymous ID locally, signed tokens for attempts, no server profiles
+# ADR-025 - Guests are device-only: anonymous ID locally, signed tokens for attempts, no server profiles
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Security
 
@@ -23,7 +23,7 @@ Anonymous server profiles (rejected: stores behavioural records pre-consent and 
 
 ## Consequences
 - **Positive:** Zero PII before consent; truthful messaging; migration reduces to one validated upload.
-- **Negative:** No cross-device guest resume — which is precisely the account's honest value proposition.
+- **Negative:** No cross-device guest resume - which is precisely the account's honest value proposition.
 
 ## Related Documents
 - [ADR-004](adr-004-guest-first-access.md)

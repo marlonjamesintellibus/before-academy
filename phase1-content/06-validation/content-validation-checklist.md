@@ -3,7 +3,7 @@
 ```yaml
 content_id: P1-VAL-001
 content_type: validation-audit
-title: Content validation checklist — Phase 1 package
+title: Content validation checklist - Phase 1 package
 phase: 6
 section: ai-automation-traditional-software
 content_status: audit-complete
@@ -23,7 +23,7 @@ Statuses: **Pass** · **Pass with note** · **Requires correction** (with the co
 | 8 | AI not presented as human consciousness | Pass | Anthropomorphic-verb scans clean across all learner copy |
 | 9 | Hybrid (combined) systems explained | Pass | L005 walkthrough + DGM-001 + six-case gallery |
 | 10 | Not-enough-information scenarios included | Pass | S10, QB-009/031/038/039, diagnostic S02/S04; overuse guard in feedback |
-| 11 | Marketing language treated critically | Pass | S10, QB-030/042, REM-009, PRS-007 — both directions (proves nothing, disproves nothing) |
+| 11 | Marketing language treated critically | Pass | S10, QB-030/042, REM-009, PRS-007 - both directions (proves nothing, disproves nothing) |
 | 12 | Examples realistic and varied | Pass | Industries: banking, retail, healthcare, education, transport, logistics, media, communication, workplace |
 | 13 | Incorrect feedback teaches | Pass | All 50 activity + all bank feedbacks follow Verdict → Because → Clue → Next |
 | 14 | Remediation uses different explanations | Pass | Every REM module leads with held-back or fresh material; commitments from Phase 2 honoured |
@@ -35,13 +35,13 @@ Statuses: **Pass** · **Pass with note** · **Requires correction** (with the co
 | 20 | Accessibility descriptions complete | Pass | Both diagrams: alt + long alternative; every interactive: keyboard/SR/mobile/reduced-motion specs |
 | 21 | Interface copy complete | Pass with note | 36 items cover the required set; strings are *proposed* pending UX §7 merge (A4) |
 | 22 | Content IDs unique | Pass | Registry cross-checked; no collisions |
-| 23 | Cross-file links valid | Requires correction → corrected | **C2:** registry's assigned-ID table lacked P1-FND-009/010 — rows added with correction note |
+| 23 | Cross-file links valid | Requires correction → corrected | **C2:** registry's assigned-ID table lacked P1-FND-009/010 - rows added with correction note |
 | 24 | No placeholder language remains | Pass | Grep for TODO/TBD/placeholder clean across all files |
 
 ## Additional corrections log
 
 - **C1 (Phase 5, logged here):** banned minimizer "obvious" in P1-REM-013 learner copy → replaced with "natural." File updated.
 - **C2:** ID registry updated for P1-FND-009/010 (row above).
-- **C3 (decision, not a text change):** M12 graded-coverage gap — **accepted as implicit coverage** (QB-017/025/026 + S06) per the Phase 4 recommendation; a dedicated M12 stem risked trick-adjacent wording. Revisit only if pilot shows M12-pattern errors without a routing signal.
-- **C4:** glossary chip count across lessons is 15 vs the CS ~9 recommendation (see accessibility audit, cognitive load) — accepted with per-lesson cap ≤6 and trim candidates named (algorithm, trigger, workflow, model, training). Pilot-validated.
-- **C5:** glossary extended to 23 entries (trigger, workflow) because both terms are surfaced in lessons — flagged for the Phase 0 §18 document audit alongside the terminology guide's six new drafts.
+- **C3 (decision, not a text change):** M12 graded-coverage gap - **accepted as implicit coverage** (QB-017/025/026 + S06) per the Phase 4 recommendation; a dedicated M12 stem risked trick-adjacent wording. Revisit only if pilot shows M12-pattern errors without a routing signal.
+- **C4:** glossary chip count across lessons is 15 vs the CS ~9 recommendation (see accessibility audit, cognitive load) - accepted with per-lesson cap ≤6 and trim candidates named (algorithm, trigger, workflow, model, training). Pilot-validated.
+- **C5:** glossary extended to 23 entries (trigger, workflow) because both terms are surfaced in lessons - flagged for the Phase 0 §18 document audit alongside the terminology guide's six new drafts.

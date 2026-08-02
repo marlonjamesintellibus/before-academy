@@ -8,7 +8,7 @@ related: [adr-003-competency-progression.md, adr-028-blueprint-metadata.md, adr-
 last_updated: 2026-07-31
 ---
 
-# ADR-005 — Assessment-first entry is a supported route
+# ADR-005 - Assessment-first entry is a supported route
 
 **Status:** Accepted · **Date:** 2026-07-31 · **Category:** Product
 

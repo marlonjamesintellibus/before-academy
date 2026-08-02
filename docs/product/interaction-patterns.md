@@ -24,4 +24,4 @@ One h1 per page; no skipped levels; complete landmarks. `aria-live=polite` for f
 Inline on-blur field-level validation stating the fix; never clear input; never disable submit for validation. Network failure on submit → queue + retry ×3 (1s/4s/10s) with non-blocking toast, then manual retry. Answers, attempt state, and scroll survive refresh; nothing user-entered is lost by in-lesson navigation.
 
 ## Related Documents
-- [accessibility.md](accessibility.md) — the release gate these patterns serve
+- [accessibility.md](accessibility.md) - the release gate these patterns serve

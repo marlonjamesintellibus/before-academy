@@ -127,7 +127,7 @@ export const diagrams = pgTable(
       .references(() => sections.id),
     slug: text("slug").notNull(),
     title: text("title").notNull(),
-    /** Storage path: diagrams/{section}/{version}/ — immutable per version. */
+    /** Storage path: diagrams/{section}/{version}/ - immutable per version. */
     storagePath: text("storage_path").notNull(),
     altText: text("alt_text").notNull(),
     longTextAlternative: text("long_text_alternative").notNull(),

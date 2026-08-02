@@ -61,7 +61,7 @@ export function withAction<Schema extends z.ZodType, T>(
       if (options.rateLimit) {
         const decision = checkRateLimit(options.rateLimit, actorKey(context.actor));
         if (!decision.allowed) {
-          return err("RATE_LIMITED", "Too many requests — give it a moment and try again.", {
+          return err("RATE_LIMITED", "Too many requests - give it a moment and try again.", {
             retryable: true,
           });
         }
