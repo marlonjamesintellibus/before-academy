@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppFooter } from "@/components/ui/app-footer";
+import { AppHeader } from "@/components/ui/app-header";
+import { PostHogInit } from "@/lib/analytics";
 
 export const metadata: Metadata = {
-  title: "Before Academy",
+  title: {
+    default: "Before Academy",
+    template: "%s · Before Academy",
+  },
   description:
     "Learn to tell AI, automation, and traditional software apart — free, about twenty minutes.",
 };
@@ -21,7 +27,10 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <PostHogInit />
+        <AppHeader />
         {children}
+        <AppFooter />
       </body>
     </html>
   );
