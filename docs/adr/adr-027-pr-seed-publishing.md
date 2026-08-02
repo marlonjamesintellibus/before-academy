@@ -4,7 +4,7 @@ category: adr
 status: Accepted
 date: 2026-07-31
 decision_category: Data/Content
-related: [adr-020-canonical-content-records.md, adr-021-immutable-versioning.md]
+related: [adr-020-canonical-content-records.md, adr-021-immutable-versioning.md, adr-041-defer-cms-ui.md]
 last_updated: 2026-07-31
 ---
 
@@ -28,4 +28,5 @@ Minimal admin UI (rejected: scope Phase 1 forbids); headless CMS (rejected per A
 ## Related Documents
 - [ADR-020](adr-020-canonical-content-records.md)
 - [ADR-021](adr-021-immutable-versioning.md)
+- [ADR-041](adr-041-defer-cms-ui.md)
 - Specifications: Eng §8.3, Content §13

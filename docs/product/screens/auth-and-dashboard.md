@@ -3,6 +3,7 @@ title: "Screens: Auth & Dashboard (S10–S11)"
 category: product
 owner: product-designer
 status: approved
+depends_on: [../../engineering/auth.md]
 related: [../../engineering/auth.md]
 last_updated: 2026-07-31
 ---

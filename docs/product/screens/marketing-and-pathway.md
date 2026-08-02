@@ -15,7 +15,7 @@ States: default; returning guest/registered = resume banner above hero ("Continu
 Events: `home_viewed`, `resume_banner_shown/clicked`, `cta_start_clicked`, `cta_assessment_first_clicked`.
 
 ## S02 Pathway Overview (`/learn`)
-Coursera course-home pattern. Pathway header (title, plain description, estimated total time). Section list = ordered list of cards: Section 1 enabled with status chip + per-step microstatus; future sections muted **"Coming soon"** preview cards — never locks (ADR register). States: no progress / progress (Continue CTA) / registered / post-completion (auto-scroll to `#next`). Status in text, not colour alone.
+Coursera course-home pattern. Pathway header (title, plain description, estimated total time). Section list = ordered list of cards: Section 1 enabled with status chip + per-step microstatus; future sections muted **"Coming soon"** preview cards — never locks ([ADR-003](../../adr/adr-003-competency-progression.md): consumption is never a gate). States: no progress / progress (Continue CTA) / registered / post-completion (auto-scroll to `#next`). Status in text, not colour alone.
 Events: `pathway_viewed`, `section_card_clicked`, `preview_card_clicked`, `notify_me_clicked`.
 
 ## S12 Next-Step Preview (`/learn#next`)

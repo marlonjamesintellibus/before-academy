@@ -40,7 +40,7 @@ Phase 0/1 documents > product/ > engineering/ > content/ > roadmap/ > code comme
 
 ## Conventions
 
-Every document carries YAML frontmatter (`title, category, status, last_updated`, plus `owner, depends_on, used_by, related` where applicable — ADRs use `decision_category`/`date` instead of `owner`) and ends with **Related Documents**. Cross-references are relative links. Provisional values (80% pass threshold, layer word budgets, question counts) are marked `provisional` and are configuration, not constants.
+Every document carries YAML frontmatter (`title, category, status, last_updated`, plus `owner, depends_on, used_by, related` where applicable — ADRs use `decision_category`/`date` instead of `owner`) and ends with **Related Documents**. Status vocabularies: ADRs use `Accepted` (with optional qualifiers); all other docs use `approved` — tooling that parses status must accept both. Cross-references are relative links. Provisional values (80% pass threshold, layer word budgets, question counts) are marked `provisional` and are configuration, not constants.
 
 ## Related Documents
 - [shared/decision-register.md](shared/decision-register.md) — decision lookup by area

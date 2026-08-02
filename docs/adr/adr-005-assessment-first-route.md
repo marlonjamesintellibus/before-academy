@@ -4,7 +4,7 @@ category: adr
 status: Accepted
 date: 2026-07-31
 decision_category: Product
-related: [adr-003-competency-progression.md, adr-028-blueprint-metadata.md]
+related: [adr-003-competency-progression.md, adr-028-blueprint-metadata.md, adr-011-step-per-url.md]
 last_updated: 2026-07-31
 ---
 
@@ -28,4 +28,5 @@ Content-first only (rejected: contradicts ADR-003); a separate placement test (r
 ## Related Documents
 - [ADR-003](adr-003-competency-progression.md)
 - [ADR-028](adr-028-blueprint-metadata.md)
+- [ADR-011](adr-011-step-per-url.md)
 - Specifications: UX §J2, Eng §9.5

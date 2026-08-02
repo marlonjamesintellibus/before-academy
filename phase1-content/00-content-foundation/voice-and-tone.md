@@ -46,7 +46,7 @@ source_of_truth: CS §1.2 (human voice), §9 (feedback), §11 (UX writing), §12
 ## Prohibited phrases and patterns
 
 - Anthropomorphic AI verbs: think, know, understand, believe, want, feel (lintable list).
-- Minimizers: simply, just, easy, obvious, of course.
+- Minimizers: simply, just, easy, obvious, of course. *Exception:* the fixed remediation frame "easy to mix up" (see the Remediation row above) is permitted — it names a shared confusion between two concepts rather than minimizing the material; "easy" remains banned in every other construction.
 - Marketing register: revolutionary, cutting-edge, game-changing, unlock the power of, dive into, embark on a journey, in today's rapidly evolving world, AI is transforming everything, imagine a world.
 - School-anxiety terms: test, exam, quiz; "fail" in learner copy.
 - Identity labels for learners: smart, weak, good at this, bad at this.

@@ -2,12 +2,14 @@
 title: Glossary
 category: content
 owner: content-owner
-status: approved (provisional definitions pending document audit)
+status: approved
 related: [knowledge-model.md]
 last_updated: 2026-07-31
 ---
 
 # Glossary
+
+> Definitions are approved as provisional pending the document audit; wording may still change with their canonical records.
 
 **Entry standards:** term · plain definition (≤25 words, standalone, behaviour-first, no circularity or undefined jargon) · one example · related terms · canonical-record link. Context-first rule: a term enters the glossary only after appearing in lesson content — the glossary is support, not curriculum. Definitions version with their canonical record; a definition change is a record change ([governance.md](governance.md)).
 
