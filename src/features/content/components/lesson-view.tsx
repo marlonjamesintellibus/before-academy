@@ -35,7 +35,7 @@ function BlockView({
       );
     case "objectives":
       return (
-        <details className="rounded-(--radius-control) border border-surface-alt p-4">
+        <details className="panel p-4">
           <summary className="cursor-pointer text-body font-semibold">
             What you&rsquo;ll learn
           </summary>
@@ -97,7 +97,7 @@ function BlockView({
       return (
         <aside
           role="note"
-          className="rounded-(--radius-control) border-2 border-ink bg-accent-tint p-5 shadow-(--shadow-card)"
+          className="rounded-(--radius-card) border-l-4 border-warning bg-surface-card p-5 shadow-(--shadow-card)"
         >
           <p className="text-body font-semibold">Common misconception</p>
           <p className="mt-2 text-body italic">&ldquo;{block.claim}&rdquo;</p>
@@ -132,7 +132,7 @@ function BlockView({
       return (
         <section
           aria-label="Key takeaways"
-          className="rounded-(--radius-control) border-l-4 border-accent bg-surface-alt p-5"
+          className="rounded-(--radius-card) border-l-4 border-primary bg-primary-tint p-5"
         >
           <RichTextView body={block.body} glossary={glossary} idPrefix={block.id} />
         </section>

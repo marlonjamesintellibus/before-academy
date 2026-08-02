@@ -31,14 +31,14 @@ export default function PathwayPage() {
             <div className="flex flex-wrap items-center gap-3">
               <span
                 aria-hidden="true"
-                className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) border-2 border-ink bg-accent-tint font-display text-subheading font-bold text-ink"
+                className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-primary font-display text-subheading font-bold text-surface-card"
               >
                 1
               </span>
               <span className="font-display text-subheading font-semibold text-ink">
                 {strings.pathway.sectionOneTitle}
               </span>
-              <span className="rounded-(--radius-chip) border border-ink/30 bg-surface px-3 py-0.5 text-caption font-medium text-ink-muted">
+              <span className="rounded-(--radius-chip) bg-surface-alt px-3 py-0.5 text-caption font-medium text-ink-muted">
                 {strings.pathway.notStarted}
               </span>
             </div>
@@ -49,26 +49,26 @@ export default function PathwayPage() {
           <TrackOnVisible event="next_preview_viewed">
             <div
               id="next"
-              className="rounded-(--radius-control) border-2 border-dashed border-ink/30 bg-surface-alt/60 p-6"
+              className="rounded-(--radius-card) border-2 border-dashed border-border bg-surface-alt/60 p-6"
             >
               <div className="flex flex-wrap items-center gap-3">
                 <span
                   aria-hidden="true"
-                  className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) border-2 border-ink/30 font-display text-subheading font-bold text-ink-muted"
+                  className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) border-2 border-border font-display text-subheading font-bold text-ink-muted"
                 >
                   2
                 </span>
                 <span className="font-display text-subheading font-semibold text-ink-muted">
                   Applying AI at Work
                 </span>
-                <span className="rounded-(--radius-chip) bg-accent-tint px-3 py-0.5 text-caption font-medium text-accent">
+                <span className="rounded-(--radius-chip) bg-primary-tint px-3 py-0.5 text-caption font-medium text-primary">
                   {strings.pathway.comingSoon}
                 </span>
               </div>
               <p className="mt-3 text-body text-ink-muted">{strings.pathway.previewNote}</p>
               <TrackedButton
                 event="notify_me_clicked"
-                className="mt-4 inline-flex min-h-11 items-center rounded-(--radius-control) border-2 border-ink px-4 py-2 text-body font-semibold text-ink shadow-[2px_2px_0_rgba(22,22,31,0.9)] transition-all duration-(--duration-state) hover:-translate-y-0.5 hover:bg-highlight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="mt-4 inline-flex min-h-11 items-center rounded-(--radius-control) border border-primary px-4 py-2 text-body font-semibold text-primary transition-colors duration-(--duration-state) hover:bg-primary-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 {strings.actions.notifyMe}
               </TrackedButton>

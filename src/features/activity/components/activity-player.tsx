@@ -128,9 +128,12 @@ export function ActivityPlayer({
 
   return (
     <div>
-      <p className="text-caption text-ink-muted" aria-live="polite">
+      <p className="text-caption font-medium text-ink-muted" aria-live="polite">
         Scenario {state.index + 1} of {total}
       </p>
+      <div className="progress-track mt-2" aria-hidden="true">
+        <div className="progress-fill" style={{ width: `${(state.index / total) * 100}%` }} />
+      </div>
 
       <div className="panel mt-4 p-6">
         <h2 className="sr-only">{scenario.title}</h2>

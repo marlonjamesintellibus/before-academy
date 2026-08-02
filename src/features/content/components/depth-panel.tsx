@@ -25,7 +25,7 @@ export function DepthPanel({
   const panelId = useId();
 
   return (
-    <div className="mt-4 rounded-(--radius-control) border border-ink/25 bg-surface">
+    <div className="mt-4 rounded-(--radius-card) border border-border bg-surface-card">
       <button
         type="button"
         aria-expanded={open}
@@ -35,7 +35,7 @@ export function DepthPanel({
           setOpen(next);
           if (next) track("layer_expanded", { layer, concept });
         }}
-        className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-2 text-left text-body font-semibold text-primary hover:bg-highlight focus-visible:outline-2 focus-visible:outline-primary"
+        className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-2 text-left text-body font-semibold text-primary hover:bg-primary-tint focus-visible:outline-2 focus-visible:outline-primary"
       >
         <span>
           {label} <span className="font-normal text-ink-muted">({minutes} min read)</span>

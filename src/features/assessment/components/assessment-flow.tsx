@@ -148,7 +148,7 @@ export function AssessmentFlow({
     return (
       <div>
         <div className="flex items-center justify-between">
-          <p className="text-caption text-ink-muted" aria-live="polite">
+          <p className="text-caption font-medium text-ink-muted" aria-live="polite">
             Question {index + 1} of {stage.payload.questions.length}
           </p>
           <button
@@ -158,6 +158,13 @@ export function AssessmentFlow({
           >
             Exit assessment
           </button>
+        </div>
+
+        <div className="progress-track mt-2" aria-hidden="true">
+          <div
+            className="progress-fill"
+            style={{ width: `${(index / stage.payload.questions.length) * 100}%` }}
+          />
         </div>
 
         <QuestionCard

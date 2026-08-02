@@ -40,6 +40,15 @@ export default async function SectionPage({ params }: SectionPageProps) {
         />
         <h1 className="mt-6 max-w-[680px] text-display font-bold">{content.title}</h1>
         <p className="mt-3 max-w-[680px] text-body text-ink-muted">{content.description}</p>
+        <ul className="mt-4 flex flex-wrap gap-2 text-caption font-medium text-ink-muted">
+          <li className="rounded-(--radius-chip) bg-primary-tint px-3 py-1 text-primary">
+            Level 1 · AI Awareness
+          </li>
+          <li className="rounded-(--radius-chip) bg-surface-alt px-3 py-1">About 20 minutes</li>
+          <li className="rounded-(--radius-chip) bg-surface-alt px-3 py-1">
+            Lesson → activity → practice → assessment
+          </li>
+        </ul>
       </div>
       <div className="mt-10">
         <LessonView content={content} lessonRoute={LESSON_ROUTE} />

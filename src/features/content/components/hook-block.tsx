@@ -16,7 +16,7 @@ export function HookBlock({
   const [answered, setAnswered] = useState<string | null>(null);
 
   return (
-    <div className="rounded-(--radius-control) border-2 border-ink bg-accent-tint p-6 shadow-(--shadow-card)">
+    <div className="rounded-(--radius-card) border border-primary/30 bg-primary-tint p-6 shadow-(--shadow-card)">
       <p className="text-subheading font-semibold">{prompt}</p>
       {answered === null ? (
         <div className="mt-4 flex flex-wrap gap-3" role="group" aria-label={prompt}>
@@ -28,7 +28,7 @@ export function HookBlock({
                 setAnswered(choice);
                 track("hook_answered", { chosen: choice });
               }}
-              className="min-h-11 rounded-(--radius-control) border border-primary px-4 py-2 text-body font-semibold text-primary hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="min-h-11 rounded-(--radius-control) border border-primary bg-surface-card px-4 py-2 text-body font-semibold text-primary hover:bg-sky/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               {choice}
             </button>

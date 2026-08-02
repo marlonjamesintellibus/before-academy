@@ -10,12 +10,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT_CLASSES: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary:
-    "border-2 border-ink bg-primary text-surface shadow-[3px_3px_0_rgba(22,22,31,0.9)] hover:-translate-y-0.5 hover:bg-primary-strong",
-  secondary:
-    "border-2 border-ink text-ink shadow-[2px_2px_0_rgba(22,22,31,0.9)] hover:-translate-y-0.5 hover:bg-highlight",
+  primary: "bg-primary text-surface-card shadow-(--shadow-card) hover:bg-primary-strong",
+  secondary: "border border-primary text-primary hover:bg-primary-tint",
   tertiary: "text-primary underline-offset-4 hover:underline",
-  destructive: "bg-danger text-surface hover:opacity-90",
+  destructive: "bg-danger text-surface-card hover:opacity-90",
 };
 
 export function Button({

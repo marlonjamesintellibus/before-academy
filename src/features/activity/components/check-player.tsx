@@ -95,9 +95,12 @@ export function CheckPlayer({
 
   return (
     <div>
-      <p className="text-caption text-ink-muted" aria-live="polite">
+      <p className="text-caption font-medium text-ink-muted" aria-live="polite">
         Question {index + 1} of {questions.length}
       </p>
+      <div className="progress-track mt-2" aria-hidden="true">
+        <div className="progress-fill" style={{ width: `${(index / questions.length) * 100}%` }} />
+      </div>
 
       <div className="panel mt-4 p-6">
         <p className="text-body font-semibold">{question.stem}</p>
