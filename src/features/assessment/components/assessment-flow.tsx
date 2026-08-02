@@ -25,6 +25,43 @@ type Stage =
 
 const LAST_COMBINATION_KEY = "ba.v1.last_combination";
 const ATTEMPT_COUNT_KEY = "ba.v1.attempt_count";
+const ATTEMPT_MIRROR_KEY = "ba.v1.attempt_mirror";
+
+interface AttemptMirror {
+  payload: AttemptPayload;
+  answers: Record<string, string[]>;
+  index: number;
+  review: boolean;
+}
+
+/** Refresh survival (assessment-engine.md): the in-flight attempt mirrors to sessionStorage. */
+function readAttemptMirror(): AttemptMirror | null {
+  try {
+    const raw = window.sessionStorage.getItem(ATTEMPT_MIRROR_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as AttemptMirror;
+    if (!parsed?.payload?.token || !Array.isArray(parsed.payload.questions)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeAttemptMirror(mirror: AttemptMirror): void {
+  try {
+    window.sessionStorage.setItem(ATTEMPT_MIRROR_KEY, JSON.stringify(mirror));
+  } catch {
+    // Private browsing: the attempt continues in memory only.
+  }
+}
+
+function clearAttemptMirror(): void {
+  try {
+    window.sessionStorage.removeItem(ATTEMPT_MIRROR_KEY);
+  } catch {
+    // nothing to clear
+  }
+}
 
 export function AssessmentFlow({
   intro,
@@ -44,36 +81,63 @@ export function AssessmentFlow({
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const introViewed = useRef(false);
+  const inFlight = useRef(false);
 
   useEffect(() => {
     if (!introViewed.current) {
       introViewed.current = true;
+      const mirror = readAttemptMirror();
+      if (mirror) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time refresh restore
+        setAnswers(mirror.answers);
+        setIndex(mirror.index);
+        setStage(
+          mirror.review
+            ? { name: "review", payload: mirror.payload }
+            : { name: "attempt", payload: mirror.payload },
+        );
+      }
       track("assessment_intro_viewed", {
         route: assessmentFirst ? "assessment_first" : "lesson_first",
       });
     }
   }, [assessmentFirst]);
 
+  useEffect(() => {
+    if (stage.name === "attempt" || stage.name === "review") {
+      writeAttemptMirror({
+        payload: stage.payload,
+        answers,
+        index,
+        review: stage.name === "review",
+      });
+    }
+  }, [stage, answers, index]);
+
   async function start() {
-    if (!anonymousId || busy) return;
+    if (!anonymousId || busy || inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setErrorMessage(null);
-    const attemptNumber = Number(localStorage.getItem(ATTEMPT_COUNT_KEY) ?? "0") + 1;
-    const previous = JSON.parse(localStorage.getItem(LAST_COMBINATION_KEY) ?? "[]") as string[];
+    // Device storage through the safe wrapper only (private-browsing promise).
+    const storedCount = readDevice<number>(ATTEMPT_COUNT_KEY, 0, (v) => typeof v === "number");
+    const attemptNumber = (Number.isFinite(storedCount) ? storedCount : 0) + 1;
+    const previous = readDevice<string[]>(LAST_COMBINATION_KEY, [], Array.isArray);
     const result = await createAttempt({
       anonymousId,
       attemptNumber,
       previousQuestionIds: previous,
     });
     setBusy(false);
+    inFlight.current = false;
     if (!result.ok) {
       setErrorMessage(result.error.message);
       return;
     }
-    localStorage.setItem(ATTEMPT_COUNT_KEY, String(attemptNumber));
-    localStorage.setItem(
+    writeDevice(ATTEMPT_COUNT_KEY, attemptNumber);
+    writeDevice(
       LAST_COMBINATION_KEY,
-      JSON.stringify(result.data.questions.map((question) => question.id)),
+      result.data.questions.map((question) => question.id),
     );
     setAnswers({});
     setIndex(0);
@@ -85,7 +149,8 @@ export function AssessmentFlow({
   }
 
   async function submit(payload: AttemptPayload) {
-    if (!anonymousId || busy) return;
+    if (!anonymousId || busy || inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setErrorMessage(null);
     const result = await submitAttempt({
@@ -98,10 +163,12 @@ export function AssessmentFlow({
       idempotencyKey: crypto.randomUUID(),
     });
     setBusy(false);
+    inFlight.current = false;
     if (!result.ok) {
       setErrorMessage(result.error.message);
       return;
     }
+    clearAttemptMirror();
     setStage({ name: "results", result: result.data });
     // Guest completion state (ADR-025): outcome summary only - no answers, no PII.
     const outcomeKey = "ba.v1.assessment.ai-automation-software";
@@ -247,6 +314,7 @@ export function AssessmentFlow({
               type="button"
               onClick={() => {
                 track("assessment_abandoned", { question_index: index });
+                clearAttemptMirror();
                 router.push(lessonRoute);
               }}
               className="min-h-11 rounded-(--radius-control) border border-danger px-4 text-body font-semibold text-danger hover:bg-surface-alt focus-visible:outline-2 focus-visible:outline-danger"

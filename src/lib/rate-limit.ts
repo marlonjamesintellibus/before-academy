@@ -12,6 +12,16 @@ interface Window {
 
 const windows = new Map<string, Window>();
 
+/** Sweep expired windows when the map grows; prevents unbounded memory (review finding). */
+const SWEEP_THRESHOLD = 10_000;
+
+function sweep(now: number): void {
+  if (windows.size < SWEEP_THRESHOLD) return;
+  for (const [key, window] of windows) {
+    if (now >= window.resetAt) windows.delete(key);
+  }
+}
+
 export interface RateLimitConfig {
   /** Max requests per window. */
   limit: number;
@@ -39,6 +49,7 @@ export function checkRateLimit(
   now: number = Date.now(),
 ): RateLimitDecision {
   const config = RATE_LIMITS[surface];
+  sweep(now);
   const bucketKey = `${surface}:${key}`;
   const window = windows.get(bucketKey);
 

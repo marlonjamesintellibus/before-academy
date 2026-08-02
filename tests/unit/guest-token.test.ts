@@ -13,15 +13,22 @@ describe("guest attempt token", () => {
       questionIds: ["P1-QB-001", "P1-QB-009"],
       issuedAt: Date.now(),
       attemptNumber: 2,
+      anonymousId: "anon-1234",
     });
     const claims = verifyGuestToken(token, TTL);
     expect(claims?.questionIds).toEqual(["P1-QB-001", "P1-QB-009"]);
     expect(claims?.attemptNumber).toBe(2);
+    expect(claims?.anonymousId).toBe("anon-1234");
   });
 
   it("rejects expired tokens", () => {
     const issuedAt = Date.now() - TTL - 1000;
-    const token = issueGuestToken({ questionIds: ["a"], issuedAt, attemptNumber: 1 });
+    const token = issueGuestToken({
+      questionIds: ["a"],
+      issuedAt,
+      attemptNumber: 1,
+      anonymousId: "anon-1234",
+    });
     expect(verifyGuestToken(token, TTL)).toBeNull();
   });
 
@@ -30,10 +37,16 @@ describe("guest attempt token", () => {
       questionIds: ["P1-QB-001"],
       issuedAt: Date.now(),
       attemptNumber: 1,
+      anonymousId: "anon-1234",
     });
     const [, signature] = token.split(".");
     const forged = `${Buffer.from(
-      JSON.stringify({ questionIds: ["P1-QB-002"], issuedAt: Date.now(), attemptNumber: 1 }),
+      JSON.stringify({
+        questionIds: ["P1-QB-002"],
+        issuedAt: Date.now(),
+        attemptNumber: 1,
+        anonymousId: "anon-1234",
+      }),
     ).toString("base64url")}.${signature}`;
     expect(verifyGuestToken(forged, TTL)).toBeNull();
   });

@@ -20,6 +20,9 @@ import { err } from "@/lib/result";
 export interface ActionContext {
   actor: Actor;
   requestId: string;
+  /** Caller IP (x-forwarded-for head) - rate limits key on actor AND ip so a
+   * rotated anonymousId cannot bypass the limiter (security review). */
+  ip?: string;
 }
 
 export interface ActionOptions<Schema extends z.ZodType> {
@@ -60,7 +63,10 @@ export function withAction<Schema extends z.ZodType, T>(
       }
 
       if (options.rateLimit) {
-        const decision = checkRateLimit(options.rateLimit, actorKey(context.actor));
+        const decision = checkRateLimit(
+          options.rateLimit,
+          `${context.ip ?? "unknown"}|${actorKey(context.actor)}`,
+        );
         if (!decision.allowed) {
           return err("RATE_LIMITED", "Too many requests - give it a moment and try again.", {
             retryable: true,

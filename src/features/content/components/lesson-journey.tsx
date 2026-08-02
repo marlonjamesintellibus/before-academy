@@ -76,6 +76,7 @@ const HASH_TO_STAGE: Record<string, number> = {
   "#p1-lesson-004": 3,
   "#p1-lesson-005": 4,
   "#p1-dgm-001": 4,
+  "#p1-lesson-005-misconception": 4,
 };
 
 const TONE_CLASSES = {
@@ -652,7 +653,8 @@ function CompareStage({
         question="What was learned, from what data, to make this output?"
       />
       {misconception ? (
-        <div className="mt-6">
+        // Anchor target for misconception remediation links.
+        <div id="p1-lesson-005-misconception" className="mt-6">
           <Callout variant="warning" title="Remember the vending machine">
             <p className="italic">“{misconception.claim}”</p>
             <p>{misconception.correction}</p>
@@ -781,17 +783,22 @@ export function LessonJourney({
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      let nextActive = HASH_TO_STAGE[window.location.hash.toLowerCase()] ?? 0;
+      const hashStage = HASH_TO_STAGE[window.location.hash.toLowerCase()];
+      let nextActive = hashStage ?? 0;
       try {
         const raw = window.localStorage.getItem(PROGRESS_KEY);
         const parsed: unknown = raw ? JSON.parse(raw) : null;
-        if (isSavedProgress(parsed) && !window.location.hash) {
-          nextActive = parsed.active;
+        if (isSavedProgress(parsed)) {
+          // Saved completion ALWAYS loads - a remediation deep link must never
+          // wipe progress; the hash only chooses which stage to open.
           setCompleted([
             ...new Set(parsed.completed.filter((item) => item >= 0 && item < STAGES.length)),
           ]);
-          if (parsed.active > 0 || parsed.completed.length > 0) {
-            track("lesson_resumed", { stage: (STAGES[parsed.active] ?? STAGES[0]).label });
+          if (hashStage === undefined) {
+            nextActive = parsed.active;
+            if (parsed.active > 0 || parsed.completed.length > 0) {
+              track("lesson_resumed", { stage: (STAGES[parsed.active] ?? STAGES[0]).label });
+            }
           }
         }
       } catch {
@@ -799,6 +806,14 @@ export function LessonJourney({
       }
       setActive(nextActive);
       setHydrated(true);
+      if (hashStage !== undefined) {
+        // The anchor target only exists after the stage renders.
+        requestAnimationFrame(() => {
+          const target = document.getElementById(window.location.hash.slice(1).toLowerCase());
+          target?.scrollIntoView({ block: "start" });
+          headingRef.current?.focus();
+        });
+      }
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);

@@ -1,3 +1,4 @@
+import type { AssessmentSeed } from "@/features/assessment/types";
 import type { ActivitySeed, CheckSeed, ScenarioSeed } from "./activity-types";
 import { SCENARIO_CATEGORIES } from "./activity-types";
 import type { LintIssue } from "./lint";
@@ -111,6 +112,64 @@ export function lintCheck(check: CheckSeed, section: SectionSeed): LintIssue[] {
     for (const option of question.options) lintLearnerText(question.id, option.text, issues);
     lintLearnerText(question.id, question.correctFeedback, issues);
     lintLearnerText(question.id, question.incorrectFeedback, issues);
+  }
+
+  return issues;
+}
+
+/**
+ * Graded-bank lint (review finding: an empty draw pool or a question with no
+ * correct option ships silently and fails at runtime). Publish-time gate.
+ */
+export function lintAssessment(seed: AssessmentSeed): LintIssue[] {
+  const issues: LintIssue[] = [];
+  const questions = seed.questions;
+
+  if (questions.length < 10) {
+    issues.push({
+      blockId: seed.id,
+      message: `expected >=10 bank items, found ${questions.length}`,
+    });
+  }
+
+  const fixed = questions.filter((question) => question.fixedDraw);
+  if (fixed.length !== 2) {
+    issues.push({
+      blockId: seed.id,
+      message: `expected exactly 2 fixedDraw items, found ${fixed.length}`,
+    });
+  }
+
+  const pools: [string, (category: string) => boolean][] = [
+    ["ai_characteristics", (category) => category === "ai_characteristics"],
+    ["combined_systems", (category) => category === "combined_systems"],
+    ["classification", (category) => category === "classification"],
+    [
+      "traditional/automation",
+      (category) => category === "traditional_software" || category === "automation",
+    ],
+  ];
+  for (const [label, match] of pools) {
+    if (!questions.some((question) => !question.fixedDraw && match(question.category))) {
+      issues.push({ blockId: seed.id, message: `empty draw pool: ${label}` });
+    }
+  }
+
+  for (const question of questions) {
+    const correct = question.options.filter((option) => option.correct);
+    if (correct.length === 0) {
+      issues.push({ blockId: question.id, message: "no correct option" });
+    }
+    if (question.format !== "multiple_select" && correct.length > 1) {
+      issues.push({
+        blockId: question.id,
+        message: `${correct.length} correct options on single-answer format`,
+      });
+    }
+    lintLearnerText(question.id, question.stem, issues);
+    for (const option of question.options) lintLearnerText(question.id, option.text, issues);
+    lintLearnerText(question.id, question.correctExplanation, issues);
+    lintLearnerText(question.id, question.incorrectExplanation, issues);
   }
 
   return issues;

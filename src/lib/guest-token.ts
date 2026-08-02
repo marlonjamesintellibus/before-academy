@@ -10,6 +10,8 @@ export interface GuestAttemptClaims {
   questionIds: string[];
   issuedAt: number;
   attemptNumber: number;
+  /** Binds the token to its issuing guest; verified on submit. */
+  anonymousId: string;
 }
 
 function secret(): string {
@@ -41,6 +43,8 @@ export function verifyGuestToken(
   try {
     const claims = JSON.parse(Buffer.from(payload, "base64url").toString()) as GuestAttemptClaims;
     if (!Array.isArray(claims.questionIds) || typeof claims.issuedAt !== "number") return null;
+    if (typeof claims.attemptNumber !== "number" || typeof claims.anonymousId !== "string")
+      return null;
     if (now - claims.issuedAt > ttlMs) return null;
     return claims;
   } catch {

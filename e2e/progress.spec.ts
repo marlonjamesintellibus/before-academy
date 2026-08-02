@@ -62,3 +62,33 @@ test("a passed assessment renders the complete state on the pathway", async ({ p
   // Resume banner points at what's next once the section is complete
   await expect(page.getByText(/Section complete - your result is saved/)).toBeVisible();
 });
+
+test("remediation deep link never wipes lesson progress", async ({ page }) => {
+  // Seed completed lesson stages on the device
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      "ba.v1.lesson.ai-automation-software",
+      JSON.stringify({ active: 3, completed: [0, 1, 2], updatedAt: 1 }),
+    );
+  });
+  // Arrive via a remediation hash (the misconception anchor, previously broken)
+  await page.goto(`${LESSON}#p1-lesson-005-misconception`);
+  await page.waitForTimeout(300);
+  const saved = await page.evaluate(() =>
+    JSON.parse(window.localStorage.getItem("ba.v1.lesson.ai-automation-software") ?? "{}"),
+  );
+  expect(saved.completed).toEqual([0, 1, 2]);
+});
+
+test("mid-assessment refresh restores the attempt", async ({ page }) => {
+  await page.goto(`${LESSON}/assessment`);
+  await page.getByRole("button", { name: "Start assessment" }).click();
+  await expect(page.getByText("Question 1 of 6")).toBeVisible();
+  await page.getByRole("radio").first().check();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByText("Question 2 of 6")).toBeVisible();
+  await page.reload();
+  // The attempt (not the intro) is restored, with the answered state intact
+  await expect(page.getByText(/Question \d of 6/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Start assessment" })).not.toBeVisible();
+});

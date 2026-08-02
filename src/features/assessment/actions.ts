@@ -1,6 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { headers } from "next/headers";
 import { z } from "zod";
 import type { Actor } from "@/lib/actor";
 import { captureServer } from "@/lib/analytics-server";
@@ -31,9 +32,9 @@ const createAttemptHandler = withAction(
   {
     name: "createAttempt",
     schema: z.object({
-      anonymousId: z.string().min(8),
+      anonymousId: z.string().min(8).max(64),
       attemptNumber: z.number().int().min(1).max(1000),
-      previousQuestionIds: z.array(z.string()).max(20).default([]),
+      previousQuestionIds: z.array(z.string().max(64)).max(20).default([]),
     }),
     rateLimit: "attempt",
   },
@@ -48,6 +49,7 @@ const createAttemptHandler = withAction(
       questionIds: drawn.map((question) => question.id),
       issuedAt: Date.now(),
       attemptNumber: input.attemptNumber,
+      anonymousId: input.anonymousId,
     });
 
     return ok({
@@ -70,25 +72,25 @@ const submitAttemptHandler = withAction(
   {
     name: "submitAttempt",
     schema: z.object({
-      anonymousId: z.string().min(8),
-      token: z.string().min(16),
+      anonymousId: z.string().min(8).max(64),
+      token: z.string().min(16).max(4096),
       answers: z
         .array(
           z.object({
-            questionId: z.string(),
-            optionIds: z.array(z.string()).min(1).max(8),
+            questionId: z.string().max(64),
+            optionIds: z.array(z.string().max(64)).min(1).max(8),
           }),
         )
         .min(1)
         .max(10),
-      idempotencyKey: z.string().min(8),
+      idempotencyKey: z.string().min(8).max(64),
     }),
     rateLimit: "attempt",
   },
   async (input): Promise<Result<AttemptResult>> => {
     const config = getAssessmentConfig();
     const claims = verifyGuestToken(input.token, config.tokenTtlMs);
-    if (!claims) {
+    if (!claims || claims.anonymousId !== input.anonymousId) {
       return err("VALIDATION", "This attempt has expired. Start a fresh one - no penalty.", {
         fields: { token: "expired" },
       });
@@ -136,6 +138,11 @@ const submitAttemptHandler = withAction(
   },
 );
 
+async function callerIp(): Promise<string> {
+  const headerList = await headers();
+  return (headerList.get("x-forwarded-for") ?? "unknown").split(",")[0]?.trim() ?? "unknown";
+}
+
 export async function createAttempt(input: {
   anonymousId: string;
   attemptNumber: number;
@@ -144,6 +151,7 @@ export async function createAttempt(input: {
   return createAttemptHandler(input, {
     actor: guestActor(input.anonymousId),
     requestId: randomUUID(),
+    ip: await callerIp(),
   });
 }
 
@@ -156,5 +164,6 @@ export async function submitAttempt(input: {
   return submitAttemptHandler(input, {
     actor: guestActor(input.anonymousId),
     requestId: randomUUID(),
+    ip: await callerIp(),
   });
 }

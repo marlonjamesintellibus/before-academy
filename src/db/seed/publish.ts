@@ -12,7 +12,7 @@ import {
   sections,
 } from "@/db/schema";
 import { lintSection } from "@/features/content/lint";
-import { lintActivity, lintCheck } from "@/features/content/activity-lint";
+import { lintActivity, lintAssessment, lintCheck } from "@/features/content/activity-lint";
 import { sectionSeed } from "./section-content";
 import { activitySeed, checkSeed } from "./activity-content";
 import { assessmentSeed } from "./assessment-content";
@@ -28,6 +28,7 @@ async function publish() {
     ...lintSection(sectionSeed),
     ...lintActivity(activitySeed, sectionSeed),
     ...lintCheck(checkSeed, sectionSeed),
+    ...lintAssessment(assessmentSeed),
   ];
   if (issues.length > 0) {
     console.error("content-lint failed:");
