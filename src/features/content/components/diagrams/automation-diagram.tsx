@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { track } from "@/lib/analytics";
-import { DiagramObservation, DiagramTextAlternative } from "./diagram-parts";
+import { DiagramObservation, DiagramTextAlternative, InteractiveBadge } from "./diagram-parts";
 import { PredictionGate } from "./prediction-gate";
 
 const STEPS = [
@@ -40,7 +40,8 @@ export function AutomationDiagram() {
   return (
     <figure aria-label="Interactive automation workflow" className="panel mt-5 p-5">
       <figcaption>
-        <span className="block text-caption font-semibold uppercase tracking-wide text-ink-muted">
+        <InteractiveBadge />
+        <span className="mt-2 block text-caption font-semibold uppercase tracking-wide text-ink-muted">
           Workflow explorer
         </span>
         <span className="mt-1 block text-body text-ink-muted">

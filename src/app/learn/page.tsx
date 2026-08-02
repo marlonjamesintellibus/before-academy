@@ -7,6 +7,7 @@ import {
   SectionUnits,
   SkillMap,
   ReviewSession,
+  ResetProgress,
 } from "@/features/progress";
 import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
@@ -90,6 +91,7 @@ export default function PathwayPage() {
         </ol>
         <ReviewSession />
         <SkillMap />
+        <ResetProgress />
       </div>
     </main>
   );

@@ -669,7 +669,7 @@ function CompareStage({
       {misconception ? (
         // Anchor target for misconception remediation links.
         <div id="p1-lesson-005-misconception" className="mt-6">
-          <Callout variant="warning" title="Remember the vending machine">
+          <Callout variant="warning" title="Common misconception">
             <p className="italic">“{misconception.claim}”</p>
             <p>{misconception.correction}</p>
           </Callout>

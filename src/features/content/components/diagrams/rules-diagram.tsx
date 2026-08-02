@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
-import { DiagramObservation, DiagramTextAlternative } from "./diagram-parts";
+import { DiagramObservation, DiagramTextAlternative, InteractiveBadge } from "./diagram-parts";
 import { PredictionGate } from "./prediction-gate";
 
 export function RulesDiagram() {
@@ -23,7 +23,8 @@ export function RulesDiagram() {
   return (
     <figure aria-label="Interactive written-rules simulator" className="panel mt-5 p-5">
       <figcaption>
-        <span className="block text-caption font-semibold uppercase tracking-wide text-ink-muted">
+        <InteractiveBadge />
+        <span className="mt-2 block text-caption font-semibold uppercase tracking-wide text-ink-muted">
           Written rules simulator
         </span>
         <span className="mt-1 block text-body text-ink-muted">

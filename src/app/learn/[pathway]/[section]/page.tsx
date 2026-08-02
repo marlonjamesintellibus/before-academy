@@ -30,7 +30,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
   return (
     <main id="main" className="w-full flex-1 py-8">
       <TrackOnMount event="lesson_viewed" />
-      <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6">
+      <div className="mx-auto w-full max-w-[1280px] px-4 md:px-6">
         <Breadcrumbs
           items={[
             { label: "Pathways", href: "/learn" },

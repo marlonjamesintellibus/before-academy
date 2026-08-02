@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { track } from "@/lib/analytics";
-import { DiagramObservation } from "./diagrams/diagram-parts";
+import { DiagramObservation, InteractiveBadge } from "./diagrams/diagram-parts";
 import { PredictionGate } from "./diagrams/prediction-gate";
 
 interface Layer {
@@ -99,7 +99,8 @@ export function DiagramFigure({
   return (
     <figure aria-label={altText} className="panel p-5">
       <figcaption>
-        <span className="block font-display text-subheading font-bold">{title}</span>
+        <InteractiveBadge />
+        <span className="mt-2 block font-display text-subheading font-bold">{title}</span>
         <span className="mt-1 block text-body text-ink-muted">{claim}</span>
       </figcaption>
       <PredictionGate

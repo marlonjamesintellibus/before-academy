@@ -148,3 +148,25 @@ test("capstone appears after passing and saves device-only answers", async ({ pa
   await page.reload();
   await expect(page.locator("#capstone-feature")).toHaveValue("Helpdesk reply suggestions");
 });
+
+test("reset progress clears the section after an explicit confirm", async ({ page }) => {
+  await page.goto("/learn");
+  // Seed after load (initScript would re-seed on the post-reset reload)
+  await page.evaluate(() => {
+    window.localStorage.setItem(
+      "ba.v1.lesson.ai-automation-software",
+      JSON.stringify({ active: 2, completed: [0, 1], updatedAt: Date.now() }),
+    );
+  });
+  await page.reload();
+  await expect(page.getByText("In progress")).toBeVisible();
+  await page.getByRole("button", { name: "Reset my progress for this section" }).click();
+  // Keep is the default focus; destructive requires an explicit choice
+  await expect(page.getByRole("button", { name: "Keep my progress" })).toBeFocused();
+  await page.getByRole("button", { name: "Reset everything" }).click();
+  await expect(page.getByText("Not started")).toBeVisible();
+  const cleared = await page.evaluate(
+    () => window.localStorage.getItem("ba.v1.lesson.ai-automation-software") === null,
+  );
+  expect(cleared).toBe(true);
+});

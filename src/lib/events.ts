@@ -77,7 +77,8 @@ export type EventName =
   | "review_session_started"
   | "review_session_completed"
   | "capstone_started"
-  | "capstone_completed";
+  | "capstone_completed"
+  | "progress_reset";
 
 export interface EventProperties {
   [key: string]: string | number | boolean | undefined;

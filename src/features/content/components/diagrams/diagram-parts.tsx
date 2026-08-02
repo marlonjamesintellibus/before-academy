@@ -18,3 +18,15 @@ export function DiagramTextAlternative({ children }: { children: ReactNode }) {
     </details>
   );
 }
+
+/** Signals that a figure is manipulable, not an illustration (product feedback). */
+export function InteractiveBadge() {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-(--radius-chip) bg-primary px-3 py-1 text-caption font-bold uppercase tracking-wide text-white">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+        <path d="M3.5 1.5 v5.2 l1.4 -1.2 1 2.8 1.2 -0.5 -1 -2.7 1.9 -0.2 Z" fill="currentColor" />
+      </svg>
+      Interactive - try it
+    </span>
+  );
+}

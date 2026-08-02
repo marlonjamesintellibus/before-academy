@@ -49,6 +49,7 @@ Every event answers a documented Phase 1 question (ADR-032); nothing is collecte
 | skill_map_viewed | does the category skill map earn its pathway placement |
 | review_session_started (day_offset) / review_session_completed (correct, total, day_offset) | spaced-retrieval usage and delayed retention - the durable-learning evidence |
 | capstone_started / capstone_completed (fields_filled) | workplace transfer: does the audit task get used (free text never leaves the device) |
+| progress_reset | fresh-start demand; a proxy for shared devices and self-directed retakes |
 
 **Funnels:** F1 home→lesson→activity→check→assessment→pass · F2 assessment-first→result · F3 prompt→account→migration.
 
