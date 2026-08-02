@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { TrackOnMount, TrackOnVisible, TrackedButton, TrackedLink } from "@/components/track";
-import { ResumeBanner, SectionMicrostatus, SectionStatusChip } from "@/features/progress";
+import {
+  ResumeBanner,
+  SectionMicrostatus,
+  SectionStatusChip,
+  SectionUnits,
+  SkillMap,
+} from "@/features/progress";
 import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
 
@@ -80,6 +86,7 @@ export default function PathwayPage() {
             </TrackOnVisible>
           </li>
         </ol>
+        <SkillMap />
       </div>
     </main>
   );

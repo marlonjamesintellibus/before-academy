@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TrackOnMount, TrackedLink } from "@/components/track";
+import { LandingDemo } from "@/features/content";
 import { ResumeBanner } from "@/features/progress";
 import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
@@ -53,6 +54,8 @@ export default function HomePage() {
             </li>
           ))}
         </ul>
+
+        <LandingDemo />
 
         <Link
           href="/learn"

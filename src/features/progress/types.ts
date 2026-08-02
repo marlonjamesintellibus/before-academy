@@ -50,4 +50,7 @@ export interface StoredAssessmentOutcome {
   total: number;
   passed: boolean;
   lastAttemptAt: string;
+  /** Last attempt's per-category results - feeds the pathway skill map.
+   * Additive field; absent on outcomes recorded before Phase C. */
+  categories?: Record<string, { correct: number; total: number }>;
 }

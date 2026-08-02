@@ -8,6 +8,7 @@ export { lintSection } from "./lint";
 export { lintActivity, lintAssessment, lintCheck } from "./activity-lint";
 export { DiagnosticProbe, readDiagnostic } from "./components/diagnostic-probe";
 export { ConfidencePrompt, readConfidence, saveConfidence } from "./components/confidence-prompt";
+export { LandingDemo } from "./components/landing-demo";
 export type {
   DiagnosticSeed,
   DiagnosticItemSeed,

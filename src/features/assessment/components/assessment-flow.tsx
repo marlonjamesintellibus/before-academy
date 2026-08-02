@@ -11,6 +11,7 @@ import { createAttempt, submitAttempt } from "../actions";
 import type { AttemptPayload, AttemptResult, SanitizedQuestion } from "../types";
 import { CATEGORY_DISPLAY } from "../types";
 import { ConfidencePrompt, readConfidence, readDiagnostic } from "@/features/content";
+import { CompletionPanel } from "./completion-panel";
 import { useAnonymousId } from "../use-anonymous-id";
 
 /**
@@ -186,6 +187,13 @@ export function AssessmentFlow({
         value !== null &&
         (value as { version?: number }).version === 1,
     );
+    const categoryResults: Record<string, { correct: number; total: number }> = {};
+    for (const entry of result.data.review) {
+      const tally = categoryResults[entry.category] ?? { correct: 0, total: 0 };
+      tally.total += 1;
+      if (entry.correct) tally.correct += 1;
+      categoryResults[entry.category] = tally;
+    }
     writeDevice(outcomeKey, {
       version: 1,
       attempts: result.data.attemptNumber,
@@ -193,6 +201,7 @@ export function AssessmentFlow({
       total: result.data.total,
       passed: (previous?.passed ?? false) || result.data.passed,
       lastAttemptAt: new Date().toISOString(),
+      categories: categoryResults,
     });
     track("assessment_result_viewed", {
       passed: result.data.passed,
@@ -473,6 +482,8 @@ function Results({
           </p>
         ) : null}
       </Callout>
+
+      {result.passed ? <CompletionPanel perfect={result.score === result.total} /> : null}
 
       {result.categoriesFailed.length > 0 ? (
         <section aria-label="What to review" className="mt-6">

@@ -8,25 +8,16 @@ related: [../components.md, ../../engineering/content-engine.md]
 last_updated: 2026-07-31
 ---
 
-# S03 Lesson - Layered Content
+# S03 Lesson (staged journey - ADR-042)
 
-Objective: deliver the four-layer model with genuinely voluntary depth (ADR-006).
+The lesson is a five-stage journey: Start Here (hook, why-it-matters, outcomes, opening diagnostic, pre-confidence) then four concept units (Rules → Automation → Patterns and AI → Combined systems and review), each with its own objective, completion, and device resume (`ba.v1.lesson.*`). Desktop: sticky progress rail (percent, minutes remaining, stage outline with completion state). Mobile: stacked stages with the same outline.
 
-## Layout
-Desktop: sticky left ToC rail + 680px reading column. Mobile: sticky compact progress header + stepper. Block order (content defined in [content/lessons](../../content/lessons/ai-automation-software.md)): hook (one-tap tease) → pre-lesson confidence prompt (1–5 scale, optional, per the lesson spec's pre/post pair) → why it matters → objectives (collapsed accordion "What you'll learn") → Quick Explanation blocks per concept → diagram → misconception callout → Continue to activity.
+Every interactive diagram sits behind a prediction gate (predict → commit → observe → explain); each concept unit carries 2-3 inline checks from the authored bank; remediation deep links (`#p1-lesson-00x`, `#p1-lesson-005-misconception`) open the right stage without touching saved completion. Content renders from published records; the staged presentation, gates, and check placements are interface (this spec + ADR-042).
 
-## Depth controls
-Explore Further / Go Deeper render as **inline expandable panels** beneath each Quick block, labelled with reading time ("Explore further · 2 min"). Buttons with `aria-expanded`; expansion state persists per learner; never displayed as pressure. Tabs and separate pages were rejected - see ADR-006.
+Block inventory per unit: quick explanation with glossary chips, interactive diagram, memory callback, Explore Further / Go Deeper depth panels, inline checks. Stage advance moves focus to the new stage heading. Events: `lesson_viewed`, `lesson_stage_started/completed(stage, stage_number)`, `lesson_resumed(stage)`, `prediction_committed`, `interaction_*`, `glossary_term_opened`, `layer_expanded`, `diagram_component_opened`, `diagram_text_alt_opened`, `confidence_submitted(value, stage='pre')`, `diagnostic_item_answered/completed`, `continue_to_activity_clicked`.
 
-## Diagram
-"How Rules, Automation and AI Work Together": responsive figure; each layer (Interface / Traditional software / Automation / AI component / Human review) is a tappable **button** revealing a description panel below the figure (no tooltips - they fail on touch). Adjacent **"Read as text"** disclosure contains the complete prose alternative (versioned with the diagram - [../../content/editorial-style.md](../../content/editorial-style.md) alt-text standards).
-
-## States
-Fresh · resumed (scroll restored + toast) · remediation entry (relevant blocks auto-expanded and highlighted, highlight announced in text) · content-version mismatch ("This lesson was updated" banner).
-
-## Accessibility & events
-Single h1; concepts are h2; reduced motion = instant toggle. Events: `lesson_viewed`, `layer_expanded(layer, concept)`, `diagram_component_opened`, `diagram_text_alt_opened`, `hook_answered`, `confidence_submitted(value, stage='pre')`, `lesson_completed_scroll`, `continue_to_activity_clicked`.
+States: fresh · resumed (stage restored from device, `lesson_resumed`) · remediation entry (hash → stage + anchor focus) · private browsing (fully usable, nothing persists).
 
 ## Related Documents
-- [../../content/learning-framework.md](../../content/learning-framework.md) - why layers exist, standalone test
-- [../../engineering/content-engine.md](../../engineering/content-engine.md) - rendering pipeline
+- [../components.md](../components.md) - DepthPanel, GlossaryChip, DiagramFigure, ConceptDiagram contracts
+- [../../adr/adr-042-staged-lesson-units.md](../../adr/adr-042-staged-lesson-units.md) - why staged

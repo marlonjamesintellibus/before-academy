@@ -72,7 +72,8 @@ export type EventName =
   | "diagnostic_item_answered"
   | "diagnostic_completed"
   | "prediction_committed"
-  | "evidence_selected";
+  | "evidence_selected"
+  | "skill_map_viewed";
 
 export interface EventProperties {
   [key: string]: string | number | boolean | undefined;

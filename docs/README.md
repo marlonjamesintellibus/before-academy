@@ -30,7 +30,7 @@ This is the canonical knowledge base for Before Academy, reorganized from five a
 - **engineering/** - how it's built: architecture, engines, data, auth, security, ops. Owner: engineering lead.
 - **content/** - what it teaches: learning framework, lesson specs, assessment blueprint, glossary, governance. Owner: education lead.
 - **roadmap/** - build order: milestones M0–M9, delivery process, dependencies, risks. Owner: product owner.
-- **adr/** - why: 41 self-contained decision records. New decisions start at ADR-042.
+- **adr/** - why: 42 self-contained decision records. New decisions start at ADR-043.
 - **shared/** - terminology, naming, and the decision-register index used by every folder.
 - **implementation/** - task-shaped guides telling agents and engineers exactly which docs to load per workflow.
 
