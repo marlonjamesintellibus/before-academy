@@ -61,6 +61,27 @@ h2,
   transition: width var(--duration-panel) ease-out;
 }
 
+/* Flow dashes: applied ONLY while a run/trace is active - never idle (no autoplay rule). */
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+.flow-active {
+  stroke-dasharray: 6 8;
+  animation: flow-dash 0.8s linear infinite;
+}
+
+/* Model "thinking" pulse: applied transiently during classification. */
+@keyframes node-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+.thinking {
+  animation: node-pulse 0.5s ease-in-out 3;
+}
+
 /* Every animation has an instant reduced-motion equivalent; nothing loops or autoplays. */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -17,6 +17,62 @@ interface Layer {
   description: string;
 }
 
+/** Trace narrative: the canonical support-request walkthrough, one beat per layer. */
+const STORY = [
+  'A customer types: "Where is my package?"',
+  "Written rules look up the order and the account - same steps for every request",
+  "A workflow routes it to the right queue - nobody clicked anything",
+  "The model reads the message: shipping issue, 84% confident",
+  "A person checks the suggestion and approves the reply",
+];
+
+/** Minimal geometric layer icons (design-system v3 illustration language). */
+function LayerGlyph({ index }: { index: number }) {
+  const stroke = "currentColor";
+  const common = { fill: "none", stroke, strokeWidth: 1.8, strokeLinecap: "round" as const };
+  switch (index) {
+    case 0: // interface: chat bubble
+      return (
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path d="M3 4 h12 v8 h-7 l-3.5 3 v-3 H3 Z" {...common} strokeLinejoin="round" />
+        </svg>
+      );
+    case 1: // rules: list lines
+      return (
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path d="M4 5 h10 M4 9 h10 M4 13 h6" {...common} />
+        </svg>
+      );
+    case 2: // automation: chained arrows
+      return (
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <path
+            d="M2.5 9 h5 M10.5 9 h5 M13 6.5 15.5 9 13 11.5 M5 6.5 7.5 9 5 11.5"
+            {...common}
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case 3: // AI: node spark
+      return (
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <circle cx="9" cy="9" r="2.4" {...common} />
+          <path
+            d="M9 2.5 v2.5 M9 13 v2.5 M2.5 9 h2.5 M13 9 h2.5 M4.5 4.5 l1.8 1.8 M11.7 11.7 l1.8 1.8"
+            {...common}
+          />
+        </svg>
+      );
+    default: // human review: person
+      return (
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+          <circle cx="9" cy="6" r="3" {...common} />
+          <path d="M3.5 15 a5.5 5.5 0 0 1 11 0" {...common} />
+        </svg>
+      );
+  }
+}
+
 const LAYER_HEIGHT = 56;
 const LAYER_GAP = 14;
 const WIDTH = 560;
@@ -38,6 +94,7 @@ export function DiagramFigure({
 }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [tracing, setTracing] = useState(-1); // -1 idle; 0..n-1 = active layer
+  const [storyBeat, setStoryBeat] = useState<string | null>(null);
   const [textAltOpen, setTextAltOpen] = useState(false);
   const textAltId = useId();
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -48,6 +105,7 @@ export function DiagramFigure({
 
   function selectLayer(layer: Layer) {
     setSelected(layer.id);
+    setStoryBeat(null);
     track("diagram_component_opened", { component: layer.id });
   }
 
@@ -57,7 +115,10 @@ export function DiagramFigure({
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       const last = layers[layers.length - 1];
-      if (last) setSelected(last.id);
+      if (last) {
+        setSelected(last.id);
+        setStoryBeat(STORY[layers.length - 1] ?? null);
+      }
       return;
     }
     setTracing(0);
@@ -66,10 +127,11 @@ export function DiagramFigure({
         setTimeout(() => {
           setTracing(index);
           setSelected(layer.id);
+          setStoryBeat(STORY[index] ?? null);
           if (index === layers.length - 1) {
-            timers.current.push(setTimeout(() => setTracing(-1), 700));
+            timers.current.push(setTimeout(() => setTracing(-1), 900));
           }
-        }, index * 650),
+        }, index * 900),
       );
     });
   }
@@ -154,6 +216,12 @@ export function DiagramFigure({
                       >
                         {index + 1}
                       </span>
+                      <span
+                        aria-hidden="true"
+                        className={isSelected ? "text-primary" : "text-ink-muted"}
+                      >
+                        <LayerGlyph index={index} />
+                      </span>
                       <span className="truncate">{layer.label}</span>
                     </button>
                   </foreignObject>
@@ -174,12 +242,16 @@ export function DiagramFigure({
 
         <div>
           <p aria-live="polite" className="rounded-(--radius-card) bg-surface-alt p-4 text-body">
-            {selectedLayer ? (
+            {storyBeat && selectedLayer ? (
+              <>
+                <strong>{selectedLayer.label}:</strong> {storyBeat}
+              </>
+            ) : selectedLayer ? (
               <>
                 <strong>{selectedLayer.label}:</strong> {selectedLayer.description}
               </>
             ) : (
-              "Select a layer to see what it does - or trace a request through all five."
+              "Select a layer to see what it does - or trace one request through all five."
             )}
           </p>
         </div>

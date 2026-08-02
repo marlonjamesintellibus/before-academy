@@ -54,15 +54,21 @@ test("diagram layer opens its description and the text alternative toggles", asy
 
 test("concept diagrams run their interactions", async ({ page }) => {
   await page.goto(LESSON);
-  // Traditional software: deterministic run counter
+  // Traditional software: run twice, history proves determinism
   await page.getByRole("button", { name: "Run the rules" }).click();
-  await expect(page.getByText(/output was \$138\.00 every time/)).toBeVisible();
+  await expect(page.getByText(/Identical input gives identical output/)).toBeVisible({
+    timeout: 5000,
+  });
+  await page.getByRole("button", { name: "Run it again" }).click();
+  await expect(page.getByText("same input, same answer - guaranteed")).toBeVisible({
+    timeout: 5000,
+  });
   // Automation: trigger the chain to completion
   await page.getByRole("button", { name: "Trigger it now" }).click();
   await expect(page.getByText(/no decisions were made anywhere/)).toBeVisible({ timeout: 5000 });
-  // AI: classification with confidence
-  await page.getByRole("button", { name: "Classify a message" }).click();
-  await expect(page.getByText(/% confident/).first()).toBeVisible();
+  // AI: pick a message card, verdict lands with confidence (allow thinking delay)
+  await page.getByRole("button", { name: /^Classify: You won a FREE prize/ }).click();
+  await expect(page.getByText(/96% confident/).first()).toBeVisible({ timeout: 5000 });
   // Canonical diagram: trace a request selects the final layer
   await page.getByRole("button", { name: "Trace a request through the layers" }).click();
   const diagram = page
