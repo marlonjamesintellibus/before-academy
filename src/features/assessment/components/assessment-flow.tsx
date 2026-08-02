@@ -126,7 +126,6 @@ export function AssessmentFlow({
       passed: (previous?.passed ?? false) || result.data.passed,
       lastAttemptAt: new Date().toISOString(),
     });
-    track("assessment_submitted", {});
     track("assessment_result_viewed", {
       passed: result.data.passed,
       score: result.data.score,

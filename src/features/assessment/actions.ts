@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import type { Actor } from "@/lib/actor";
+import { captureServer } from "@/lib/analytics-server";
 import { getAssessmentConfig } from "@/lib/config";
 import { issueGuestToken, verifyGuestToken } from "@/lib/guest-token";
 import type { Result } from "@/lib/result";
@@ -117,6 +118,12 @@ const submitAttemptHandler = withAction(
     );
 
     const passed = outcome.score / outcome.total >= config.passThreshold;
+    captureServer(guestActor(input.anonymousId), "assessment_submitted", {
+      score: outcome.score,
+      total: outcome.total,
+      passed,
+      attempt_number: claims.attemptNumber,
+    });
     return ok({
       score: outcome.score,
       total: outcome.total,

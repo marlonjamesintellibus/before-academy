@@ -25,6 +25,7 @@
     "pino": "^10.3.1",
     "postgres": "^3.4.9",
     "posthog-js": "^1.409.5",
+    "posthog-node": "^5.47.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "uuidv7": "^1.2.1",

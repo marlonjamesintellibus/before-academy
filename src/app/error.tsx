@@ -1,10 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { track } from "@/lib/analytics";
 import { strings } from "@/lib/strings";
 
 /** Route error boundary (docs/engineering/error-handling.md): learner-safe copy, retry. */
 export default function RouteError({ reset }: { error: Error; reset: () => void }) {
+  useEffect(() => {
+    track("error_event", { code: "BOUNDARY", severity: "error" });
+  }, []);
+
   return (
     <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-16">
       <h1 className="text-heading font-bold">{strings.system.loadFailure}</h1>

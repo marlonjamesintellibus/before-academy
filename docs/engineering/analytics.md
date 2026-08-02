@@ -13,7 +13,7 @@ last_updated: 2026-07-31
 Event taxonomy is canonical in [../product/analytics-events.md](../product/analytics-events.md); this defines implementation.
 
 - PostHog JS client-side with **autocapture off** - explicit events only; posthog-node server-side for scoring, migration, and error events. Session recording off (ADR-031).
-- Event names + properties are typed constants in `lib/analytics/events.ts`, imported by both sides - drift-proof. A shared `enrich()` attaches common properties.
+- Event names + properties are typed constants in `lib/events.ts`, imported by both sides; a CI unit test audits the taxonomy doc against the type in both directions - drift-proof. A shared `enrich()` attaches common properties.
 - Identity: guest anonymous_id is the distinct_id; `posthog.alias(userId)` at conversion so funnels F1–F3 survive sign-up.
 - Funnel definitions live in [../product/analytics-events.md](../product/analytics-events.md); dashboard notes carry an owner + review cadence - every metric maps to a documented decision (ADR-032); orphan events are removed.
 - Privacy: no PII in properties pre-consent; respect DNT; consent posture is a privacy-review outcome.

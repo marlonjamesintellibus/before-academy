@@ -67,7 +67,8 @@ export type EventName =
   | "account_deletion_started"
   | "account_deleted"
   | "feedback_submitted"
-  | "error_event";
+  | "error_event"
+  | "web_vital";
 
 export interface EventProperties {
   [key: string]: string | number | boolean | undefined;

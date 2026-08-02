@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { Actor } from "@/lib/actor";
 import { actorKey } from "@/lib/actor";
+import { captureServer } from "@/lib/analytics-server";
 import { logger } from "@/lib/logger";
 import type { RateLimitSurface } from "@/lib/rate-limit";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -72,6 +73,11 @@ export function withAction<Schema extends z.ZodType, T>(
       return result;
     } catch (cause) {
       log.error({ err: cause, duration_ms: Date.now() - startedAt }, "action.unhandled");
+      captureServer(context.actor, "error_event", {
+        code: "INTERNAL",
+        route: options.name,
+        severity: "error",
+      });
       return err("INTERNAL", GENERIC_ERROR_MESSAGE, { retryable: true });
     }
   };
