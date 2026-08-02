@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { LessonBlock, PublishedSection } from "../types";
+import { ConceptDiagram } from "./diagrams/concept-diagram";
 import { DepthPanel } from "./depth-panel";
 import { DiagramFigure } from "./diagram-figure";
 import { HookBlock } from "./hook-block";
@@ -53,6 +54,7 @@ function BlockView({
             {block.title}
           </h2>
           <RichTextView body={block.quick} glossary={glossary} idPrefix={block.id} />
+          <ConceptDiagram blockId={block.id} />
           {block.explore ? (
             <DepthPanel
               layer="explore"

@@ -41,11 +41,34 @@ test("depth panel expands and collapses with aria-expanded", async ({ page }) =>
 
 test("diagram layer opens its description and the text alternative toggles", async ({ page }) => {
   await page.goto(LESSON);
-  const layers = page.getByRole("group", { name: "Diagram layers" }).getByRole("button");
+  const diagram = page
+    .getByRole("figure")
+    .filter({ has: page.getByRole("group", { name: "Diagram layers" }) });
+  const layers = diagram.getByRole("group", { name: "Diagram layers" }).getByRole("button");
   await layers.first().click();
-  await expect(page.getByRole("figure").locator("[aria-live=polite]")).toBeVisible();
+  await expect(layers.first()).toHaveAttribute("aria-pressed", "true");
+  await expect(diagram.locator("[aria-live=polite]")).toContainText(":");
   await page.getByRole("button", { name: "Read the full text version" }).click();
   await expect(page.getByRole("button", { name: "Hide the text version" })).toBeVisible();
+});
+
+test("concept diagrams run their interactions", async ({ page }) => {
+  await page.goto(LESSON);
+  // Traditional software: deterministic run counter
+  await page.getByRole("button", { name: "Run the rules" }).click();
+  await expect(page.getByText(/output was \$138\.00 every time/)).toBeVisible();
+  // Automation: trigger the chain to completion
+  await page.getByRole("button", { name: "Trigger it now" }).click();
+  await expect(page.getByText(/no decisions were made anywhere/)).toBeVisible({ timeout: 5000 });
+  // AI: classification with confidence
+  await page.getByRole("button", { name: "Classify a message" }).click();
+  await expect(page.getByText(/% confident/).first()).toBeVisible();
+  // Canonical diagram: trace a request selects the final layer
+  await page.getByRole("button", { name: "Trace a request through the layers" }).click();
+  const diagram = page
+    .getByRole("figure")
+    .filter({ has: page.getByRole("group", { name: "Diagram layers" }) });
+  await expect(diagram.locator("[aria-live=polite]")).toContainText(":", { timeout: 8000 });
 });
 
 test("glossary chip opens a definition panel on tap", async ({ page }) => {

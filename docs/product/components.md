@@ -10,7 +10,7 @@ last_updated: 2026-07-31
 
 # Component Library
 
-26 components cover every Phase 1 screen. Global interaction rules live in [interaction-patterns.md](interaction-patterns.md) and apply to all. Engineering wraps shadcn/ui once in `components/ui` (ADR-013); features consume wrappers only.
+27 components cover every Phase 1 screen. Global interaction rules live in [interaction-patterns.md](interaction-patterns.md) and apply to all. Engineering wraps shadcn/ui once in `components/ui` (ADR-013); features consume wrappers only.
 
 | Component | Variants | States | Key accessibility behaviour |
 |---|---|---|---|
@@ -24,7 +24,8 @@ last_updated: 2026-07-31
 | ProgressBar | Lesson scroll, Attempt, Activity dots | 0–100 / dots | `role=progressbar` + valuetext |
 | ContentBlock | Concept, Objectives accordion | collapsed/expanded/highlighted | h2 headings; highlight announced in text |
 | DepthPanel | Explore Further, Go Deeper | collapsed/expanded | button + `aria-expanded`; reading time in label |
-| DiagramFigure | Static, Interactive layers | layer selected; text-alt open | figure/figcaption; layers are buttons; full text alternative |
+| DiagramFigure | Interactive SVG layer stack + request trace | layer selected; tracing; text-alt open | figure/figcaption; layers are real buttons (aria-pressed); trace has reduced-motion instant equivalent; full text alternative |
+| ConceptDiagram | Rules, Automation, AI (keyed by concept block) | idle/running/result | interactions are buttons; outcomes announced via aria-live; never colour alone |
 | MisconceptionCallout | - | - | `role=note`; "Common misconception" prefix |
 | GlossaryChip | inline term | default/open | tap-to-open panel, never hover tooltip |
 | ScenarioCard | activity scenario | unanswered/selected/submitted | radiogroup; text precedes controls |
