@@ -25,7 +25,7 @@ export default function HomePage() {
         </TrackedLink>
         <TrackedLink
           event="cta_assessment_first_clicked"
-          href={`${LESSON_ROUTE}/assessment`}
+          href={`${LESSON_ROUTE}/assessment?route=assessment_first`}
           className="text-body text-primary underline-offset-4 hover:underline"
         >
           {strings.actions.assessmentFirst}

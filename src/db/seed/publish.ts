@@ -15,6 +15,7 @@ import { lintSection } from "@/features/content/lint";
 import { lintActivity, lintCheck } from "@/features/content/activity-lint";
 import { sectionSeed } from "./section-content";
 import { activitySeed, checkSeed } from "./activity-content";
+import { assessmentSeed } from "./assessment-content";
 
 /**
  * Idempotent seed/publish pipeline (ADR-027, ADR-021). Content lives as
@@ -35,7 +36,7 @@ async function publish() {
   }
 
   const db = getDb();
-  const snapshot = JSON.stringify({ sectionSeed, activitySeed, checkSeed });
+  const snapshot = JSON.stringify({ sectionSeed, activitySeed, checkSeed, assessmentSeed });
   const hash = createHash("sha256").update(snapshot).digest("hex");
 
   await db.transaction(async (tx) => {
@@ -197,6 +198,49 @@ async function publish() {
       );
     }
 
+    // Graded core bank (kind=assessment, ADR-029): replace wholesale like check.
+    const existingAssessment = await tx.query.questions.findMany({
+      where: and(eq(questions.sectionId, section.id), eq(questions.kind, "assessment")),
+    });
+    for (const row of existingAssessment) {
+      await tx.delete(questions).where(eq(questions.id, row.id));
+    }
+    for (const question of assessmentSeed.questions) {
+      const [inserted] = await tx
+        .insert(questions)
+        .values({
+          sectionId: section.id,
+          contentId: question.id,
+          kind: "assessment" as const,
+          format: question.format,
+          category: question.category,
+          difficulty: question.difficulty,
+          stem: question.stem,
+          explanation: JSON.stringify({
+            correctExplanation: question.correctExplanation,
+            incorrectExplanation: question.incorrectExplanation,
+            fixedDraw: question.fixedDraw,
+            rotateOptions: question.rotateOptions,
+          }),
+          remediationBlockId: question.category,
+          learningOutcomes: question.learningOutcomes,
+          misconceptionTags: question.misconceptionTags,
+          useTags: ["assessment"],
+          status: "published" as const,
+          version,
+        })
+        .returning();
+      if (!inserted) throw new Error("assessment question insert returned nothing");
+      await tx.insert(questionOptions).values(
+        question.options.map((option, position) => ({
+          questionId: inserted.id,
+          position,
+          body: option.text,
+          isCorrect: option.correct,
+        })),
+      );
+    }
+
     await tx.insert(contentVersions).values({
       sectionId: section.id,
       version,
@@ -205,7 +249,7 @@ async function publish() {
     });
 
     console.log(
-      `published ${section.slug} v${version}: ${sectionSeed.blocks.length} blocks, ${sectionSeed.glossary.length} glossary terms, ${activitySeed.scenarios.length} scenarios, ${checkSeed.questions.length} check questions`,
+      `published ${section.slug} v${version}: ${sectionSeed.blocks.length} blocks, ${sectionSeed.glossary.length} glossary terms, ${activitySeed.scenarios.length} scenarios, ${checkSeed.questions.length} check questions, ${assessmentSeed.questions.length} bank items`,
     );
   });
 
