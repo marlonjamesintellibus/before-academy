@@ -1,9 +1,20 @@
 import { createHash } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
-import { contentBlocks, contentVersions, glossaryTerms, pathways, sections } from "@/db/schema";
+import {
+  contentBlocks,
+  contentVersions,
+  glossaryTerms,
+  pathways,
+  questionOptions,
+  questions,
+  scenarios,
+  sections,
+} from "@/db/schema";
 import { lintSection } from "@/features/content/lint";
+import { lintActivity, lintCheck } from "@/features/content/activity-lint";
 import { sectionSeed } from "./section-content";
+import { activitySeed, checkSeed } from "./activity-content";
 
 /**
  * Idempotent seed/publish pipeline (ADR-027, ADR-021). Content lives as
@@ -12,7 +23,11 @@ import { sectionSeed } from "./section-content";
  * Run: npm run db:seed (uses DATABASE_URL).
  */
 async function publish() {
-  const issues = lintSection(sectionSeed);
+  const issues = [
+    ...lintSection(sectionSeed),
+    ...lintActivity(activitySeed, sectionSeed),
+    ...lintCheck(checkSeed, sectionSeed),
+  ];
   if (issues.length > 0) {
     console.error("content-lint failed:");
     for (const issue of issues) console.error(`  [${issue.blockId}] ${issue.message}`);
@@ -20,7 +35,7 @@ async function publish() {
   }
 
   const db = getDb();
-  const snapshot = JSON.stringify(sectionSeed);
+  const snapshot = JSON.stringify({ sectionSeed, activitySeed, checkSeed });
   const hash = createHash("sha256").update(snapshot).digest("hex");
 
   await db.transaction(async (tx) => {
@@ -116,6 +131,72 @@ async function publish() {
         });
     }
 
+    // Sort the System scenarios (S04): replace wholesale, same versioning model.
+    await tx.delete(scenarios).where(eq(scenarios.sectionId, section.id));
+    await tx.insert(scenarios).values(
+      activitySeed.scenarios.map((scenario) => ({
+        sectionId: section.id,
+        contentId: scenario.id,
+        position: scenario.position,
+        body: scenario.body,
+        correctCategory: scenario.correctCategory,
+        acceptedCategories: scenario.accepted,
+        clue: scenario.clue,
+        ambiguityNote: scenario.ambiguityNote ?? null,
+        feedback: {
+          title: scenario.title,
+          difficulty: scenario.difficulty,
+          byCategory: scenario.feedback,
+          ...(scenario.explanation ? { explanation: scenario.explanation } : {}),
+          remediationAnchor: scenario.remediationAnchor,
+        },
+        status: "published" as const,
+        version,
+      })),
+    );
+
+    // Knowledge check questions (S05, kind=check; never in graded draws, ADR-029).
+    const existingCheck = await tx.query.questions.findMany({
+      where: and(eq(questions.sectionId, section.id), eq(questions.kind, "check")),
+    });
+    for (const row of existingCheck) {
+      await tx.delete(questions).where(eq(questions.id, row.id));
+    }
+    for (const question of checkSeed.questions) {
+      const [inserted] = await tx
+        .insert(questions)
+        .values({
+          sectionId: section.id,
+          contentId: question.id,
+          kind: "check" as const,
+          format: "multiple_choice" as const,
+          category: question.category,
+          difficulty: question.difficulty,
+          stem: question.stem,
+          explanation: JSON.stringify({
+            correctFeedback: question.correctFeedback,
+            incorrectFeedback: question.incorrectFeedback,
+            chipLabel: question.chip.label,
+          }),
+          remediationBlockId: question.chip.anchor,
+          learningOutcomes: question.learningOutcomes,
+          misconceptionTags: question.misconceptionTags,
+          useTags: ["check"],
+          status: "published" as const,
+          version,
+        })
+        .returning();
+      if (!inserted) throw new Error("question insert returned nothing");
+      await tx.insert(questionOptions).values(
+        question.options.map((option, position) => ({
+          questionId: inserted.id,
+          position,
+          body: option.text,
+          isCorrect: option.correct,
+        })),
+      );
+    }
+
     await tx.insert(contentVersions).values({
       sectionId: section.id,
       version,
@@ -124,7 +205,7 @@ async function publish() {
     });
 
     console.log(
-      `published ${section.slug} v${version}: ${sectionSeed.blocks.length} blocks, ${sectionSeed.glossary.length} glossary terms`,
+      `published ${section.slug} v${version}: ${sectionSeed.blocks.length} blocks, ${sectionSeed.glossary.length} glossary terms, ${activitySeed.scenarios.length} scenarios, ${checkSeed.questions.length} check questions`,
     );
   });
 

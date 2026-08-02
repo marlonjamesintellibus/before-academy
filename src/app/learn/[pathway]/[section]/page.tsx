@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { TrackOnMount } from "@/components/track";
-import { getPublishedSection, LessonView } from "@/features/content";
+import { LessonView } from "@/features/content";
+import { getPublishedSection } from "@/features/content/server";
 import { LESSON_ROUTE, PATHWAY_SLUG, SECTION_SLUG } from "@/lib/routes";
 import { strings } from "@/lib/strings";
 

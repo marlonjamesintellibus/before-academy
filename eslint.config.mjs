@@ -39,7 +39,7 @@ const eslintConfig = defineConfig([
           patterns: [
             { group: ["@/app/*"], message: "features must not import from app." },
             {
-              group: ["@/features/*/*", "!@/features/*/index"],
+              group: ["@/features/*/*", "!@/features/*/index", "!@/features/*/server"],
               message: "Cross-feature imports go through the feature's index.ts only.",
             },
           ],
