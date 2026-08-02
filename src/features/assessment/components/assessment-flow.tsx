@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Callout } from "@/components/ui/callout";
 import { Modal } from "@/components/ui/modal";
 import { track } from "@/lib/analytics";
 import { createAttempt, submitAttempt } from "../actions";
@@ -355,26 +356,25 @@ function Results({
 
   return (
     <div>
-      <div
-        className={`rounded-(--radius-control) border-l-4 p-6 ${
-          result.passed ? "border-success bg-surface-alt" : "border-warning bg-surface-alt"
-        }`}
+      <Callout
+        variant={result.passed ? "success" : "warning"}
+        title={
+          result.passed ? "Section complete - well done" : "Not this time - here's what to review"
+        }
+        as="h2"
       >
-        <h2 className="text-heading font-bold">
-          {result.passed ? "Section complete - well done" : "Not this time - here's what to review"}
-        </h2>
-        <p className="mt-2 text-body">
+        <p>
           {result.score} of {result.total} correct; passing is {result.passingScore} of{" "}
           {result.total}.
         </p>
         {!result.passed && uniqueStrengths.length > 0 ? (
-          <p className="mt-2 text-body">
+          <p>
             You were strong on {uniqueStrengths.slice(0, 2).join(" and ")}. Focus on{" "}
             {result.categoriesFailed.map((category) => CATEGORY_DISPLAY[category]).join(", ")} and
             retake when you&rsquo;re ready - the questions will be different.
           </p>
         ) : null}
-      </div>
+      </Callout>
 
       {result.categoriesFailed.length > 0 ? (
         <section aria-label="What to review" className="mt-6">

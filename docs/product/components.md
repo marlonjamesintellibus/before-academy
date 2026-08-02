@@ -26,7 +26,7 @@ last_updated: 2026-07-31
 | DepthPanel | Explore Further, Go Deeper | collapsed/expanded | button + `aria-expanded`; reading time in label |
 | DiagramFigure | Interactive SVG layer stack + request trace | layer selected; tracing; text-alt open | figure/figcaption; layers are real buttons (aria-pressed); trace has reduced-motion instant equivalent; full text alternative |
 | ConceptDiagram | Rules, Automation, AI (keyed by concept block) | idle/running/result | interactions are buttons; outcomes announced via aria-live; never colour alone |
-| MisconceptionCallout | - | - | `role=note`; "Common misconception" prefix |
+| Callout | Warning (misconception), Info (takeaways), Success (pass) | - | `role=note`; tinted rounded card, decorative SVG icon, colored heading carries meaning in text |
 | GlossaryChip | inline term | default/open | tap-to-open panel, never hover tooltip |
 | ScenarioCard | activity scenario | unanswered/selected/submitted | radiogroup; text precedes controls |
 | AnswerOption | radio, checkbox, match/sort row | + correct/incorrect/missed | correctness = icon + text; button-based reorder |

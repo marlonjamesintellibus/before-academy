@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { LessonBlock, PublishedSection } from "../types";
+import { Callout } from "@/components/ui/callout";
 import { ConceptDiagram } from "./diagrams/concept-diagram";
 import { DepthPanel } from "./depth-panel";
 import { DiagramFigure } from "./diagram-figure";
@@ -97,14 +98,10 @@ function BlockView({
       );
     case "misconception":
       return (
-        <aside
-          role="note"
-          className="rounded-(--radius-card) border-l-4 border-warning bg-surface-card p-5 shadow-(--shadow-card)"
-        >
-          <p className="text-body font-semibold">Common misconception</p>
-          <p className="mt-2 text-body italic">&ldquo;{block.claim}&rdquo;</p>
-          <p className="mt-2 text-body">{block.correction}</p>
-        </aside>
+        <Callout variant="warning" title="Common misconception">
+          <p className="italic">&ldquo;{block.claim}&rdquo;</p>
+          <p>{block.correction}</p>
+        </Callout>
       );
     case "activity_cta":
       return (
@@ -132,12 +129,9 @@ function BlockView({
       );
     case "takeaway":
       return (
-        <section
-          aria-label="Key takeaways"
-          className="rounded-(--radius-card) border-l-4 border-primary bg-primary-tint p-5"
-        >
+        <Callout variant="info" title="Key takeaways">
           <RichTextView body={block.body} glossary={glossary} idPrefix={block.id} />
-        </section>
+        </Callout>
       );
     case "next_step":
       return <p className="text-body text-ink-muted">{block.body}</p>;

@@ -30,6 +30,7 @@ Tokens are implemented as the Tailwind theme; a token change is one diff (ADR-01
 | color.success | #0E7A46 | correct (always icon + text) |
 | color.success-tint | #E5F4EC | correct surfaces |
 | color.warning | #B45309 | needs-review |
+| color.warning-tint | #FDF4E7 | warning callout surfaces |
 | color.danger | #B3261E | errors, destructive |
 | color.danger-tint | #FBEAE8 | incorrect surfaces |
 
@@ -43,6 +44,7 @@ Display face: **Bricolage Grotesque** (600-800) for h1/h2, the wordmark, and sta
 - Radius 8 (controls), 12 (cards), 16 (hero panels), 999 (chips/pills).
 - Elevation: white cards with 1px border + soft layered shadow (0 1px 2px + 0 8px 24px at 6% navy); shell surfaces flat. Hover lifts are subtle (2px translate + deeper shadow), never bouncy.
 - Progress: primary-filled bars/rings on sky tracks; always paired with text ("3 of 10").
+- Callouts: tinted rounded cards with an SVG icon and colored heading - never a left-border stripe.
 - Breakpoints: 360 floor · 768 · 1024 (ToC rail appears) · 1440 max canvas.
 - Motion: 120ms state / 200ms panel / 280ms route; ease-out in, ease-in out; instant reduced-motion equivalent; nothing loops or autoplays.
 - Icons: 24px stroke set (Lucide), always paired with text except close ×.
