@@ -14,8 +14,25 @@ import type { SectionSeed } from "./types";
  * standalone test, analogy judgment) stay human per governance.md.
  */
 
-/** Register IDs from docs/content/misconceptions.md. M7 lands with AIA-5. */
-const MISCONCEPTION_IDS = new Set(["M1", "M2", "M3", "M4", "M5", "M6"]);
+/** Register IDs from docs/content/misconceptions.md. */
+const MISCONCEPTION_IDS = new Set(["M1", "M2", "M3", "M4", "M5", "M6", "M7"]);
+
+/**
+ * knowledge-model.md asks for 3 to 6 approved examples per record
+ * (content-map.md decision 8). An unchecked standard is how canonical_records
+ * spent a schema version empty, so the floor is enforced rather than suggested.
+ */
+const EXAMPLE_FLOOR = 3;
+const EXAMPLE_CEILING = 6;
+
+/**
+ * The published section keeps its legacy unprefixed IDs because anchors,
+ * remediation deep links and e2e tests reference them (content-map.md decision
+ * 1). Every other section must carry a section discriminator, checked here so
+ * the exception cannot spread by copy-paste.
+ */
+const LEGACY_PREFIX_SECTION = "ai-automation-software";
+const LEGACY_PREFIX = /^P1-/i;
 
 /** knowledge-model.md: plain definitions are 25 words or fewer. */
 const DEFINITION_WORD_LIMIT = 25;
@@ -77,8 +94,17 @@ export function lintCanonicalRecords(
       });
     }
 
-    if (record.examples.length === 0) {
-      issues.push({ blockId: at, message: "at least one approved example is required" });
+    if (record.examples.length < EXAMPLE_FLOOR) {
+      issues.push({
+        blockId: at,
+        message: `${record.examples.length} approved example(s); the knowledge model asks for ${EXAMPLE_FLOOR} to ${EXAMPLE_CEILING}`,
+      });
+    }
+    if (record.examples.length > EXAMPLE_CEILING) {
+      issues.push({
+        blockId: at,
+        message: `${record.examples.length} approved examples exceeds the ${EXAMPLE_CEILING} the knowledge model allows`,
+      });
     }
     for (const [index, example] of record.examples.entries()) {
       if (!example.text.trim() || !example.clue.trim()) {
@@ -113,6 +139,18 @@ export function lintCanonicalRecords(
       }
       if (relatedKey === record.key) {
         issues.push({ blockId: at, message: "a record cannot be related to itself" });
+      }
+    }
+  }
+
+  // Identifier scheme (decision 1): only the published section may use P1-.
+  if (section.section.slug !== LEGACY_PREFIX_SECTION) {
+    for (const block of section.blocks) {
+      if (LEGACY_PREFIX.test(block.id)) {
+        issues.push({
+          blockId: block.id,
+          message: `section "${section.section.slug}" must not use the legacy P1- prefix; use AIA-<n>-* per content-map.md`,
+        });
       }
     }
   }

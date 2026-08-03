@@ -55,6 +55,23 @@ export const strings = {
      * dashboard cannot drift apart, which is how "Applying AI at Work" (a
      * section no plan defined) reached both. */
     nextSectionTitle: "What AI Can Do",
+    restOfPathwayTitle: "The rest of the AI Awareness pathway",
+    restOfPathwayNote:
+      "Seven sections in total. Section 3 is open now; the others are planned and open as each passes learner testing.",
+    /**
+     * The AI Awareness outline exactly as commissioned in
+     * docs/content/content-map.md. Positions are learner order, so the open
+     * section keeps its true number 3 rather than being renumbered to look
+     * like the beginning of the pathway.
+     */
+    outline: [
+      { position: 1, title: "What Is Artificial Intelligence?" },
+      { position: 2, title: "AI in Everyday Life" },
+      { position: 4, title: "What AI Can Do" },
+      { position: 5, title: "What AI Cannot Reliably Do" },
+      { position: 6, title: "Myths and Misconceptions" },
+      { position: 7, title: "Where to Go Next" },
+    ],
     previewNote: "Coming soon - we'll open this section once it passes learner testing.",
   },
   account: {

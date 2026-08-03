@@ -185,6 +185,10 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
         text: "An email filter that blocks a named sender",
         clue: "the condition was typed in by a person",
       },
+      {
+        text: "A warehouse system reordering stock when the count drops below fifty",
+        clue: "fifty is a number someone chose, not a demand forecast",
+      },
     ],
     analogies: [],
     misconceptionIds: ["M1"],
@@ -213,6 +217,10 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
         text: "A support classifier trained on past tickets",
         clue: "the word trained names the mechanism",
       },
+      {
+        text: "A camera app that finds faces in a photo it has never seen before",
+        clue: "it works on images that were not among its examples",
+      },
     ],
     analogies: [],
     misconceptionIds: ["M1", "M4"],
@@ -236,6 +244,14 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
       {
         text: "Entering the same three amounts and getting the same total",
         clue: "identical output on repeat",
+      },
+      {
+        text: "A payroll run producing the same net pay from the same timesheet",
+        clue: "rerun the month and every figure matches",
+      },
+      {
+        text: "A currency converter returning the same amount for the same rate and input",
+        clue: "no variation between runs, however many times you ask",
       },
     ],
     analogies: [],
@@ -265,6 +281,10 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
         text: "A spam filter occasionally catching a real message",
         clue: "a false positive that is expected behaviour, not a bug",
       },
+      {
+        text: "A voice assistant transcribing the same phrase slightly differently on a second try",
+        clue: "identical audio in, different text out",
+      },
     ],
     analogies: [],
     misconceptionIds: ["M4"],
@@ -290,6 +310,14 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
         text: "A recommendation system improving as more people use it",
         clue: "performance changed with data, not with an edit",
       },
+      {
+        text: "A bank's fraud model retrained each quarter on recent cases",
+        clue: "behaviour updated by new examples, not by new rules",
+      },
+      {
+        text: "A logistics tool estimating delivery windows from years of past routes",
+        clue: "the estimate came from history; nobody wrote the timings down",
+      },
     ],
     analogies: [],
     misconceptionIds: [],
@@ -314,6 +342,14 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
         text: "A tool drafting an email from a one-line instruction",
         clue: "the output did not exist anywhere before",
       },
+      {
+        text: "An image tool producing a picture from a written description",
+        clue: "the picture is composed, not retrieved from a library",
+      },
+      {
+        text: "A meeting tool writing a summary in its own prose rather than quoting lines",
+        clue: "the wording is new, so it can be fluent and wrong at once",
+      },
     ],
     analogies: [],
     misconceptionIds: ["M3"],
@@ -337,6 +373,14 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
       {
         text: "A support agent reading and answering a ticket the system routed",
         clue: "a person makes the call that reaches the customer",
+      },
+      {
+        text: "A clinician confirming a flagged scan before it reaches the patient record",
+        clue: "the flag is a prompt to look, not a decision",
+      },
+      {
+        text: "An editor approving a drafted product description before it goes live",
+        clue: "nothing publishes until a person accepts it",
       },
     ],
     analogies: [],
@@ -366,6 +410,10 @@ export const canonicalRecordSeeds: CanonicalRecordSeed[] = [
       {
         text: "A support platform that routes automatically, classifies with a trained model, and hands to an agent",
         clue: "trained names the AI layer, routing names the automation, the agent is the human step",
+      },
+      {
+        text: "An email client with rule-based folders, scheduled send, and a learned spam filter",
+        clue: "three mechanisms in one familiar product, only one of them learned",
       },
     ],
     analogies: [

@@ -16,7 +16,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx src/db/seed/publish.ts",
-    "content:lint": "tsx src/db/seed/lint-run.ts"
+    "content:lint": "tsx src/db/seed/lint-run.ts",
+    "content:deck": "tsx src/db/seed/deck-run.ts"
   },
   "dependencies": {
     "better-auth": "^1.6.25",

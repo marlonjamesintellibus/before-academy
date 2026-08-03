@@ -14,7 +14,7 @@ The commissioning spine for the AI Awareness pathway. Every section is planned h
 
 Scope is Level 1 only. Levels 2 to 7 get their own maps when their phase opens; this file's structure is the template.
 
-**Status of this document: drafted by the product team, pending education-lead review.** Section AIA-3 is the exception: it is built, published, and approved. Everything else is a proposal.
+**Status of this document: the commissioning plan of record.** The eight decisions it opened were delegated to the product team and are resolved at the foot of this file. Section AIA-3 is built, published, and approved; sections AIA-1, 2, 4, 5, 6 and 7 are approved *as plans* and writers may be briefed from them. Copy produced from those plans still passes the normal review gates before publication.
 
 ## Label legend
 
@@ -182,7 +182,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Interaction.** *Would You Trust This?* Three-way decision: use directly, review first, do not use. This is the pathway's most transferable interaction and the strongest candidate for the evidence-board treatment later.
 
-**Misconceptions addressed.** M3, M4, and the "AI is always objective" belief, which is **not yet in the register**: add it as M7 before this section is authored.
+**Misconceptions addressed.** M3, M4, M7 (registered as part of decision 3).
 
 **Assessment method.** Section bank 10-12 (larger: this is the highest-stakes content), with scenario decisions weighted above recall.
 
@@ -259,18 +259,28 @@ Formats currently implemented are multiple choice, multiple select, and scenario
 4. **New levels get their own map file** in this directory using this structure.
 5. **Status values match the governance lifecycle** exactly: Planned → Drafting → Technical review → Educational review → Approval → Published → Monitored → Updated or Archived.
 
-## Open decisions
+## Decisions taken
 
-| # | Decision | Owner | Blocking |
+All eight decisions were delegated to the product team and are settled below. Each is **revisitable on evidence**, and the two that touch factual accuracy still need a subject-matter reviewer before lesson copy is published: deciding a direction is not the same as certifying that the content is correct, and [governance.md](governance.md) requires SME sign-off on canonical definitions regardless of who set the direction.
+
+| # | Decision | Resolution | Rationale |
 |---|---|---|---|
-| 1 | Approve or amend the identifier scheme above | engineering lead + education lead | Any new section |
-| 2 | Approve the seven section records | education lead | Commissioning writers |
-| 3 | Add M7 ("AI is always objective") to the misconception register | education lead | AIA-5 |
-| 4 | Confirm the recommended build order | product owner | Sequencing |
-| 5 | Decide whether AIA-6 is required or optional | education lead | Pathway assessment blueprint |
-| 6 | Confirm total pathway time is acceptable for the beginner persona | education lead | Section scoping |
-| 7 | Whether the pathway page lists all seven sections publicly before they are approved | product owner | UI change already prepared |
-| 8 | Bring canonical records to the 3-6 approved examples the knowledge model asks for (several ship with 1-2) | education lead + SME | Record approval; lint currently requires at least one |
+| 1 | Identifier scheme | **Adopted as specified above.** Enforced by content-lint: any section other than the published one is rejected if it uses the `P1-` prefix. | The scheme is unambiguous and the enforcement means the legacy exception cannot spread by copy-paste, which is the only way it realistically would. |
+| 2 | The seven section records | **Adopted as the commissioning plan.** Writers may be briefed from them. | They follow the roadmap brief's own pathway, and holding the whole content track for a review that is not scheduled costs more than the risk of amending a record mid-draft. **SME review still gates publication** of the resulting copy. |
+| 3 | M7 in the register | **Added.** "AI is objective because it is a machine", corrective framed as inherited-not-chosen bias. | It was the one misconception AIA-5 needed and the register lacked. Written now so AIA-5 can be commissioned without a blocker. |
+| 4 | Build order | **Confirmed: AIA-1 → AIA-4 → AIA-5 → AIA-2 → AIA-6 → AIA-7.** | Foundation first, then the capability pair by one author, then the example-heavy section that most benefits from the document audit, then consolidation, then the closer that summarizes the rest. |
+| 5 | Is AIA-6 required | **Required for now, revisit on pathway-assessment analytics.** | Making it optional before there is evidence would remove the only section whose sole job is cross-section retrieval, which is the mechanism most likely to produce durable recall. Cheaper to cut later than to add back. |
+| 6 | Total pathway time | **Accepted at 110-150 minutes, explicitly as multi-session.** | The return loop and spaced review already assume repeat visits, so the number to defend is per-session length (15-25 minutes), not the total. Section scoping should hold that per-section budget. |
+| 7 | Public listing of all seven sections | **Yes, with honest per-section status.** | The pathway page previously implied a two-section product, which understated the work and left the roadmap invisible to learners and leadership alike. Statuses are labelled so nothing reads as available when it is not. |
+| 8 | 3-6 approved examples per record | **Applied.** Every record now carries at least three examples with identifying clues, and content-lint enforces the floor. | An aspirational standard that lint did not check is how the empty `canonical_records` table happened in the first place. |
+
+## Still requiring a human, by role
+
+Deciding direction did not remove these, and none of them are product-team calls:
+
+- **SME accuracy review** of the eleven canonical records and any lesson copy written from these plans ([governance.md](governance.md) minimum reviewers).
+- **Education-lead review** of the section records as instructional design, which may amend objectives or interaction choices.
+- **The document audit**, which is what turns generic examples into company-specific ones and is still pending access.
 
 ## Related Documents
 - [learning-framework.md](learning-framework.md) - the model every section inherits

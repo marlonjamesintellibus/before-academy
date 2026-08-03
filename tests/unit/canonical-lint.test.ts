@@ -16,7 +16,11 @@ const base: CanonicalRecordSeed = {
   definition: "A short plain definition that stays under the word limit",
   technicalDefinition: "A more precise framing for the deeper layer.",
   whyItMatters: "It changes a decision the learner actually makes.",
-  examples: [{ text: "A familiar system", clue: "the observable property" }],
+  examples: [
+    { text: "A familiar system", clue: "the observable property" },
+    { text: "A second system from another industry", clue: "a different observable property" },
+    { text: "A third that looks like the first but is not", clue: "the contrast case" },
+  ],
   analogies: [{ analogy: "A vending machine", boundary: "a bigger machine is still a machine" }],
   misconceptionIds: ["M1"],
   relatedKeys: [],
@@ -26,7 +30,16 @@ const base: CanonicalRecordSeed = {
   isChip: false,
 };
 
-const emptySection = { glossary: [] } as unknown as SectionSeed;
+/** The published section keeps the legacy prefix, so fixtures use its slug. */
+function sectionWith(overrides: Partial<{ glossary: unknown[]; blocks: unknown[]; slug: string }>) {
+  return {
+    section: { slug: overrides.slug ?? "ai-automation-software" },
+    blocks: overrides.blocks ?? [],
+    glossary: overrides.glossary ?? [],
+  } as unknown as SectionSeed;
+}
+
+const emptySection = sectionWith({});
 
 function lint(record: Partial<CanonicalRecordSeed>) {
   return lintCanonicalRecords([{ ...base, ...record }], {}, emptySection);
@@ -48,7 +61,7 @@ describe("canonical-lint: shipped seeds", () => {
 
 describe("canonical-lint: rejections", () => {
   it("catches a glossary definition that drifts from its record", () => {
-    const drifted = {
+    const drifted = sectionWith({
       glossary: [
         {
           term: "Example term",
@@ -57,13 +70,13 @@ describe("canonical-lint: rejections", () => {
           chip: false,
         },
       ],
-    } as unknown as SectionSeed;
+    });
     const issues = lintCanonicalRecords([base], { "example-concept": "Example term" }, drifted);
     expect(issues.map((i) => i.message).join(" ")).toMatch(/drifted from its canonical record/);
   });
 
   it("accepts a trailing period difference, which is rendering not wording", () => {
-    const sameWithPeriod = {
+    const sameWithPeriod = sectionWith({
       glossary: [
         {
           term: "Example term",
@@ -72,7 +85,7 @@ describe("canonical-lint: rejections", () => {
           chip: false,
         },
       ],
-    } as unknown as SectionSeed;
+    });
     expect(
       lintCanonicalRecords([base], { "example-concept": "Example term" }, sameWithPeriod),
     ).toEqual([]);
@@ -116,12 +129,35 @@ describe("canonical-lint: rejections", () => {
     ).toMatch(/limit 25/);
   });
 
-  it("catches a record with no approved example", () => {
+  it("catches a record below the approved-example floor", () => {
     expect(
-      lint({ examples: [] })
+      lint({ examples: [{ text: "Only one", clue: "a clue" }] })
         .map((i) => i.message)
         .join(" "),
-    ).toMatch(/at least one approved example/);
+    ).toMatch(/asks for 3 to 6/);
+  });
+
+  it("catches a record above the approved-example ceiling", () => {
+    const many = Array.from({ length: 7 }, (_, i) => ({ text: `Example ${i}`, clue: "a clue" }));
+    expect(
+      lint({ examples: many })
+        .map((i) => i.message)
+        .join(" "),
+    ).toMatch(/exceeds the 6/);
+  });
+
+  it("rejects the legacy P1- prefix outside the published section", () => {
+    const newSection = sectionWith({
+      slug: "what-is-artificial-intelligence",
+      blocks: [{ id: "P1-LESSON-002" }],
+    });
+    const issues = lintCanonicalRecords([base], {}, newSection);
+    expect(issues.map((i) => i.message).join(" ")).toMatch(/must not use the legacy P1- prefix/);
+  });
+
+  it("allows the legacy prefix in the published section", () => {
+    const published = sectionWith({ blocks: [{ id: "P1-LESSON-002" }] });
+    expect(lintCanonicalRecords([base], {}, published)).toEqual([]);
   });
 
   it("catches an example missing its identifying clue", () => {

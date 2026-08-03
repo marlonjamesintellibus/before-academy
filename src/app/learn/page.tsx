@@ -57,7 +57,7 @@ export default function PathwayPage() {
                     aria-hidden="true"
                     className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-primary font-display text-subheading font-bold text-surface-card"
                   >
-                    1
+                    3
                   </span>
                   <span className="font-display text-subheading font-semibold text-ink">
                     {strings.pathway.sectionOneTitle}
@@ -71,37 +71,47 @@ export default function PathwayPage() {
               </TrackedLink>
               <SectionUnits />
             </li>
-            <li>
-              <TrackOnVisible event="next_preview_viewed">
-                <div
-                  id="next"
-                  className="rounded-(--radius-card) border border-border bg-surface-alt p-6"
-                >
-                  <div className="flex flex-wrap items-center gap-3">
+          </ol>
+
+          {/* S12 next-step preview, widened to the whole pathway: showing one
+              "coming soon" card understated a seven-section plan and left the
+              roadmap invisible (content-map.md decision 7). Positions are
+              learner order, so the open section keeps its true number. */}
+          <TrackOnVisible event="next_preview_viewed">
+            <section
+              id="next"
+              aria-label={strings.pathway.restOfPathwayTitle}
+              className="mt-8 rounded-(--radius-card) border border-border bg-surface-alt p-6"
+            >
+              <h2 className="font-display text-subheading font-bold text-ink">
+                {strings.pathway.restOfPathwayTitle}
+              </h2>
+              <p className="mt-2 text-body text-ink-muted">{strings.pathway.restOfPathwayNote}</p>
+              <ol className="mt-4 divide-y divide-border rounded-(--radius-card) border border-border bg-surface-card">
+                {strings.pathway.outline.map((entry) => (
+                  <li key={entry.position} className="flex min-h-12 items-center gap-3 px-4 py-3">
                     <span
                       aria-hidden="true"
-                      className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-border font-display text-subheading font-bold text-ink-muted"
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface-alt text-caption font-bold text-ink-muted"
                     >
-                      2
+                      {entry.position}
                     </span>
-                    <span className="font-display text-subheading font-semibold text-ink-muted">
-                      {strings.pathway.nextSectionTitle}
-                    </span>
-                    <span className="rounded-(--radius-chip) bg-primary-tint px-3 py-0.5 text-caption font-semibold text-primary">
+                    <span className="flex-1 text-body text-ink">{entry.title}</span>
+                    <span className="shrink-0 text-caption font-medium text-ink-muted">
                       {strings.pathway.comingSoon}
                     </span>
-                  </div>
-                  <p className="mt-3 text-body text-ink-muted">{strings.pathway.previewNote}</p>
-                  <TrackedButton
-                    event="notify_me_clicked"
-                    className="mt-4 inline-flex min-h-11 items-center rounded-(--radius-control) border border-primary bg-surface-card px-4 py-2 text-body font-semibold text-primary transition-colors duration-(--duration-state) hover:bg-primary-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    {strings.actions.notifyMe}
-                  </TrackedButton>
-                </div>
-              </TrackOnVisible>
-            </li>
-          </ol>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-4 text-body text-ink-muted">{strings.pathway.previewNote}</p>
+              <TrackedButton
+                event="notify_me_clicked"
+                className="mt-4 inline-flex min-h-11 items-center rounded-(--radius-control) border border-primary bg-surface-card px-4 py-2 text-body font-semibold text-primary transition-colors duration-(--duration-state) hover:bg-primary-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                {strings.actions.notifyMe}
+              </TrackedButton>
+            </section>
+          </TrackOnVisible>
           <ReviewSession />
         </div>
 
