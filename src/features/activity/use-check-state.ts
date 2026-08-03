@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = "ba.v1.knowledge-check.ai-automation-software";
+/** The first section keeps its original key; other sections scope by slug. */
+export const CLASSIC_CHECK_KEY = "ba.v1.knowledge-check.ai-automation-software";
 
 export interface SavedCheckAnswer {
   selectedId: string;
@@ -28,9 +29,9 @@ const EMPTY: CheckState = {
   attempt: 1,
 };
 
-function read(): CheckState {
+function read(storageKey: string): CheckState {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(storageKey);
     if (!raw) return EMPTY;
     const parsed = JSON.parse(raw) as Partial<CheckState>;
     if (
@@ -51,37 +52,40 @@ function read(): CheckState {
   }
 }
 
-export function useCheckState() {
+export function useCheckState(storageKey: string = CLASSIC_CHECK_KEY) {
   const [state, setState] = useState<CheckState>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     // Browser-only device progress; server rendering must not touch localStorage.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setState(read());
+    setState(read(storageKey));
     setHydrated(true);
-  }, []);
+  }, [storageKey]);
 
-  const update = useCallback((next: CheckState) => {
-    setState(next);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // Storage can be blocked; in-memory progress remains fully usable.
-    }
-  }, []);
+  const update = useCallback(
+    (next: CheckState) => {
+      setState(next);
+      try {
+        window.localStorage.setItem(storageKey, JSON.stringify(next));
+      } catch {
+        // Storage can be blocked; in-memory progress remains fully usable.
+      }
+    },
+    [storageKey],
+  );
 
   const retry = useCallback(() => {
     setState((current) => {
       const next = { ...EMPTY, started: true, attempt: current.attempt + 1 };
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        window.localStorage.setItem(storageKey, JSON.stringify(next));
       } catch {
         // Keep the new attempt in memory when device storage is unavailable.
       }
       return next;
     });
-  }, []);
+  }, [storageKey]);
 
   return { state, hydrated, update, retry };
 }

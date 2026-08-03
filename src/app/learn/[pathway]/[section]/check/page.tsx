@@ -5,6 +5,8 @@ import { CheckPlayer } from "@/features/activity";
 import { getPublishedCheckQuestions } from "@/features/content/server";
 import { PATHWAY_SLUG } from "@/lib/routes";
 import { checkSeed } from "@/db/seed/activity-content";
+import { checkForSection } from "@/db/seed/sections";
+import { SECTION_SLUG } from "@/lib/routes";
 
 export const metadata: Metadata = { title: "Knowledge check" };
 export const revalidate = 300;
@@ -21,6 +23,9 @@ export default async function CheckPage({ params }: CheckPageProps) {
   const questions = await getPublishedCheckQuestions(section);
   if (questions.length === 0) notFound();
 
+  const meta = section === SECTION_SLUG ? checkSeed : checkForSection(section);
+  if (!meta) notFound();
+
   return (
     <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-8">
       <Breadcrumbs
@@ -30,13 +35,14 @@ export default async function CheckPage({ params }: CheckPageProps) {
           { label: "Knowledge check" },
         ]}
       />
-      <h1 className="mt-6 text-display font-bold">{checkSeed.label}</h1>
+      <h1 className="mt-6 text-display font-bold">{meta.label}</h1>
       <div className="mt-8">
         <CheckPlayer
           questions={questions}
-          intro={checkSeed.intro}
-          completion={checkSeed.completion.body}
+          intro={meta.intro}
+          completion={meta.completion.body}
           lessonRoute={`/learn/${pathway}/${section}`}
+          {...(section === SECTION_SLUG ? {} : { storageKey: `ba.v1.knowledge-check.${section}` })}
         />
       </div>
     </main>

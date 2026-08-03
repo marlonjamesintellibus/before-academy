@@ -11,13 +11,16 @@ export function CheckPlayer({
   intro,
   completion,
   lessonRoute,
+  storageKey,
 }: {
   questions: PublishedCheckQuestion[];
   intro: string;
   completion: string;
   lessonRoute: string;
+  /** Device key; defaults to the first section's original key. */
+  storageKey?: string;
 }) {
-  const { state, hydrated, update, retry } = useCheckState();
+  const { state, hydrated, update, retry } = useCheckState(storageKey);
   const [answerHint, setAnswerHint] = useState(false);
   const feedbackRef = useRef<HTMLDivElement>(null);
   const question = questions[state.index];

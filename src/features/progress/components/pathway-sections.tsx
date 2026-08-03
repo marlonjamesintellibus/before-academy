@@ -6,6 +6,7 @@ import { readDevice } from "@/lib/device-store";
 import { track } from "@/lib/analytics";
 import { strings } from "@/lib/strings";
 import { SectionMicrostatus, SectionStatusChip } from "./section-status";
+import { SectionUnits } from "./section-units";
 import { useDeviceStore } from "../use-device-store";
 
 /**
@@ -63,14 +64,129 @@ function ScopedStatusChip({ slug }: { slug: string }) {
   );
 }
 
-const STEPS = [
-  { label: "Lesson", path: "" },
-  { label: "Activity", path: "/activity" },
-  { label: "Practice", path: "/check" },
-  { label: "Assessment", path: "/assessment" },
-] as const;
+/** Unit metadata built server-side from the seeds (learn/page.tsx). */
+export interface SectionUnitsData {
+  stages: { label: string; minutes: number }[];
+  activity: string | null;
+  check: string | null;
+  assessment: boolean;
+}
 
-export function PathwaySections() {
+interface UnitRow {
+  label: string;
+  detail: string;
+  href: string;
+  done: boolean;
+}
+
+function useSectionUnitState(slug: string) {
+  const [state, setState] = useState<{
+    lesson: number[];
+    activity: boolean;
+    check: boolean;
+    assessment: boolean;
+  }>({ lesson: [], activity: false, check: false, assessment: false });
+
+  useEffect(() => {
+    const lesson = readDevice<{ completed?: number[] } | null>(`ba.v1.lesson.${slug}`, null);
+    const activity = readDevice<{ completed?: boolean } | null>(`ba.v1.activity.${slug}`, null);
+    const check = readDevice<{ completed?: boolean } | null>(`ba.v1.knowledge-check.${slug}`, null);
+    const outcome = readDevice<{ passed?: boolean } | null>(`ba.v1.assessment.${slug}`, null);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount device-storage hydration
+    setState({
+      lesson: lesson?.completed ?? [],
+      activity: activity?.completed ?? false,
+      check: check?.completed ?? false,
+      assessment: outcome?.passed ?? false,
+    });
+  }, [slug]);
+
+  return state;
+}
+
+/**
+ * The expandable unit list for a generic section: every stage and step with
+ * its own completion state and a direct link, mirroring the first section's
+ * unit rows so choosing where to go next works the same everywhere.
+ */
+function GenericSectionUnits({
+  slug,
+  route,
+  data,
+}: {
+  slug: string;
+  route: string;
+  data: SectionUnitsData;
+}) {
+  const state = useSectionUnitState(slug);
+
+  const rows: UnitRow[] = [
+    ...data.stages.map((stage, index) => ({
+      label: stage.label,
+      detail: `${stage.minutes} min`,
+      href: `${route}#stage-${index}`,
+      done: state.lesson.includes(index),
+    })),
+    ...(data.activity
+      ? [
+          {
+            label: data.activity,
+            detail: "6-8 min",
+            href: `${route}/activity`,
+            done: state.activity,
+          },
+        ]
+      : []),
+    ...(data.check
+      ? [{ label: data.check, detail: "3 min", href: `${route}/check`, done: state.check }]
+      : []),
+    ...(data.assessment
+      ? [
+          {
+            label: "Graded assessment",
+            detail: "5 min",
+            href: `${route}/assessment`,
+            done: state.assessment,
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <ol className="mt-1 divide-y divide-border rounded-(--radius-card) border border-border bg-surface-card">
+      {rows.map((row, index) => (
+        <li key={row.label}>
+          <Link
+            href={row.href}
+            className={`flex min-h-12 items-center gap-3 px-4 py-2 hover:bg-primary-tint/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary ${
+              row.done ? "bg-success-tint/40" : ""
+            }`}
+          >
+            <span
+              aria-hidden="true"
+              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-caption font-bold ${
+                row.done ? "bg-success text-white" : "bg-surface-alt text-ink-muted"
+              }`}
+            >
+              {row.done ? "✓" : index + 1}
+            </span>
+            <span className="flex-1 text-body">
+              {row.label}
+              <span className="sr-only">{row.done ? ", completed" : ", not started"}</span>
+            </span>
+            <span
+              className={`shrink-0 text-caption ${row.done ? "font-semibold text-success" : "text-ink-muted"}`}
+            >
+              {row.done ? "Done" : row.detail}
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export function PathwaySections({ units }: { units: Record<string, SectionUnitsData> }) {
   // Subscribed once here so the classic card's chip re-renders with the rest,
   // and to surface the optional capstone once the classic assessment passes.
   const { hydrated, snapshot } = useDeviceStore();
@@ -104,17 +220,30 @@ export function PathwaySections() {
               <p className="mt-3 text-body text-ink-muted">{section.description}</p>
               {classic ? <SectionMicrostatus /> : null}
             </Link>
-            <nav aria-label={`${section.title} steps`} className="mt-4 flex flex-wrap gap-2">
-              {STEPS.map((step) => (
-                <Link
-                  key={step.label}
-                  href={`${route}${step.path}`}
-                  className="inline-flex min-h-9 items-center rounded-(--radius-chip) border border-border bg-surface-card px-3 py-1 text-caption font-medium text-ink-muted hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-primary"
-                >
-                  {step.label}
-                </Link>
-              ))}
-            </nav>
+            <details className="group mt-4">
+              <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-(--radius-control) px-2 py-1 text-body font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-primary [&::-webkit-details-marker]:hidden">
+                <span aria-hidden="true" className="transition-transform group-open:rotate-90">
+                  ▸
+                </span>
+                Show the steps
+              </summary>
+              {classic ? (
+                <SectionUnits />
+              ) : (
+                <GenericSectionUnits
+                  slug={section.slug}
+                  route={route}
+                  data={
+                    units[section.slug] ?? {
+                      stages: [],
+                      activity: null,
+                      check: null,
+                      assessment: false,
+                    }
+                  }
+                />
+              )}
+            </details>
             {classic && classicPassed ? (
               <Link
                 href={`${route}/capstone`}

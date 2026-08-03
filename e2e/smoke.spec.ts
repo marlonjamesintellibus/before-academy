@@ -55,3 +55,30 @@ test("pathway summarises progress across the seven sections", async ({ page }) =
   await page.reload();
   await expect(page.getByText("2 of 7 sections complete")).toBeVisible();
 });
+
+test("section cards expand into unit rows with completion and deep links", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      "ba.v1.lesson.what-is-artificial-intelligence",
+      JSON.stringify({ active: 2, completed: [0, 1], updatedAt: 1 }),
+    );
+  });
+  await page.goto("/learn");
+
+  // Expand section 1: stages appear with honest Done / estimate states.
+  const card = page.locator("li", { hasText: "What Is Artificial Intelligence?" }).first();
+  await card.getByText("Show the steps").click();
+  await expect(card.getByRole("link", { name: /Start here.*completed/ })).toBeVisible();
+  await expect(
+    card.getByRole("link", { name: /Where the behaviour came from.*completed/ }),
+  ).toBeVisible();
+  await expect(card.getByRole("link", { name: /AI or Not AI\?/ })).toBeVisible();
+  await expect(card.getByRole("link", { name: /Graded assessment/ })).toBeVisible();
+
+  // A stage row deep-links into that exact stage of the lesson.
+  await card.getByRole("link", { name: /A field, not a single thing.*not started/ }).click();
+  await expect(page).toHaveURL(/what-is-artificial-intelligence#stage-2$/);
+  await expect(
+    page.getByRole("heading", { level: 2, name: "A field, not a single thing" }),
+  ).toBeVisible();
+});

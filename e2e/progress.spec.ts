@@ -180,7 +180,7 @@ test("reset progress clears the section after an explicit confirm", async ({ pag
   await expect(page.getByRole("button", { name: "Keep my progress" })).toBeFocused();
   await page.getByRole("button", { name: "Reset everything" }).click();
   // Seven cards now share the label, so assert the count: all reset.
-  await expect(page.getByText("Not started")).toHaveCount(7);
+  await expect(page.getByText("Not started", { exact: true })).toHaveCount(7);
   const cleared = await page.evaluate(
     () => window.localStorage.getItem("ba.v1.lesson.ai-automation-software") === null,
   );
@@ -204,7 +204,7 @@ test("another section's assessment result never marks section 3 complete", async
     );
   });
   await page.goto("/learn");
-  await expect(page.getByText("Not started").first()).toBeVisible();
+  await expect(page.getByText("Not started", { exact: true }).first()).toBeVisible();
   await expect(page.getByText(/Section complete - your result is saved/)).not.toBeVisible();
   await expect(page.getByText(/Assessment passed/)).not.toBeVisible();
 });

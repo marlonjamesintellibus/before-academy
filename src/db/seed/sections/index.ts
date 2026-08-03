@@ -106,3 +106,8 @@ export const allAuthoredSectionSeeds: SectionSeed[] = sectionBundles.map((bundle
 export function activityForSection(sectionSlug: string): ActivitySeed | undefined {
   return sectionBundles.find((bundle) => bundle.seed.section.slug === sectionSlug)?.activity;
 }
+
+/** Check meta (label/intro/completion) for a section's route. */
+export function checkForSection(sectionSlug: string): CheckSeed | undefined {
+  return sectionBundles.find((bundle) => bundle.seed.section.slug === sectionSlug)?.check;
+}

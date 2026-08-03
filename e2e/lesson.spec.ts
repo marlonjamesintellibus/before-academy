@@ -166,10 +166,16 @@ test("generic lessons carry the enriched journey: stages, inline checks, predict
 }) => {
   await page.goto("/learn/ai-awareness/what-is-artificial-intelligence");
 
-  // The rail IS the original journey's: same component, same wording.
-  const rail = page.getByRole("navigation", { name: "Lesson progress" }).last();
+  // The rail IS the original journey's: same component, same wording. Both
+  // variants render; pick the one this viewport shows (mobile first, desktop
+  // second). The desktop panel carries minutes remaining.
+  const isMobile = test.info().project.name === "mobile";
+  // Only the viewport's variant is exposed to the accessibility tree.
+  const rail = page.getByRole("navigation", { name: "Lesson progress" });
   await expect(rail.getByText(/% complete/)).toBeVisible();
-  await expect(rail.getByText(/About \d+ min remaining/)).toBeVisible();
+  if (!isMobile) {
+    await expect(rail.getByText(/About \d+ min remaining/)).toBeVisible();
+  }
 
   // Transitions are labelled with the destination stage.
   await page.getByRole("button", { name: "Continue to Where the behaviour came from" }).click();
@@ -190,11 +196,8 @@ test("generic lessons carry the enriched journey: stages, inline checks, predict
 
   // The final stage's diagram sits behind a committed prediction.
   await page.getByRole("button", { name: /Keep doing a task well|Continue to/ }).first();
-  await page
-    .getByRole("navigation", { name: "Lesson progress" })
-    .last()
-    .getByRole("button", { name: /Doing a task is not working like a person/ })
-    .click();
+  if (isMobile) await rail.getByRole("button", { name: "Outline" }).click();
+  await rail.getByRole("button", { name: /Doing a task is not working like a person/ }).click();
   await expect(
     page.getByText("Two systems produce identical outputs for the same input", { exact: false }),
   ).toBeVisible();

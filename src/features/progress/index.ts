@@ -7,7 +7,7 @@ export { StorageNotice } from "./components/storage-notice";
 export { SectionStatusChip, SectionMicrostatus } from "./components/section-status";
 export { SectionUnits } from "./components/section-units";
 export { PathwayProgress } from "./components/pathway-progress";
-export { PathwaySections } from "./components/pathway-sections";
+export { PathwaySections, type SectionUnitsData } from "./components/pathway-sections";
 export { SkillMap } from "./components/skill-map";
 export { ReviewSession } from "./components/review-session";
 export { Capstone } from "./components/capstone";

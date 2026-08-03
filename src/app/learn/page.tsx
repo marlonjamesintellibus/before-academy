@@ -9,6 +9,8 @@ import {
   PathwaySections,
 } from "@/features/progress";
 import { strings } from "@/lib/strings";
+import { sectionBundles } from "@/db/seed/sections";
+import type { SectionUnitsData } from "@/features/progress";
 
 export const metadata: Metadata = { title: "AI Awareness" };
 
@@ -19,6 +21,25 @@ export const metadata: Metadata = { title: "AI Awareness" };
  * Sections never lock (ADR-003).
  */
 export default function PathwayPage() {
+  // Unit metadata comes from the seeds server-side; completion state is read
+  // from the device client-side. The pathway page is the only place both meet.
+  const units: Record<string, SectionUnitsData> = Object.fromEntries(
+    sectionBundles.map((bundle) => [
+      bundle.seed.section.slug,
+      {
+        stages: [
+          { label: "Start here", minutes: 3 },
+          ...bundle.seed.blocks
+            .filter((block) => block.type === "concept")
+            .map((block) => ({ label: block.title, minutes: block.minutes ?? 4 })),
+        ],
+        activity: bundle.activity ? bundle.activity.title : null,
+        check: bundle.check ? bundle.check.label : null,
+        assessment: Boolean(bundle.assessment),
+      },
+    ]),
+  );
+
   return (
     <main id="main" className="w-full flex-1">
       <ResumeBanner />
@@ -41,7 +62,7 @@ export default function PathwayPage() {
 
       <div className="mx-auto grid w-full max-w-[1280px] gap-8 px-4 py-12 md:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
         <div>
-          <PathwaySections />
+          <PathwaySections units={units} />
 
           {/* The pathway close: passing this is what completing AI Awareness
               means. Carries the old next-preview visibility event so the S12
