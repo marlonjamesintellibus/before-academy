@@ -55,8 +55,7 @@ export function SkillMap() {
       </p>
       {reviewDue([outcome.lastAttemptAt]).rusty ? (
         <p className="mt-2 rounded-(--radius-control) bg-primary-tint px-3 py-2 text-caption font-medium text-primary">
-          It has been a while since these were exercised - the two-minute review below keeps them
-          sharp.
+          It has been a while since these were exercised. The two-minute review keeps them sharp.
         </p>
       ) : null}
       <ul className="mt-4 flex flex-col gap-3">

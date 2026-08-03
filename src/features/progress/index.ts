@@ -6,6 +6,7 @@ export { ResumeBanner } from "./components/resume-banner";
 export { StorageNotice } from "./components/storage-notice";
 export { SectionStatusChip, SectionMicrostatus } from "./components/section-status";
 export { SectionUnits } from "./components/section-units";
+export { PathwayProgress } from "./components/pathway-progress";
 export { SkillMap } from "./components/skill-map";
 export { ReviewSession } from "./components/review-session";
 export { Capstone } from "./components/capstone";

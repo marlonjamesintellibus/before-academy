@@ -29,7 +29,7 @@ Record of the WCAG 2.1 AA gate (ADR-008: accessibility is a release gate). Metho
 - axe (critical + serious = fail) on home, pathway, lesson, activity, check, assessment, 404 - desktop and mobile profiles.
 - Keyboard journeys: skip link → CTA → lesson; full activity and assessment runs driven by keyboard-checkable controls.
 - Lighthouse budgets (new `lighthouse` CI job): accessibility ≥ 0.95, best practices ≥ 0.9, LCP < 2.5s, CLS < 0.1 on home, pathway, and lesson.
-- 360px reflow sweep; reduced-motion behavior test; focus/`aria-expanded`/`aria-pressed` assertions throughout the e2e suite (78 tests).
+- 360px reflow sweep; reduced-motion behavior test; focus/`aria-expanded`/`aria-pressed` assertions throughout the e2e suite (82 tests).
 
 ## Residual items - honest register
 

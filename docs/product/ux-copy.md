@@ -11,6 +11,16 @@ last_updated: 2026-07-31
 
 Canonical interface strings. Ownership split: interface strings live here (implemented in `strings.ts`); learning copy (lesson, feedback, questions) lives in content records - see [../content/editorial-style.md](../content/editorial-style.md). Voice: plain, warm, confident; second person; no blame anywhere.
 
+## Marketing home (S01)
+- Eyebrow: "AI Awareness · Free · No account needed"
+- Headline (two lines, second in sky): "Know what AI actually is." / "And what it isn't."
+- Promise: "In about twenty minutes, learn to read what a system really does, judging it on evidence instead of the label on the box."
+- Outcome cards: "Read the mechanism" / "Judge a system by how it works, not by what the marketing around it calls it." · "Practice on real cases" / "Ten everyday systems to classify, with feedback that names the clue you missed." · "Know when you can't tell" / "Spot the moment the evidence runs out, and say so instead of guessing."
+- Hero demo: "Try one right now" · "Try a harder one" · "Learn to read them all"
+
+## Pathway (S02)
+- Progress summary: "Your progress" / "{done} of 4 steps done" / "About 20 minutes end to end. Nothing is locked, so you can jump to any step."
+
 ## Core actions
 Start learning - free · Already know this? Take the assessment · Continue · Try it: Sort the System · Check · Start assessment · Submit assessment · Retake with new questions · Retake assessment (S09 bar; opens the same new-questions retake) · Review weak areas · Review the lesson first · Notify me · Exit assessment · Create free account / Continue as guest
 

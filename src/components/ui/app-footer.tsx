@@ -7,7 +7,7 @@ import Link from "next/link";
 export function AppFooter() {
   return (
     <footer className="mt-auto bg-navy">
-      <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-6 text-caption text-sky md:px-6">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-6 text-caption text-sky md:px-6">
         <span className="font-display text-body font-semibold text-surface-card">
           Before Academy
           <span aria-hidden="true" className="text-sky">

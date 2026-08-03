@@ -15,7 +15,7 @@ export function AppHeader({ variant = "default" }: AppHeaderProps) {
     <header className="bg-navy">
       <nav
         aria-label="Main"
-        className="mx-auto flex min-h-16 w-full max-w-[1440px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 md:px-6"
+        className="mx-auto flex min-h-16 w-full max-w-[1280px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 md:px-6"
       >
         <Link
           href="/"

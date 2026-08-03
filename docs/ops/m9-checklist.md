@@ -13,7 +13,7 @@ The Phase 1 sign-off from [milestones.md](../roadmap/milestones.md), expanded in
 
 ## Engineering (status as of 2026-08-03)
 
-- [x] Full regression green: lint, typecheck, prettier, content lint, 49 unit tests, production build, 78 e2e tests (desktop + mobile), run 2026-08-03 on top of 2ab4154.
+- [x] Full regression green: lint, typecheck, prettier, content lint, 49 unit tests, production build, 82 e2e tests (desktop + mobile), run 2026-08-03.
 - [x] CI green on `main` including Lighthouse budgets (accessibility 0.95+, best practices 0.9+, LCP under 2.5s, CLS under 0.1).
 - [x] Security review performed (record below).
 - [x] Rollback rehearsed: previous release verified healthy against current schema; record in [launch-runbook.md](launch-runbook.md).
