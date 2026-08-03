@@ -196,6 +196,8 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-5.ts`), written as one piece with AIA-4 so the boundary holds. Outstanding before publish: activity, knowledge check, assessment bank, generalized step routes.
 
+**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-2.ts`). Outstanding before publish: activity, knowledge check, assessment bank.
+
 ---
 
 ### AIA-6 · Myths and Misconceptions
@@ -219,6 +221,8 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Should have. This is the one Level 1 section that could ship after the pathway assessment without leaving a hole.
 
+**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-6.ts`). Outstanding before publish: activity, knowledge check, assessment bank.
+
 ---
 
 ### AIA-7 · Where to Go Next
@@ -239,6 +243,8 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 **Dependencies.** Cannot be written until AIA-1 through AIA-6 are approved, and the Level 2 map exists at least in outline, or this section will describe a next step that does not exist. **This is the section most at risk of promising unbuilt content**, which the product has already had to correct once.
 
 **Priority.** Must have.
+
+**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-7.ts`). Outstanding before publish: activity, knowledge check, assessment bank.
 
 ---
 
