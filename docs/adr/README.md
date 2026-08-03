@@ -58,6 +58,8 @@ New decisions and deviations create new records numbered from **ADR-043** (`adr-
 | [ADR-039](adr-039-defer-certificates.md) | Certificates & credentials deferred | Accepted (deferral) | Future |
 | [ADR-040](adr-040-defer-offline.md) | Offline support deferred | Accepted (deferral) | Future |
 | [ADR-041](adr-041-defer-cms-ui.md) | CMS UI deferred | Accepted (deferral) | Future |
+| [ADR-042](adr-042-staged-lesson-units.md) | Staged lesson units with predict-first interactions | Accepted | Phase 1 |
+| [ADR-043](adr-043-csp-inline-acceptance.md) | CSP 'unsafe-inline' accepted for pilot | Accepted | Phase 1 |
 
 ## Timeline
 **Foundational (Phase 0 approvals):** 001–005 product shape · 006–011 learning UX. **Phase 1 build:** 012–019 stack composition · 020–023 content & data model · 024–026 security posture · 027–030 content ops & assessment · 031–034 analytics & delivery. **Future (evidence-gated):** 035–041 deferrals; 042+ opened by Phase 2, enterprise, tutor, mobile.

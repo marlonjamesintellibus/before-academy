@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 /**
  * Security headers (docs/engineering/security.md). CSP allows self plus the
  * PostHog ingest host; Next.js hydration requires inline script allowance -
- * 'unsafe-inline' here is the pragmatic baseline, tightened to nonces at M8.
+ * 'unsafe-inline' is an accepted risk for the pilot (ADR-043): nonce-based CSP
+ * would force every route dynamic and the app renders no user-generated HTML.
  */
 const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
 
@@ -30,6 +31,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // No next/image usage anywhere; disabling the optimizer removes the
+  // /_next/image endpoint and with it the bundled-sharp attack surface.
+  images: { unoptimized: true },
   poweredByHeader: false,
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];

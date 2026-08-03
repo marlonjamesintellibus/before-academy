@@ -35,7 +35,7 @@ Record of the WCAG 2.1 AA gate (ADR-008: accessibility is a release gate). Metho
 
 1. **Manual screen-reader passes (SR ×2) are not yet performed.** Automated checks cannot substitute for a VoiceOver + NVDA walk-through of J1-J4. Owner: product owner or a tester with SR fluency, before pilot (M9 checklist item).
 2. Single-select button groups (diagram layers, scenario chooser) use `aria-pressed` per components.md rather than radiogroup semantics; group labels state the choose-one contract. Recorded as a known deviation; revisit if SR passes surface confusion.
-3. CSP allows 'unsafe-inline' scripts (Next.js hydration baseline); nonce tightening tracked for M9 hardening.
+3. CSP allows 'unsafe-inline' scripts (Next.js hydration baseline); resolved at M9 as an accepted risk with rationale in [ADR-043](../adr/adr-043-csp-inline-acceptance.md).
 
 Gate status: **automated AA gate green; manual SR passes pending** - the one human task left before the pilot checklist can close.
 
