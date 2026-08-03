@@ -83,7 +83,10 @@ export const scenarios = pgTable(
     contentId: text("content_id").notNull(),
     position: integer("position").notNull(),
     body: text("body").notNull(),
-    correctCategory: scenarioCategory("correct_category").notNull(),
+    /** Null for scenarios that carry their own options (generic dialect);
+     * correctness then lives in the feedback jsonb meta. Expand migration
+     * 0003 dropped the NOT NULL. */
+    correctCategory: scenarioCategory("correct_category"),
     /** Additional accepted categories for honest-ambiguity items. */
     acceptedCategories: text("accepted_categories").array().notNull().default([]),
     clue: text("clue").notNull(),

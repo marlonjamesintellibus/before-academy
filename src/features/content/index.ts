@@ -18,7 +18,12 @@ export type {
 export {
   CATEGORY_LABELS,
   SCENARIO_CATEGORIES,
+  isClassicScenario,
+  primaryCorrectOption,
+  scenarioOptions,
   type ScenarioCategory,
+  type ScenarioOption,
+  type ScenarioOptionSeed,
   type ActivitySeed,
   type CheckSeed,
   type ScenarioSeed,

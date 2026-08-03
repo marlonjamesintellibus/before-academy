@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { activitySeed } from "@/db/seed/activity-content";
-import { CATEGORY_LABELS, SCENARIO_CATEGORIES } from "../activity-types";
+import { CATEGORY_LABELS, SCENARIO_CATEGORIES, scenarioOptions } from "../activity-types";
 import type { ScenarioCategory } from "../activity-types";
 import { LESSON_ROUTE } from "@/lib/routes";
 import { track } from "@/lib/analytics";
@@ -26,7 +26,8 @@ export function LandingDemo({ className = "" }: { className?: string }) {
   if (!scenario) return null;
 
   const correct =
-    chosen !== null && (chosen === scenario.correctCategory || scenario.accepted.includes(chosen));
+    chosen !== null &&
+    (scenarioOptions(scenario).find((option) => option.id === chosen)?.correct ?? false);
   const lastTurn = turn + 1 >= Math.min(TURNS, DEMO_SCENARIOS.length);
 
   return (
@@ -55,7 +56,8 @@ export function LandingDemo({ className = "" }: { className?: string }) {
                 track("interaction_completed", {
                   question_id: "landing-demo",
                   correct:
-                    category === scenario.correctCategory || scenario.accepted.includes(category),
+                    scenarioOptions(scenario).find((option) => option.id === category)?.correct ??
+                    false,
                 });
               }}
               className="min-h-11 rounded-(--radius-control) border border-primary bg-surface-card px-4 py-2 text-body font-semibold text-primary transition-colors duration-(--duration-state) hover:bg-primary-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
@@ -69,7 +71,7 @@ export function LandingDemo({ className = "" }: { className?: string }) {
           {/* Seed feedback already opens with "Correct." or "Not quite -", so the
               wording carries the verdict and colour only reinforces it. */}
           <p className={`text-body font-semibold ${correct ? "text-success" : "text-warning"}`}>
-            {scenario.feedback[chosen]}
+            {scenarioOptions(scenario).find((option) => option.id === chosen)?.feedback ?? ""}
           </p>
           {lastTurn ? (
             <>

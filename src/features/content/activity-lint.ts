@@ -28,39 +28,91 @@ function scenarioAnchors(section: SectionSeed): Set<string> {
   return new Set(section.blocks.map((block) => block.id.toLowerCase()));
 }
 
-export function lintActivity(activity: ActivitySeed, section: SectionSeed): LintIssue[] {
+export function lintActivity(
+  activity: ActivitySeed,
+  section: SectionSeed,
+  options?: { fixedSet?: boolean },
+): LintIssue[] {
   const issues: LintIssue[] = [];
   const anchors = scenarioAnchors(section);
 
-  if (activity.scenarios.length !== 10) {
+  // The 10-scenario shape and the 6/7 minimal pair are Sort the System's
+  // contract, not a property of activities in general. New sections opt out
+  // with fixedSet: false and get contiguity + minimum-size rules instead.
+  const fixedSet = options?.fixedSet ?? true;
+  if (fixedSet && activity.scenarios.length !== 10) {
     issues.push({
       blockId: activity.id,
       message: `expected 10 scenarios, found ${activity.scenarios.length}`,
     });
   }
-
-  const positions = activity.scenarios.map((scenario) => scenario.position).sort((a, b) => a - b);
-  if (positions.join(",") !== "1,2,3,4,5,6,7,8,9,10") {
+  if (!fixedSet && activity.scenarios.length < 4) {
     issues.push({
       blockId: activity.id,
-      message: `scenario positions must be exactly 1..10 (got ${positions.join(",")})`,
+      message: `an activity needs at least 4 scenarios, found ${activity.scenarios.length}`,
     });
   }
 
-  const byPosition = new Map(activity.scenarios.map((scenario) => [scenario.position, scenario]));
-  const six = byPosition.get(6);
-  const seven = byPosition.get(7);
-  if (!six || !seven || !six.id.endsWith("S06") || !seven.id.endsWith("S07")) {
+  const positions = activity.scenarios.map((scenario) => scenario.position).sort((a, b) => a - b);
+  const expected = Array.from({ length: activity.scenarios.length }, (_, i) => i + 1).join(",");
+  if (positions.join(",") !== expected) {
     issues.push({
       blockId: activity.id,
-      message: "the fixed 6→7 minimal pair must sit at positions 6 and 7",
+      message: `scenario positions must be exactly 1..${activity.scenarios.length} (got ${positions.join(",")})`,
     });
+  }
+
+  if (fixedSet) {
+    const byPosition = new Map(activity.scenarios.map((scenario) => [scenario.position, scenario]));
+    const six = byPosition.get(6);
+    const seven = byPosition.get(7);
+    if (!six || !seven || !six.id.endsWith("S06") || !seven.id.endsWith("S07")) {
+      issues.push({
+        blockId: activity.id,
+        message: "the fixed 6→7 minimal pair must sit at positions 6 and 7",
+      });
+    }
   }
 
   for (const scenario of activity.scenarios) {
-    for (const category of SCENARIO_CATEGORIES) {
-      if (!scenario.feedback[category]) {
-        issues.push({ blockId: scenario.id, message: `missing feedback for category ${category}` });
+    const generic = Boolean(scenario.options && scenario.options.length > 0);
+    if (generic && (scenario.correctCategory || scenario.feedback)) {
+      issues.push({
+        blockId: scenario.id,
+        message: "a scenario carries either options or the five-label fields, never both",
+      });
+    }
+    if (generic) {
+      const opts = scenario.options ?? [];
+      if (opts.length < 2) {
+        issues.push({
+          blockId: scenario.id,
+          message: "a generic scenario needs at least 2 options",
+        });
+      }
+      if (!opts.some((option) => option.correct)) {
+        issues.push({ blockId: scenario.id, message: "no option is marked correct" });
+      }
+      const ids = new Set(opts.map((option) => option.id));
+      if (ids.size !== opts.length) {
+        issues.push({ blockId: scenario.id, message: "duplicate option ids" });
+      }
+      for (const option of opts) {
+        if (!option.feedback.trim()) {
+          issues.push({
+            blockId: scenario.id,
+            message: `option ${option.id} has no feedback; the wrong answer is where teaching happens`,
+          });
+        }
+      }
+    } else {
+      for (const category of SCENARIO_CATEGORIES) {
+        if (!scenario.feedback?.[category]) {
+          issues.push({
+            blockId: scenario.id,
+            message: `missing feedback for category ${category}`,
+          });
+        }
       }
     }
     if (!scenario.clue) issues.push({ blockId: scenario.id, message: "missing clue" });
@@ -79,7 +131,14 @@ export function lintActivity(activity: ActivitySeed, section: SectionSeed): Lint
 function lintScenarioText(scenario: ScenarioSeed, issues: LintIssue[]): void {
   lintLearnerText(scenario.id, scenario.body, issues);
   lintLearnerText(scenario.id, scenario.clue, issues);
-  for (const text of Object.values(scenario.feedback)) lintLearnerText(scenario.id, text, issues);
+  for (const text of Object.values(scenario.feedback ?? {})) {
+    lintLearnerText(scenario.id, text, issues);
+  }
+  for (const option of scenario.options ?? []) {
+    lintLearnerText(scenario.id, option.label, issues);
+    lintLearnerText(scenario.id, option.feedback, issues);
+  }
+  if (scenario.prompt) lintLearnerText(scenario.id, scenario.prompt, issues);
   if (scenario.explanation) lintLearnerText(scenario.id, scenario.explanation, issues);
 }
 

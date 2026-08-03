@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { PublishedScenario } from "@/features/content";
-import { CATEGORY_LABELS, SCENARIO_CATEGORIES } from "@/features/content";
-import type { ScenarioCategory } from "@/features/content";
+import { isClassicScenario, primaryCorrectOption, scenarioOptions } from "@/features/content";
 import { track } from "@/lib/analytics";
 import { useActivityState } from "../use-activity-state";
 
@@ -27,7 +26,7 @@ export function ActivityPlayer({
   lessonRoute: string;
 }) {
   const { state, hydrated, update, retry } = useActivityState();
-  const [selected, setSelected] = useState<ScenarioCategory | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [answerHint, setAnswerHint] = useState(false);
   const [started, setStarted] = useState(false);
@@ -64,7 +63,7 @@ export function ActivityPlayer({
           }}
           className="mt-5 inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
-          Start sorting
+          {scenarios.every(isClassicScenario) ? "Start sorting" : "Start"}
         </button>
       </div>
     );
@@ -94,7 +93,8 @@ export function ActivityPlayer({
 
   function checkAnswer() {
     if (!selected || !scenario) return;
-    const correct = selected === scenario.correctCategory || scenario.accepted.includes(selected);
+    const correct =
+      scenarioOptions(scenario).find((option) => option.id === selected)?.correct ?? false;
     update({
       ...state,
       answers: {
@@ -141,13 +141,15 @@ export function ActivityPlayer({
         <p className="text-body">{scenario.body}</p>
 
         <fieldset className="mt-6" disabled={showFeedback || Boolean(answer)}>
-          <legend className="sr-only">Pick the best label</legend>
-          <div className="flex flex-col gap-2 md:grid md:grid-cols-2">
-            {SCENARIO_CATEGORIES.map((category) => (
+          <legend className={scenario.prompt ? "text-body font-semibold" : "sr-only"}>
+            {scenario.prompt ?? "Pick the best label"}
+          </legend>
+          <div className="mt-2 flex flex-col gap-2 md:grid md:grid-cols-2">
+            {scenarioOptions(scenario).map((option) => (
               <label
-                key={category}
+                key={option.id}
                 className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-(--radius-control) border px-4 py-2 text-body has-focus-visible:outline-2 has-focus-visible:outline-primary ${
-                  selected === category
+                  selected === option.id
                     ? "border-primary bg-highlight"
                     : "border-surface-alt hover:border-primary"
                 }`}
@@ -155,12 +157,12 @@ export function ActivityPlayer({
                 <input
                   type="radio"
                   name={`scenario-${scenario.id}`}
-                  value={category}
-                  checked={selected === category}
-                  onChange={() => setSelected(category)}
+                  value={option.id}
+                  checked={selected === option.id}
+                  onChange={() => setSelected(option.id)}
                   className="accent-primary"
                 />
-                {CATEGORY_LABELS[category]}
+                {option.label}
               </label>
             ))}
           </div>
@@ -193,7 +195,11 @@ export function ActivityPlayer({
         ) : null}
         {!showFeedback && !answer ? (
           <p role="status" className={answerHint ? "mt-2 text-body text-warning" : "sr-only"}>
-            {answerHint ? "Pick one of the five labels first." : ""}
+            {answerHint
+              ? isClassicScenario(scenario)
+                ? "Pick one of the five labels first."
+                : "Pick an answer first."
+              : ""}
           </p>
         ) : null}
 
@@ -210,7 +216,7 @@ export function ActivityPlayer({
                 .filter((entry) => entry.id !== scenario.id)
                 .slice(0, 2)
                 .map((entry) => entry.clue)}
-              chosen={(answer?.chosen as ScenarioCategory) ?? selected ?? scenario.correctCategory}
+              chosen={answer?.chosen ?? selected ?? primaryCorrectOption(scenario).id}
               lessonRoute={lessonRoute}
             />
             <button
@@ -234,11 +240,13 @@ function ScenarioFeedback({
   distractorClues,
 }: {
   scenario: PublishedScenario;
-  chosen: ScenarioCategory;
+  chosen: string;
   lessonRoute: string;
   distractorClues: string[];
 }) {
-  const correct = chosen === scenario.correctCategory || scenario.accepted.includes(chosen);
+  const options = scenarioOptions(scenario);
+  const chosenOption = options.find((option) => option.id === chosen);
+  const correct = chosenOption?.correct ?? false;
   return (
     <div>
       <p className={`text-body font-semibold ${correct ? "text-success" : "text-danger"}`}>
@@ -246,15 +254,17 @@ function ScenarioFeedback({
       </p>
       <dl className="mt-3 grid gap-2 rounded-(--radius-control) bg-surface-card p-3 text-body sm:grid-cols-2">
         <div>
-          <dt className="text-caption font-semibold text-ink-muted">Your classification</dt>
-          <dd className="font-semibold">{CATEGORY_LABELS[chosen]}</dd>
+          <dt className="text-caption font-semibold text-ink-muted">
+            {isClassicScenario(scenario) ? "Your classification" : "Your answer"}
+          </dt>
+          <dd className="font-semibold">{chosenOption?.label ?? ""}</dd>
         </div>
         <div>
           <dt className="text-caption font-semibold text-ink-muted">Best-supported answer</dt>
-          <dd className="font-semibold">{CATEGORY_LABELS[scenario.correctCategory]}</dd>
+          <dd className="font-semibold">{primaryCorrectOption(scenario).label}</dd>
         </div>
       </dl>
-      <p className="mt-2 text-body">{scenario.feedback[chosen]}</p>
+      <p className="mt-2 text-body">{chosenOption?.feedback ?? ""}</p>
       <EvidenceStep scenario={scenario} distractorClues={distractorClues} />
       {scenario.ambiguityNote ? (
         <p className="mt-2 text-body text-ink-muted">{scenario.ambiguityNote}</p>
@@ -341,12 +351,16 @@ function ActivitySummary({
   lessonRoute: string;
   onRetry: () => void;
 }) {
-  const byCategory = new Map<ScenarioCategory, { correct: number; total: number }>();
+  // Group by the primary correct answer's label. For the classic set this is
+  // the category breakdown it always showed; for generic sets it reads as a
+  // per-skill tally (e.g. "Review first - 2 of 3 correct").
+  const byCategory = new Map<string, { correct: number; total: number }>();
   for (const scenario of scenarios) {
-    const tally = byCategory.get(scenario.correctCategory) ?? { correct: 0, total: 0 };
+    const key = primaryCorrectOption(scenario).label;
+    const tally = byCategory.get(key) ?? { correct: 0, total: 0 };
     tally.total += 1;
     if (answers[scenario.id]?.correct) tally.correct += 1;
-    byCategory.set(scenario.correctCategory, tally);
+    byCategory.set(key, tally);
   }
   const skipped = scenarios.filter((scenario) => answers[scenario.id]?.skipped);
 
@@ -359,7 +373,7 @@ function ActivitySummary({
       <ul className="mt-4 flex flex-col gap-2">
         {[...byCategory.entries()].map(([category, tally]) => (
           <li key={category} className="flex justify-between text-body">
-            <span>{CATEGORY_LABELS[category]}</span>
+            <span>{category}</span>
             <span className="text-ink-muted">
               {tally.correct} of {tally.total} correct
             </span>

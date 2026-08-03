@@ -1,0 +1,1 @@
+ALTER TABLE "scenarios" ALTER COLUMN "correct_category" DROP NOT NULL;

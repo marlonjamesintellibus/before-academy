@@ -19,6 +19,8 @@ interface ScenarioMeta {
   title: string;
   difficulty: ScenarioSeed["difficulty"];
   byCategory: Record<ScenarioCategory, string>;
+  options?: ScenarioSeed["options"];
+  prompt?: string;
   explanation?: string;
   remediationAnchor: string;
 }
@@ -37,17 +39,23 @@ export async function getPublishedScenarios(sectionSlug: string): Promise<Publis
 
   return rows.map((row) => {
     const meta = row.feedback as unknown as ScenarioMeta;
+    const generic = Boolean(meta.options && meta.options.length > 0);
     return {
       id: row.contentId,
       position: row.position,
       title: meta.title,
       body: row.body,
       difficulty: meta.difficulty,
-      correctCategory: row.correctCategory as ScenarioCategory,
-      accepted: row.acceptedCategories as ScenarioCategory[],
+      // Generic scenarios round-trip their options; classic ones their labels.
+      ...(row.correctCategory && !generic
+        ? { correctCategory: row.correctCategory as ScenarioCategory }
+        : {}),
+      ...(generic ? {} : { accepted: row.acceptedCategories as ScenarioCategory[] }),
       clue: row.clue,
       ...(row.ambiguityNote ? { ambiguityNote: row.ambiguityNote } : {}),
-      feedback: meta.byCategory,
+      ...(generic ? {} : { feedback: meta.byCategory }),
+      ...(meta.options ? { options: meta.options } : {}),
+      ...(meta.prompt ? { prompt: meta.prompt } : {}),
       ...(meta.explanation ? { explanation: meta.explanation } : {}),
       remediationAnchor: meta.remediationAnchor,
     };
