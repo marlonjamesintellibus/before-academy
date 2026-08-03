@@ -89,15 +89,24 @@ export function lintSection(
     "takeaway",
     "next_step",
   ] as const;
-  // Retrieval blocks are required of a *published* section: the learning
-  // framework makes Apply It mandatory by some route. A drafting section is
-  // still held to every copy rule; it is only exempt from being finished.
-  const retrievalTypes = new Set(["activity_cta", "check_cta"]);
+  // Retrieval is required of a *published* section, but the framework asks for
+  // it "via any route" rather than for every format: the first section carries
+  // both an activity and a check because it was the slice testing both. A
+  // published section must therefore offer at least one retrieval step, and a
+  // drafting section is exempt from being finished while still being held to
+  // every copy rule. Per-section category taxonomies are follow-up work.
+  const retrievalTypes = new Set<string>(["activity_cta", "check_cta"]);
   for (const type of requiredTypes) {
-    if (options?.stage === "drafting" && retrievalTypes.has(type)) continue;
+    if (retrievalTypes.has(type)) continue;
     if (!blocks.some((block) => block.type === type)) {
       issues.push({ blockId: "-", message: `missing required block type: ${type}` });
     }
+  }
+  if (options?.stage !== "drafting" && !blocks.some((block) => retrievalTypes.has(block.type))) {
+    issues.push({
+      blockId: "-",
+      message: "a published section needs at least one retrieval step (activity_cta or check_cta)",
+    });
   }
 
   const seenIds = new Set<string>();

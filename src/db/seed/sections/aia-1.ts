@@ -282,6 +282,11 @@ export const aia1Seed: SectionSeed = {
       ],
     },
     {
+      type: "check_cta",
+      id: "AIA-1-LESSON-006-CHECK-CTA",
+      body: "Four quick situations to think through. Nothing is graded.",
+    },
+    {
       type: "next_step",
       id: "AIA-1-LESSON-007-NEXT",
       body: "Next in the pathway: where AI already sits in an ordinary day, most of it nowhere near a chat window.",

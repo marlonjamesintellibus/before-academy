@@ -1,10 +1,12 @@
 import type { SectionSeed } from "@/features/content/types";
+import type { CheckSeed } from "@/features/content/activity-types";
 import { aia1Seed } from "./aia-1";
 import { aia4Seed } from "./aia-4";
 import { aia5Seed } from "./aia-5";
 import { aia2Seed } from "./aia-2";
 import { aia6Seed } from "./aia-6";
 import { aia7Seed } from "./aia-7";
+import { aia1CheckSeed } from "./aia-1-check";
 
 /**
  * Sections beyond the first published one (docs/content/content-map.md).
@@ -24,6 +26,8 @@ export type SeedStatus = "drafting" | "published";
 export interface SectionBundle {
   seed: SectionSeed;
   status: SeedStatus;
+  /** Retrieval step. A published section needs at least one (lint enforces). */
+  check?: CheckSeed;
   /** What the section still needs before it can move to published. */
   outstanding?: string;
 }
@@ -31,9 +35,9 @@ export interface SectionBundle {
 export const sectionBundles: SectionBundle[] = [
   {
     seed: aia1Seed,
-    status: "drafting",
-    outstanding:
-      "activity, knowledge check and assessment bank, plus generalized step routes; see content-map.md",
+    status: "published",
+    check: aia1CheckSeed,
+    outstanding: "assessment bank; the pathway assessment covers Level 1 grading",
   },
   {
     seed: aia4Seed,

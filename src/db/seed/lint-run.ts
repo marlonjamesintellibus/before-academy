@@ -15,6 +15,7 @@ const issues = [
   ...lintAssessment(assessmentSeed),
   ...lintCanonicalRecords(canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY, sectionSeed),
   ...sectionBundles.flatMap((bundle) => lintSection(bundle.seed, { stage: bundle.status })),
+  ...sectionBundles.flatMap((bundle) => (bundle.check ? lintCheck(bundle.check, bundle.seed) : [])),
 ];
 if (issues.length > 0) {
   console.error(`content-lint: ${issues.length} issue(s)`);

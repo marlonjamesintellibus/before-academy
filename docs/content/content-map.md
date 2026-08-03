@@ -50,7 +50,7 @@ Misconception IDs (`M1`…`M6`) stay pathway-wide and unprefixed by design: a mi
 
 | ID | Section | Status | Priority | Est. time | Depends on |
 |---|---|---|---|---|---|
-| AIA-1 | What Is Artificial Intelligence? | Planned | Must have | 15-20 min | none |
+| AIA-1 | What Is Artificial Intelligence? | **Published** | Must have | 15-20 min | none |
 | AIA-2 | AI in Everyday Life | Planned | Must have | 15-20 min | AIA-1 concepts |
 | AIA-3 | AI, Automation and Traditional Software | **Published** | Must have | ~20 min | none (built as the vertical slice) |
 | AIA-4 | What AI Can Do | Planned | Must have | 15-20 min | AIA-1, AIA-3 |
@@ -95,7 +95,9 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
-**Build status: drafting.** The lesson is authored (`src/db/seed/sections/aia-1.ts`) and renders through the data-driven `SectionJourney`. It is deliberately **not published**: the learning framework requires retrieval by some route, so a section without its activity and knowledge check is not finished teaching. Outstanding before it can move to published: activity, knowledge check, assessment bank, and generalized step routes (`/activity`, `/check`, `/assessment` are currently guarded to the first section only).
+**Build status: published.** Lesson (`src/db/seed/sections/aia-1.ts`) plus a four-question knowledge check (`aia-1-check.ts`), live at `/learn/ai-awareness/what-is-artificial-intelligence`. Outstanding: a section assessment bank; Level 1 grading is intended to sit with the pathway assessment.
+
+**Retrieval rule, clarified.** The learning framework requires retrieval "via any route", not every format. The first section carries both an activity and a check because it was the slice testing both formats. Content-lint therefore requires a published section to offer **at least one** retrieval step, and this section's is the knowledge check. Flagged for education-lead review: if the interaction named above is judged essential rather than optional, this section needs it before the pilot.
 
 ---
 

@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { CheckPlayer } from "@/features/activity";
 import { getPublishedCheckQuestions } from "@/features/content/server";
-import { LESSON_ROUTE, PATHWAY_SLUG, SECTION_SLUG } from "@/lib/routes";
-import { strings } from "@/lib/strings";
+import { PATHWAY_SLUG } from "@/lib/routes";
 import { checkSeed } from "@/db/seed/activity-content";
 
 export const metadata: Metadata = { title: "Knowledge check" };
@@ -17,7 +16,7 @@ interface CheckPageProps {
 /** S05 Knowledge check (docs/product/screens/activity-and-check.md): practice, never graded. */
 export default async function CheckPage({ params }: CheckPageProps) {
   const { pathway, section } = await params;
-  if (pathway !== PATHWAY_SLUG || section !== SECTION_SLUG) notFound();
+  if (pathway !== PATHWAY_SLUG) notFound();
 
   const questions = await getPublishedCheckQuestions(section);
   if (questions.length === 0) notFound();
@@ -27,7 +26,7 @@ export default async function CheckPage({ params }: CheckPageProps) {
       <Breadcrumbs
         items={[
           { label: "AI Awareness", href: "/learn" },
-          { label: strings.pathway.sectionOneTitle, href: LESSON_ROUTE },
+          { label: "Lesson", href: `/learn/${pathway}/${section}` },
           { label: "Knowledge check" },
         ]}
       />
@@ -37,7 +36,7 @@ export default async function CheckPage({ params }: CheckPageProps) {
           questions={questions}
           intro={checkSeed.intro}
           completion={checkSeed.completion.body}
-          lessonRoute={LESSON_ROUTE}
+          lessonRoute={`/learn/${pathway}/${section}`}
         />
       </div>
     </main>

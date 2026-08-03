@@ -35,6 +35,9 @@ async function publish() {
     ...lintAssessment(assessmentSeed),
     ...lintCanonicalRecords(canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY, sectionSeed),
     ...sectionBundles.flatMap((bundle) => lintSection(bundle.seed, { stage: bundle.status })),
+    ...sectionBundles.flatMap((bundle) =>
+      bundle.check ? lintCheck(bundle.check, bundle.seed) : [],
+    ),
   ];
   if (issues.length > 0) {
     console.error("content-lint failed:");
@@ -382,8 +385,54 @@ async function publish() {
           });
       }
 
+      const bundle = sectionBundles.find((entry) => entry.seed === seed);
+      let checkCount = 0;
+      if (bundle?.check) {
+        const priorCheck = await tx.query.questions.findMany({
+          where: and(eq(questions.sectionId, extraSection.id), eq(questions.kind, "check")),
+        });
+        for (const row of priorCheck) {
+          await tx.delete(questions).where(eq(questions.id, row.id));
+        }
+        for (const question of bundle.check.questions) {
+          const [inserted] = await tx
+            .insert(questions)
+            .values({
+              sectionId: extraSection.id,
+              contentId: question.id,
+              kind: "check" as const,
+              format: "multiple_choice" as const,
+              category: question.category,
+              difficulty: question.difficulty,
+              stem: question.stem,
+              explanation: JSON.stringify({
+                correctExplanation: question.correctFeedback,
+                incorrectExplanation: question.incorrectFeedback,
+                chipLabel: question.chip.label,
+              }),
+              remediationBlockId: question.chip.anchor,
+              learningOutcomes: question.learningOutcomes,
+              misconceptionTags: question.misconceptionTags,
+              useTags: ["check"],
+              status: "published" as const,
+              version: extraVersion,
+            })
+            .returning();
+          if (!inserted) throw new Error("check question insert returned nothing");
+          await tx.insert(questionOptions).values(
+            question.options.map((option, position) => ({
+              questionId: inserted.id,
+              position,
+              body: option.text,
+              isCorrect: option.correct,
+            })),
+          );
+        }
+        checkCount = bundle.check.questions.length;
+      }
+
       console.log(
-        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks (lesson only)`,
+        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks, ${checkCount} check questions`,
       );
     }
   });
