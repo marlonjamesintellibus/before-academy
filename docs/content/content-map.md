@@ -95,6 +95,8 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
+**Build status: drafting.** The lesson is authored (`src/db/seed/sections/aia-1.ts`) and renders through the data-driven `SectionJourney`. It is deliberately **not published**: the learning framework requires retrieval by some route, so a section without its activity and knowledge check is not finished teaching. Outstanding before it can move to published: activity, knowledge check, assessment bank, and generalized step routes (`/activity`, `/check`, `/assessment` are currently guarded to the first section only).
+
 ---
 
 ### AIA-2 · AI in Everyday Life

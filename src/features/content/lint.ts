@@ -70,7 +70,10 @@ function learnerStrings(block: LessonBlock): string[] {
   }
 }
 
-export function lintSection(seed: SectionSeed): LintIssue[] {
+export function lintSection(
+  seed: SectionSeed,
+  options?: { stage?: "drafting" | "published" },
+): LintIssue[] {
   const issues: LintIssue[] = [];
   const { blocks, glossary } = seed;
 
@@ -86,7 +89,12 @@ export function lintSection(seed: SectionSeed): LintIssue[] {
     "takeaway",
     "next_step",
   ] as const;
+  // Retrieval blocks are required of a *published* section: the learning
+  // framework makes Apply It mandatory by some route. A drafting section is
+  // still held to every copy rule; it is only exempt from being finished.
+  const retrievalTypes = new Set(["activity_cta", "check_cta"]);
   for (const type of requiredTypes) {
+    if (options?.stage === "drafting" && retrievalTypes.has(type)) continue;
     if (!blocks.some((block) => block.type === type)) {
       issues.push({ blockId: "-", message: `missing required block type: ${type}` });
     }

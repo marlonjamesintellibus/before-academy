@@ -16,6 +16,7 @@ import { lintSection } from "@/features/content/lint";
 import { lintActivity, lintAssessment, lintCheck } from "@/features/content/activity-lint";
 import { lintCanonicalRecords } from "@/features/content/canonical-lint";
 import { canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY } from "./canonical-content";
+import { additionalSectionSeeds, sectionBundles } from "./sections";
 import { sectionSeed } from "./section-content";
 import { activitySeed, checkSeed } from "./activity-content";
 import { assessmentSeed } from "./assessment-content";
@@ -33,6 +34,7 @@ async function publish() {
     ...lintCheck(checkSeed, sectionSeed),
     ...lintAssessment(assessmentSeed),
     ...lintCanonicalRecords(canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY, sectionSeed),
+    ...sectionBundles.flatMap((bundle) => lintSection(bundle.seed, { stage: bundle.status })),
   ];
   if (issues.length > 0) {
     console.error("content-lint failed:");
@@ -50,6 +52,7 @@ async function publish() {
     checkSeed,
     assessmentSeed,
     canonicalRecordSeeds,
+    additionalSectionSeeds,
   });
   const hash = createHash("sha256").update(snapshot).digest("hex");
 
@@ -321,6 +324,68 @@ async function publish() {
     console.log(
       `published ${section.slug} v${version}: ${sectionSeed.blocks.length} blocks, ${sectionSeed.glossary.length} glossary terms, ${activitySeed.scenarios.length} scenarios, ${checkSeed.questions.length} check questions, ${assessmentSeed.questions.length} bank items`,
     );
+
+    // Sections beyond the first publish blocks and glossary only; their
+    // activity, check and assessment arrive with each section's own phase
+    // (docs/content/content-map.md build order).
+    for (const seed of additionalSectionSeeds) {
+      const existingExtra = await tx.query.sections.findFirst({
+        where: and(eq(sections.pathwayId, pathway.id), eq(sections.slug, seed.section.slug)),
+      });
+      const extraVersion = existingExtra ? existingExtra.version + 1 : 1;
+
+      const [extraSection] = existingExtra
+        ? await tx
+            .update(sections)
+            .set({ ...seed.section, status: "published", version: extraVersion })
+            .where(eq(sections.id, existingExtra.id))
+            .returning()
+        : await tx
+            .insert(sections)
+            .values({
+              ...seed.section,
+              pathwayId: pathway.id,
+              status: "published",
+              version: extraVersion,
+            })
+            .returning();
+      if (!extraSection) throw new Error(`section upsert returned nothing: ${seed.section.slug}`);
+
+      await tx.delete(contentBlocks).where(eq(contentBlocks.sectionId, extraSection.id));
+      await tx.insert(contentBlocks).values(
+        seed.blocks.map((block, position) => ({
+          sectionId: extraSection.id,
+          slug: block.id.toLowerCase(),
+          blockType: block.type,
+          layer: "quick" as const,
+          position,
+          body: block,
+          status: "published" as const,
+          version: extraVersion,
+        })),
+      );
+
+      for (const entry of seed.glossary) {
+        await tx
+          .insert(glossaryTerms)
+          .values({
+            term: entry.term,
+            definition: entry.definition,
+            example: entry.example ?? null,
+            isChip: entry.chip,
+            status: "published",
+            version: extraVersion,
+          })
+          .onConflictDoUpdate({
+            target: glossaryTerms.term,
+            set: { definition: entry.definition, status: "published", version: extraVersion },
+          });
+      }
+
+      console.log(
+        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks (lesson only)`,
+      );
+    }
   });
 
   process.exit(0);

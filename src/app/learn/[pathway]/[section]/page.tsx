@@ -4,17 +4,22 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { TrackOnMount } from "@/components/track";
 import { LessonView } from "@/features/content";
 import { getPublishedSection } from "@/features/content/server";
-import { LESSON_ROUTE, PATHWAY_SLUG, SECTION_SLUG } from "@/lib/routes";
+import { PATHWAY_SLUG } from "@/lib/routes";
 import { strings } from "@/lib/strings";
-
-export const metadata: Metadata = { title: "AI, Automation and Traditional Software" };
-
-/** ISR (ADR-034, ADR-012): render on demand, cache, revalidate; publish flips content. */
-export const revalidate = 300;
 
 interface SectionPageProps {
   params: Promise<{ pathway: string; section: string }>;
 }
+
+/** Title follows the published section, so every section reads correctly. */
+export async function generateMetadata({ params }: SectionPageProps): Promise<Metadata> {
+  const { pathway, section } = await params;
+  const content = await getPublishedSection(pathway, section);
+  return { title: content?.title ?? "Lesson" };
+}
+
+/** ISR (ADR-034, ADR-012): render on demand, cache, revalidate; publish flips content. */
+export const revalidate = 300;
 
 /**
  * S03 Lesson (docs/product/screens/lesson.md): full lesson from versioned
@@ -22,10 +27,13 @@ interface SectionPageProps {
  */
 export default async function SectionPage({ params }: SectionPageProps) {
   const { pathway, section } = await params;
-  if (pathway !== PATHWAY_SLUG || section !== SECTION_SLUG) notFound();
+  if (pathway !== PATHWAY_SLUG) notFound();
 
+  // Any published section under the pathway renders; unpublished slugs 404 via
+  // the query, which keeps the IA deep-link rule without hardcoding a list.
   const content = await getPublishedSection(pathway, section);
   if (!content) notFound();
+  const sectionRoute = `/learn/${pathway}/${section}`;
 
   return (
     <main id="main" className="w-full flex-1 py-8">
@@ -51,7 +59,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
         </ul>
       </div>
       <div className="mt-10">
-        <LessonView content={content} lessonRoute={LESSON_ROUTE} />
+        <LessonView content={content} sectionSlug={section} lessonRoute={sectionRoute} />
       </div>
     </main>
   );
