@@ -73,6 +73,7 @@ const STAGES = [
 ] as const;
 
 const HASH_TO_STAGE: Record<string, number> = {
+  "#p1-lesson-001-hook": 0,
   "#p1-lesson-002": 1,
   "#p1-lesson-003": 2,
   "#p1-lesson-004": 3,

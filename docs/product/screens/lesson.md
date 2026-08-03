@@ -10,7 +10,7 @@ last_updated: 2026-07-31
 
 # S03 Lesson (staged journey - ADR-042)
 
-The lesson is a five-stage journey: Start Here (hook, why-it-matters, outcomes, opening diagnostic, pre-confidence) then four concept units (Rules → Automation → Patterns and AI → Combined systems and review), each with its own objective, completion, and device resume (`ba.v1.lesson.*`). Desktop: sticky progress rail (percent, minutes remaining, stage outline with completion state). Mobile: stacked stages with the same outline.
+The lesson is a five-stage journey: Start Here (hook, why-it-matters, outcomes, opening diagnostic, pre-confidence) then four concept units (Traditional Software → Automation → Artificial Intelligence → Compare and Apply), each with its own objective, completion, and device resume (`ba.v1.lesson.*`). These stage labels are learner-facing and canonical: the pathway unit rows mirror them exactly, so no unit carries two different names. Stage completion is stored as a set of indices, never a count, because nothing is locked and stages can be finished out of order. Desktop: sticky progress rail (percent, minutes remaining, stage outline with completion state). Mobile: stacked stages with the same outline.
 
 Every interactive diagram sits behind a prediction gate (predict → commit → observe → explain); each concept unit carries 2-3 inline checks from the authored bank; remediation deep links (`#p1-lesson-00x`, `#p1-lesson-005-misconception`) open the right stage without touching saved completion. Content renders from published records; the staged presentation, gates, and check placements are interface (this spec + ADR-042).
 

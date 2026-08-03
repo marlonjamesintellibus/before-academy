@@ -63,6 +63,22 @@ test("a passed assessment renders the complete state on the pathway", async ({ p
   await expect(page.getByText(/Section complete - your result is saved/)).toBeVisible();
 });
 
+test("a stage completed out of order still reads as done on the pathway", async ({ page }) => {
+  // Nothing is locked (ADR-003), so a learner can finish stage 3 first. The
+  // pathway once counted completed stages instead of testing membership, which
+  // left the finished unit showing its time estimate.
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      "ba.v1.lesson.ai-automation-software",
+      JSON.stringify({ active: 3, completed: [3], updatedAt: 1 }),
+    );
+  });
+  await page.goto("/learn");
+  await expect(page.getByRole("link", { name: /Artificial intelligence.*Done/ })).toBeVisible();
+  // Units the learner has not reached keep their estimate.
+  await expect(page.getByRole("link", { name: /Traditional software.*4 min/ })).toBeVisible();
+});
+
 test("remediation deep link never wipes lesson progress", async ({ page }) => {
   // Seed completed lesson stages on the device
   await page.addInitScript(() => {
