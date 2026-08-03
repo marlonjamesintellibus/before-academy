@@ -13,7 +13,7 @@ import {
 import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
 
-export const metadata: Metadata = { title: "Pathways" };
+export const metadata: Metadata = { title: "AI Awareness" };
 
 /**
  * S02 Pathway Overview + S12 Next-Step Preview anchor

@@ -3,7 +3,9 @@ import { strings } from "@/lib/strings";
 
 /**
  * AppHeader (docs/product/components.md, design-system v3): navy shell frames
- * the learning surface. Wordmark → Home; Pathways → /learn; guest right side =
+ * the learning surface. Wordmark → Home; Learn → /learn (singular: /learn is
+ * the AI Awareness pathway overview, not an index - see information-architecture.md);
+ * guest right side =
  * Sign in + Create free account. nav landmark; skip link in layout precedes.
  */
 export interface AppHeaderProps {
@@ -32,7 +34,7 @@ export function AppHeader({ variant = "default" }: AppHeaderProps) {
               href="/learn"
               className="inline-flex min-h-11 items-center text-body font-medium text-sky underline-offset-8 hover:text-surface-card hover:underline hover:decoration-2"
             >
-              Pathways
+              Learn
             </Link>
             <span className="flex-1" />
             <Link

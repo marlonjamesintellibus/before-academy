@@ -45,7 +45,13 @@ test("keyboard-only: skip link, then CTA into the lesson", async ({ page }) => {
 });
 
 test("header navigation reaches the pathway and back home", async ({ page }) => {
-  await page.goto("/learn");
+  await page.goto("/");
+  // Chrome stays singular while one pathway ships: a plural label promises an
+  // index /learn cannot show (information-architecture.md).
+  const nav = page.getByRole("navigation", { name: "Main" });
+  await expect(nav.getByRole("link", { name: "Pathways" })).toHaveCount(0);
+  await nav.getByRole("link", { name: "Learn" }).click();
+  await expect(page).toHaveURL(/\/learn$/);
   await expect(page.getByRole("heading", { level: 1, name: "AI Awareness" })).toBeVisible();
   await page.getByRole("link", { name: "Before Academy" }).click();
   await expect(page).toHaveURL(/\/$/);

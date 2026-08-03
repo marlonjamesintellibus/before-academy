@@ -26,7 +26,7 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
     <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-8">
       <Breadcrumbs
         items={[
-          { label: "Pathways", href: "/learn" },
+          { label: "AI Awareness", href: "/learn" },
           { label: strings.pathway.sectionOneTitle, href: LESSON_ROUTE },
           { label: "Sort the System" },
         ]}

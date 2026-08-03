@@ -16,7 +16,7 @@ export function AppFooter() {
         </span>
         <span className="flex-1" />
         <Link href="/learn" className="inline-flex min-h-11 items-center hover:text-surface-card">
-          Pathways
+          Learn
         </Link>
         <a
           href="mailto:feedback@intellibus.com"

@@ -33,7 +33,7 @@ export default async function SectionPage({ params }: SectionPageProps) {
       <div className="mx-auto w-full max-w-[1280px] px-4 md:px-6">
         <Breadcrumbs
           items={[
-            { label: "Pathways", href: "/learn" },
+            { label: "AI Awareness", href: "/learn" },
             { label: strings.pathway.title, href: "/learn" },
             { label: content.title },
           ]}
