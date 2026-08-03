@@ -52,6 +52,19 @@ export const strings = {
     comingSoon: "Coming soon",
     previewNote: "Coming soon - we'll open this section once it passes learner testing.",
   },
+  account: {
+    dashboard: "Dashboard",
+    signOut: "Sign out",
+    previewNotice:
+      "Simulated sign-in for development. No password, no account, nothing leaves this device. Real accounts arrive with the auth milestone.",
+    previewCta: "Start a simulated session",
+    emailLabel: "Email address",
+    dashboardTitle: "Your dashboard",
+    guestOnly:
+      "The dashboard needs an account, and accounts are still on the way. Everything in the lesson works without one.",
+    emptyState:
+      "You have not started yet. AI, Automation and Traditional Software takes about 20 minutes.",
+  },
   system: {
     loadFailure: "Something went wrong loading this. Check your connection and try again.",
     notFound: "We can't find that page. Head home or jump back into the lesson.",

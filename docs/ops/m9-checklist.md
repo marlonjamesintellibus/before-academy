@@ -30,6 +30,12 @@ The Phase 1 sign-off from [milestones.md](../roadmap/milestones.md), expanded in
 - CSP `'unsafe-inline'` script allowance: accepted for pilot with rationale in [ADR-043](../adr/adr-043-csp-inline-acceptance.md).
 - Server actions: closed error taxonomy, zod input bounds, IP + actor rate limiting, no internal errors reach clients; RLS deny-all backstop migration in place.
 
+## Scope note: M6 and the account screens
+
+S10 and S11 are built and tested against a simulated session ([auth-and-dashboard.md](../product/screens/auth-and-dashboard.md)) so that whoever takes M6 wires BetterAuth into finished screens. That does **not** close M6: there is no real authentication, no `migrateGuestProgress`, and J3 (guest to registered) is still not demonstrable. Simulated auth is disabled in production, so the pilot is guest-only as designed.
+
+Phase 1's checklist requires "S01 to S13 live matching spec, journeys demonstrable". Because M6 is deferred past the pilot, that line cannot be signed truthfully as written. Resolve before sign-off by either rescoping Phase 1 to the guest-first slice and recording M6 as Phase 1.5, or holding Phase 1 open until M6 ships. **Owner: product owner.**
+
 ## Content
 
 - [ ] All Section 1 content published with owners and versions; provisional flags documented. **Owner: education lead.**

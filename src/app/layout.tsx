@@ -3,8 +3,10 @@ import { Bricolage_Grotesque, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { AppFooter } from "@/components/ui/app-footer";
 import { AppHeader } from "@/components/ui/app-header";
+import { AccountMenu } from "@/features/account";
 import { StorageNotice } from "@/features/progress";
 import { PostHogInit } from "@/lib/analytics";
+import { previewAuthEnabled } from "@/lib/preview-session";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -41,7 +43,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <PostHogInit />
-        <AppHeader />
+        <AppHeader accountSlot={<AccountMenu enabled={previewAuthEnabled()} />} />
         <StorageNotice />
         {children}
         <AppFooter />

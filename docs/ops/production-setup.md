@@ -30,6 +30,7 @@ One-time provisioning checklist. Everything here needs account access only the p
   - `NEXT_PUBLIC_POSTHOG_HOST` - `https://us.i.posthog.com`
   - `APP_ENV=production` (hides the version field in `/api/health`)
   - `PORT=3000` and domain target port 3000
+- [ ] **Do not set `NEXT_PUBLIC_PREVIEW_AUTH`.** It enables the simulated sign-in used to build S10/S11 before BetterAuth. `APP_ENV=production` blocks it server-side regardless, but the flag must be absent so it never reaches the client bundle either.
 - [ ] Attach the production domain.
 - [ ] Confirm Node 24 is picked up (`.node-version` in repo).
 

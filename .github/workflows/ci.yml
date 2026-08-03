@@ -125,6 +125,9 @@ jobs:
       BETTER_AUTH_URL: http://localhost:3000
       GUEST_TOKEN_SECRET: ci-only-secret-not-used-in-any-env
       APP_ENV: development
+      # Playwright's webServer builds the app, so this must be set here for the
+      # simulated session behind S10/S11 to exist in the bundle under test.
+      NEXT_PUBLIC_PREVIEW_AUTH: "1"
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

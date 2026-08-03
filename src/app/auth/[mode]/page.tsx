@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { PreviewSignIn } from "@/features/account";
+import { previewAuthEnabled } from "@/lib/preview-session";
 
 export const metadata: Metadata = { title: "Accounts" };
 
@@ -9,13 +11,26 @@ interface AuthPageProps {
 }
 
 /**
- * S10 placeholder - BetterAuth UI lands at M6 (docs/roadmap/milestones.md).
- * Everything works without an account (ADR-004), so the placeholder routes
- * learners back into the product instead of dead-ending.
+ * S10 - BetterAuth UI lands at M6 (docs/roadmap/milestones.md). Where preview
+ * auth is enabled this offers a simulated session so S11 can be built and
+ * reviewed; everywhere else (including production, always) it stays the
+ * placeholder that routes learners back into the product rather than
+ * dead-ending, because everything works without an account (ADR-004).
  */
 export default async function AuthPage({ params }: AuthPageProps) {
   const { mode } = await params;
   if (mode !== "sign-in" && mode !== "sign-up") notFound();
+
+  if (previewAuthEnabled()) {
+    return (
+      <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-16">
+        <h1 className="text-heading font-bold">
+          {mode === "sign-up" ? "Create a simulated account" : "Simulated sign-in"}
+        </h1>
+        <PreviewSignIn mode={mode} />
+      </main>
+    );
+  }
 
   return (
     <main id="main" className="mx-auto w-full max-w-[680px] flex-1 px-4 py-16">

@@ -12,7 +12,7 @@ The repo carries all deploy configuration; these steps need account access and a
 
 1. Create a project; add a service from this GitHub repo. `railway.json` supplies build, migration pre-deploy, start, and the `/api/health` gate.
 2. Environments: `staging` auto-deploys from `main`; `production` deploys on release tags (ADR-033). Enable PR preview deploys pointed at the shared preview Supabase project.
-3. Set variables per environment from `.env.example` (generate `BETTER_AUTH_SECRET` and `GUEST_TOKEN_SECRET` with `openssl rand -base64 32`; set `APP_ENV` accordingly).
+3. Set variables per environment from `.env.example` (generate `BETTER_AUTH_SECRET` and `GUEST_TOKEN_SECRET` with `openssl rand -base64 32`; set `APP_ENV` accordingly). Set `NEXT_PUBLIC_PREVIEW_AUTH=1` locally to work on S10/S11 against the simulated session; never set it in production ([docs/ops/production-setup.md](docs/ops/production-setup.md)).
 
 ## GitHub
 

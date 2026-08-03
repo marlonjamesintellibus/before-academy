@@ -1,18 +1,23 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
-import { strings } from "@/lib/strings";
 
 /**
  * AppHeader (docs/product/components.md, design-system v3): navy shell frames
  * the learning surface. Wordmark → Home; Learn → /learn (singular: /learn is
- * the AI Awareness pathway overview, not an index - see information-architecture.md);
- * guest right side =
- * Sign in + Create free account. nav landmark; skip link in layout precedes.
+ * the AI Awareness pathway overview, not an index - see
+ * information-architecture.md). nav landmark; skip link in layout precedes.
+ *
+ * The account area arrives as a slot because the import layering is
+ * app → features → lib (repository.md): this component cannot reach the
+ * account feature, so the layout passes it in.
  */
 export interface AppHeaderProps {
   variant?: "default" | "minimal";
+  /** Right-hand account area; the layout supplies it from the account feature. */
+  accountSlot?: ReactNode;
 }
 
-export function AppHeader({ variant = "default" }: AppHeaderProps) {
+export function AppHeader({ variant = "default", accountSlot }: AppHeaderProps) {
   return (
     <header className="bg-navy">
       <nav
@@ -37,18 +42,7 @@ export function AppHeader({ variant = "default" }: AppHeaderProps) {
               Learn
             </Link>
             <span className="flex-1" />
-            <Link
-              href="/auth/sign-in"
-              className="inline-flex min-h-11 items-center whitespace-nowrap text-body text-sky hover:text-surface-card"
-            >
-              {strings.actions.signIn}
-            </Link>
-            <Link
-              href="/auth/sign-up"
-              className="whitespace-nowrap rounded-(--radius-control) bg-primary px-4 py-2 text-body font-semibold text-surface-card transition-colors duration-(--duration-state) hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
-            >
-              {strings.actions.createAccount}
-            </Link>
+            {accountSlot}
           </>
         ) : null}
       </nav>
