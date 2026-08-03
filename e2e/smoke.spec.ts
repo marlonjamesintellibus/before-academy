@@ -25,9 +25,9 @@ test("hero demo runs two scenarios before handing over to the CTA", async ({ pag
   await expect(demo.getByRole("link", { name: "Learn to read them all" })).toBeVisible();
 });
 
-test("pathway summarises progress against the four steps", async ({ page }) => {
+test("pathway summarises progress across the seven sections", async ({ page }) => {
   await page.goto("/learn");
-  await expect(page.getByText("0 of 4 steps done")).toBeVisible();
+  await expect(page.getByText("0 of 7 sections complete")).toBeVisible();
   await page.evaluate(() => {
     window.localStorage.setItem(
       "ba.v1.assessment.ai-automation-software",
@@ -40,7 +40,18 @@ test("pathway summarises progress against the four steps", async ({ page }) => {
         lastAttemptAt: "2026-08-03T12:00:00.000Z",
       }),
     );
+    window.localStorage.setItem(
+      "ba.v1.assessment.what-is-artificial-intelligence",
+      JSON.stringify({
+        version: 1,
+        attempts: 1,
+        bestScore: 8,
+        total: 8,
+        passed: true,
+        lastAttemptAt: "2026-08-03T12:00:00.000Z",
+      }),
+    );
   });
   await page.reload();
-  await expect(page.getByText("1 of 4 steps done")).toBeVisible();
+  await expect(page.getByText("2 of 7 sections complete")).toBeVisible();
 });

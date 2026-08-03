@@ -1,0 +1,131 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { readDevice } from "@/lib/device-store";
+import { track } from "@/lib/analytics";
+import { strings } from "@/lib/strings";
+import { SectionMicrostatus, SectionStatusChip } from "./section-status";
+import { useDeviceStore } from "../use-device-store";
+
+/**
+ * S02 section list: the seven sections as equals, in learner order
+ * (docs/content/content-map.md decision 7; content-map is the source of the
+ * list via strings.pathway.sections). The page previously presented section 3
+ * as the product with six teasers below it, which stopped being true the day
+ * the other six published.
+ *
+ * Status per section is honest and device-derived. The first section keeps its
+ * richer tracking (snapshot-based chip and microstatus); the others read their
+ * own scoped keys.
+ */
+const CLASSIC_SLUG = "ai-automation-software";
+
+type SectionStatus = "not_started" | "in_progress" | "complete";
+
+const STATUS_LABEL: Record<SectionStatus, string> = {
+  not_started: "Not started",
+  in_progress: "In progress",
+  complete: "Complete",
+};
+
+const STATUS_CLASS: Record<SectionStatus, string> = {
+  not_started: "bg-surface-alt text-ink-muted",
+  in_progress: "bg-primary-tint text-primary",
+  complete: "bg-success-tint text-success",
+};
+
+function readScopedStatus(slug: string): SectionStatus {
+  const outcome = readDevice<{ passed?: boolean } | null>(`ba.v1.assessment.${slug}`, null);
+  if (outcome?.passed) return "complete";
+  const lesson = readDevice<{ completed?: number[] } | null>(`ba.v1.lesson.${slug}`, null);
+  const activity = readDevice<{ answers?: Record<string, unknown> } | null>(
+    `ba.v1.activity.${slug}`,
+    null,
+  );
+  const started =
+    (lesson?.completed?.length ?? 0) > 0 || Object.keys(activity?.answers ?? {}).length > 0;
+  return started ? "in_progress" : "not_started";
+}
+
+function ScopedStatusChip({ slug }: { slug: string }) {
+  const [status, setStatus] = useState<SectionStatus>("not_started");
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount device-storage hydration
+    setStatus(readScopedStatus(slug));
+  }, [slug]);
+  return (
+    <span
+      className={`rounded-(--radius-chip) px-3 py-0.5 text-caption font-semibold ${STATUS_CLASS[status]}`}
+    >
+      {STATUS_LABEL[status]}
+    </span>
+  );
+}
+
+const STEPS = [
+  { label: "Lesson", path: "" },
+  { label: "Activity", path: "/activity" },
+  { label: "Practice", path: "/check" },
+  { label: "Assessment", path: "/assessment" },
+] as const;
+
+export function PathwaySections() {
+  // Subscribed once here so the classic card's chip re-renders with the rest,
+  // and to surface the optional capstone once the classic assessment passes.
+  const { hydrated, snapshot } = useDeviceStore();
+  const classicPassed = hydrated && (snapshot?.assessment?.passed ?? false);
+
+  return (
+    <ol className="flex flex-col gap-4">
+      {strings.pathway.sections.map((section) => {
+        const route = `/learn/ai-awareness/${section.slug}`;
+        const classic = section.slug === CLASSIC_SLUG;
+        return (
+          <li key={section.slug} className="panel p-6">
+            <Link
+              href={route}
+              onClick={() => track("section_card_clicked", { section: section.slug })}
+              className="group block focus-visible:outline-2 focus-visible:outline-primary"
+            >
+              <div className="flex flex-wrap items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-primary font-display text-subheading font-bold text-surface-card"
+                >
+                  {section.position}
+                </span>
+                <span className="font-display text-subheading font-semibold text-ink group-hover:text-primary">
+                  {section.title}
+                </span>
+                {classic ? <SectionStatusChip /> : <ScopedStatusChip slug={section.slug} />}
+                <span className="ml-auto text-caption text-ink-muted">{section.minutes}</span>
+              </div>
+              <p className="mt-3 text-body text-ink-muted">{section.description}</p>
+              {classic ? <SectionMicrostatus /> : null}
+            </Link>
+            <nav aria-label={`${section.title} steps`} className="mt-4 flex flex-wrap gap-2">
+              {STEPS.map((step) => (
+                <Link
+                  key={step.label}
+                  href={`${route}${step.path}`}
+                  className="inline-flex min-h-9 items-center rounded-(--radius-chip) border border-border bg-surface-card px-3 py-1 text-caption font-medium text-ink-muted hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-primary"
+                >
+                  {step.label}
+                </Link>
+              ))}
+            </nav>
+            {classic && classicPassed ? (
+              <Link
+                href={`${route}/capstone`}
+                className="mt-3 inline-block text-body font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                Capstone: audit an AI claim at work
+              </Link>
+            ) : null}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}

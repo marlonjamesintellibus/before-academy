@@ -1,41 +1,47 @@
 "use client";
 
-import { useDeviceStore } from "../use-device-store";
+import { useEffect, useState } from "react";
+import { readDevice } from "@/lib/device-store";
+import { strings } from "@/lib/strings";
 
 /**
- * S02 pathway progress summary (docs/product/screens/marketing-and-pathway.md).
- * The four section steps rolled into one line. Visual bar is decorative; the
- * count carries the meaning in text, per design-system v3.
+ * S02 pathway progress summary. Counts sections whose graded assessment is
+ * passed, out of all seven, reading each section's scoped outcome key. This
+ * replaced a "n of 4 steps" panel that counted one section's steps while
+ * presenting itself as pathway progress.
  */
-const TOTAL_STEPS = 4;
-
 export function PathwayProgress() {
-  const { hydrated, snapshot } = useDeviceStore();
+  const [done, setDone] = useState(0);
+  const [hydrated, setHydrated] = useState(false);
 
-  const lessonDone = snapshot?.lesson
-    ? snapshot.lesson.stagesCompleted >= snapshot.lesson.totalStages
-    : false;
-  const done = hydrated
-    ? [
-        lessonDone,
-        snapshot?.activity?.completed,
-        snapshot?.check?.completed,
-        snapshot?.assessment?.passed,
-      ].filter(Boolean).length
-    : 0;
-  const percent = Math.round((done / TOTAL_STEPS) * 100);
+  useEffect(() => {
+    const count = strings.pathway.sections.filter((section) => {
+      const outcome = readDevice<{ passed?: boolean } | null>(
+        `ba.v1.assessment.${section.slug}`,
+        null,
+      );
+      return outcome?.passed === true;
+    }).length;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount device-storage hydration
+    setDone(count);
+    setHydrated(true);
+  }, []);
+
+  const total = strings.pathway.sections.length;
+  const percent = Math.round((done / total) * 100);
 
   return (
     <div className="panel p-5">
       <p className="eyebrow">Your progress</p>
       <p className="mt-2 text-body font-semibold">
-        {done} of {TOTAL_STEPS} steps done
+        {hydrated ? done : 0} of {total} sections complete
       </p>
       <div className="progress-track mt-3" aria-hidden="true">
         <div className="progress-fill" style={{ width: `${percent}%` }} />
       </div>
       <p className="mt-3 text-caption text-ink-muted">
-        Nothing is locked, so you can jump to any step and come back.
+        A section is complete when its graded questions are passed. Nothing is locked, so take them
+        in any order.
       </p>
     </div>
   );

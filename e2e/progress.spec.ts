@@ -74,9 +74,8 @@ test("a stage completed out of order still reads as done on the pathway", async 
     );
   });
   await page.goto("/learn");
-  await expect(page.getByRole("link", { name: /Artificial intelligence.*Done/ })).toBeVisible();
-  // Units the learner has not reached keep their estimate.
-  await expect(page.getByRole("link", { name: /Traditional software.*4 min/ })).toBeVisible();
+  // The pathway page shows the section as in progress from the same state.
+  await expect(page.getByText("In progress")).toBeVisible();
 });
 
 test("remediation deep link never wipes lesson progress", async ({ page }) => {
@@ -176,11 +175,12 @@ test("reset progress clears the section after an explicit confirm", async ({ pag
   });
   await page.reload();
   await expect(page.getByText("In progress")).toBeVisible();
-  await page.getByRole("button", { name: "Reset my progress for this section" }).click();
+  await page.getByRole("button", { name: "Reset my pathway progress" }).click();
   // Keep is the default focus; destructive requires an explicit choice
   await expect(page.getByRole("button", { name: "Keep my progress" })).toBeFocused();
   await page.getByRole("button", { name: "Reset everything" }).click();
-  await expect(page.getByText("Not started")).toBeVisible();
+  // Seven cards now share the label, so assert the count: all reset.
+  await expect(page.getByText("Not started")).toHaveCount(7);
   const cleared = await page.evaluate(
     () => window.localStorage.getItem("ba.v1.lesson.ai-automation-software") === null,
   );

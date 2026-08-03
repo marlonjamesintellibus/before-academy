@@ -6,7 +6,7 @@
 export const strings = {
   actions: {
     startLearning: "Start learning - free",
-    assessmentFirst: "Already know this? Take the assessment",
+    assessmentFirst: "Already know this? Take the pathway assessment",
     continue: "Continue",
     tryActivity: "Try it: Sort the System",
     notifyMe: "Notify me",
@@ -18,8 +18,8 @@ export const strings = {
     headlineLead: "Know what AI actually is.",
     headlineFoil: "And what it isn't.",
     promise:
-      "In about twenty minutes, learn to read what a system really does, judging it on evidence instead of the label on the box.",
-    startCtaLabel: "Start the AI Awareness lesson",
+      "Seven short sections teach you to read what a system really does, judging it on evidence instead of the label on the box. Start in the next minute; go at your own pace.",
+    startCtaLabel: "Start the AI Awareness pathway",
     outcomes: [
       {
         title: "Read the mechanism",
@@ -27,7 +27,7 @@ export const strings = {
       },
       {
         title: "Practice on real cases",
-        body: "Ten everyday systems to classify, with feedback that names the clue you missed.",
+        body: "Over forty real scenarios across seven activities, with feedback that names the clue you missed.",
       },
       {
         title: "Know when you can't tell",
@@ -41,9 +41,9 @@ export const strings = {
       "Build the judgment to tell what a system really does - starting with the difference between AI, automation and traditional software.",
     totalTime: "About 20 minutes",
     meta: [
-      "About 20 minutes end to end",
-      "4 steps: lesson, activity, practice, assessment",
-      "Free, no account needed",
+      "Seven sections, each 15 to 25 minutes",
+      "Every section: lesson, activity, practice, graded questions",
+      "Self-paced across visits · Free, no account needed",
     ],
     sectionOneTitle: "AI, Automation and Traditional Software",
     sectionOneDescription:
@@ -55,28 +55,75 @@ export const strings = {
      * dashboard cannot drift apart, which is how "Applying AI at Work" (a
      * section no plan defined) reached both. */
     nextSectionTitle: "What AI Can Do",
-    restOfPathwayTitle: "The rest of the AI Awareness pathway",
-    restOfPathwayNote:
-      "Seven sections in total, all open. Each is a lesson with a practice check; graded assessment currently sits with section 3.",
     /**
-     * The AI Awareness outline exactly as commissioned in
-     * docs/content/content-map.md. Positions are learner order, so the open
-     * section keeps its true number 3 rather than being renumbered to look
-     * like the beginning of the pathway.
+     * The seven sections in learner order, exactly as commissioned in
+     * docs/content/content-map.md. This is the single source the pathway page
+     * and the dashboard render from, so the pages cannot disagree about what
+     * the pathway contains.
      */
-    outline: [
+    sections: [
       {
         position: 1,
-        title: "What Is Artificial Intelligence?",
         slug: "what-is-artificial-intelligence",
+        title: "What Is Artificial Intelligence?",
+        description:
+          "A definition that holds up, why the term is contested, and why a label is a claim rather than evidence.",
+        minutes: "15-20 min",
       },
-      { position: 2, title: "AI in Everyday Life", slug: "ai-in-everyday-life" },
-      { position: 4, title: "What AI Can Do", slug: "what-ai-can-do" },
-      { position: 5, title: "What AI Cannot Reliably Do", slug: "what-ai-cannot-reliably-do" },
-      { position: 6, title: "Myths and Misconceptions", slug: "myths-and-misconceptions" },
-      { position: 7, title: "Where to Go Next", slug: "where-to-go-next" },
+      {
+        position: 2,
+        slug: "ai-in-everyday-life",
+        title: "AI in Everyday Life",
+        description:
+          "Where these systems already sit in an ordinary day, most of them nowhere near a chat window.",
+        minutes: "15-20 min",
+      },
+      {
+        position: 3,
+        slug: "ai-automation-software",
+        title: "AI, Automation and Traditional Software",
+        description:
+          "Learn to tell the three apart, classify familiar systems, and recognize when you don't have enough information to judge.",
+        minutes: "About 20 min",
+      },
+      {
+        position: 4,
+        slug: "what-ai-can-do",
+        title: "What AI Can Do",
+        description:
+          "The handful of jobs these systems are genuinely good at, and how to recognise which one a task needs.",
+        minutes: "15-20 min",
+      },
+      {
+        position: 5,
+        slug: "what-ai-cannot-reliably-do",
+        title: "What AI Cannot Reliably Do",
+        description:
+          "The limits that follow from the mechanism, and the use, review, or refuse call on any output.",
+        minutes: "20-25 min",
+      },
+      {
+        position: 6,
+        slug: "myths-and-misconceptions",
+        title: "Myths and Misconceptions",
+        description:
+          "The claims you will hear most often, and the evidence that would settle each one.",
+        minutes: "15-20 min",
+      },
+      {
+        position: 7,
+        slug: "where-to-go-next",
+        title: "Where to Go Next",
+        description: "What you can now do, said plainly, and the directions this opens up.",
+        minutes: "10-15 min",
+      },
     ],
-    previewNote: "Coming soon - we'll open this section once it passes learner testing.",
+    pathwayAssessment: {
+      title: "The pathway assessment",
+      description:
+        "Twelve questions drawn across all seven sections, at least one from each. Passing this is what completing AI Awareness means.",
+      cta: "Take the pathway assessment",
+    },
   },
   account: {
     dashboard: "Dashboard",
@@ -89,7 +136,7 @@ export const strings = {
     guestOnly:
       "The dashboard needs an account, and accounts are still on the way. Everything in the lesson works without one.",
     emptyState:
-      "You have not started yet. AI, Automation and Traditional Software takes about 20 minutes.",
+      "You have not started yet. The first section takes about twenty minutes, and there are seven.",
   },
   system: {
     loadFailure: "Something went wrong loading this. Check your connection and try again.",

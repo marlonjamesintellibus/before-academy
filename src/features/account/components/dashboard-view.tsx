@@ -133,7 +133,7 @@ export function DashboardView() {
       </section>
 
       <Link
-        href="/learn#next"
+        href="/learn"
         className="panel flex flex-wrap items-center gap-6 p-6 transition-all duration-(--duration-state) hover:-translate-y-0.5 hover:shadow-(--shadow-card-hover) focus-visible:outline-2 focus-visible:outline-primary"
       >
         <div className="flex-1">
@@ -141,7 +141,9 @@ export function DashboardView() {
           <p className="mt-2 font-display text-subheading font-bold text-ink">
             {strings.pathway.nextSectionTitle}
           </p>
-          <p className="mt-1 text-body text-ink-muted">{strings.pathway.previewNote}</p>
+          <p className="mt-1 text-body text-ink-muted">
+            Open now on the pathway, with five more sections and the pathway assessment beyond it.
+          </p>
         </div>
         <span
           aria-hidden="true"

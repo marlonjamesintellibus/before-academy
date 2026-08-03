@@ -2,7 +2,7 @@ import Link from "next/link";
 import { TrackOnMount, TrackedLink } from "@/components/track";
 import { LandingDemo } from "@/features/content";
 import { ResumeBanner } from "@/features/progress";
-import { LESSON_ROUTE } from "@/lib/routes";
+
 import { strings } from "@/lib/strings";
 
 /**
@@ -29,7 +29,7 @@ export default function HomePage() {
             <div className="mt-9 flex flex-wrap items-center gap-5">
               <TrackedLink
                 event="cta_start_clicked"
-                href={LESSON_ROUTE}
+                href="/learn/ai-awareness/what-is-artificial-intelligence"
                 aria-label={strings.home.startCtaLabel}
                 className="inline-flex min-h-12 items-center rounded-(--radius-control) bg-primary px-6 py-3 text-body font-semibold text-surface-card shadow-(--shadow-card) transition-all duration-(--duration-state) hover:-translate-y-0.5 hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
               >
@@ -37,7 +37,7 @@ export default function HomePage() {
               </TrackedLink>
               <TrackedLink
                 event="cta_assessment_first_clicked"
-                href={`${LESSON_ROUTE}/assessment?route=assessment_first`}
+                href="/learn/ai-awareness/assessment?route=assessment_first"
                 className="text-body font-medium text-sky underline decoration-2 underline-offset-4 hover:text-surface-card"
               >
                 {strings.actions.assessmentFirst}
@@ -69,10 +69,11 @@ export default function HomePage() {
           <div className="flex-1">
             <p className="eyebrow">{strings.pathway.title} pathway</p>
             <p className="mt-2 font-display text-subheading font-bold text-ink">
-              {strings.pathway.sectionOneTitle}
+              Seven sections, from the first honest definition to the judgment you can use at work
             </p>
             <p className="mt-1 text-body text-ink-muted">
-              {strings.pathway.totalTime} · Lesson, activity, practice, and assessment
+              Each 15 to 25 minutes: lesson, activity, practice, and graded questions - closed by
+              one assessment across the whole pathway
             </p>
           </div>
           <span

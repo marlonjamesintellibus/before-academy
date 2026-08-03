@@ -76,8 +76,9 @@ export function LandingDemo({ className = "" }: { className?: string }) {
           {lastTurn ? (
             <>
               <p className="mt-3 text-body text-ink-muted">
-                That reasoning, clue by clue and never by label, is the whole skill. Eight more
-                scenarios wait inside, with the lesson that makes them easy to read.
+                That reasoning, clue by clue and never by label, is the whole skill. More than forty
+                scenarios like this wait across the pathway, with the lessons that make them easy to
+                read.
               </p>
               <Link
                 href={LESSON_ROUTE}

@@ -31,16 +31,16 @@ test("keyboard-only: skip link, then CTA into the lesson", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Skip to main content" })).toBeFocused();
   await page.keyboard.press("Enter");
   // Tab until the primary CTA has focus, then activate it.
-  const cta = page.getByRole("link", { name: "Start the AI Awareness lesson" });
+  const cta = page.getByRole("link", { name: "Start the AI Awareness pathway" });
   for (let i = 0; i < 15; i += 1) {
     if (await cta.evaluate((el) => el === document.activeElement)) break;
     await page.keyboard.press("Tab");
   }
   await expect(cta).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/learn\/ai-awareness\/ai-automation-software$/);
+  await expect(page).toHaveURL(/\/learn\/ai-awareness\/what-is-artificial-intelligence$/);
   await expect(
-    page.getByRole("heading", { level: 1, name: "AI, Automation and Traditional Software" }),
+    page.getByRole("heading", { level: 1, name: "What Is Artificial Intelligence?" }),
   ).toBeVisible();
 });
 

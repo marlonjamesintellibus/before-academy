@@ -1,26 +1,22 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { TrackOnMount, TrackOnVisible, TrackedLink } from "@/components/track";
 import {
   ResumeBanner,
-  SectionMicrostatus,
-  SectionStatusChip,
-  SectionUnits,
   SkillMap,
   ReviewSession,
   ResetProgress,
   PathwayProgress,
+  PathwaySections,
 } from "@/features/progress";
-import { LESSON_ROUTE } from "@/lib/routes";
 import { strings } from "@/lib/strings";
 
 export const metadata: Metadata = { title: "AI Awareness" };
 
 /**
- * S02 Pathway Overview + S12 Next-Step Preview anchor
- * (docs/product/screens/marketing-and-pathway.md, design-system v3). Navy band
- * frames the pathway; sections run in the main column with standing state in
- * the aside. Sections never lock (ADR-003) - future ones are previews.
+ * S02 Pathway Overview (docs/product/screens/marketing-and-pathway.md,
+ * content-map.md decision 7): all seven sections as equals in learner order,
+ * with the pathway assessment as the close. Standing state lives in the aside.
+ * Sections never lock (ADR-003).
  */
 export default function PathwayPage() {
   return (
@@ -45,69 +41,30 @@ export default function PathwayPage() {
 
       <div className="mx-auto grid w-full max-w-[1280px] gap-8 px-4 py-12 md:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
         <div>
-          <ol className="flex flex-col gap-5">
-            <li>
-              <TrackedLink
-                event="section_card_clicked"
-                properties={{ section: "ai-automation-software" }}
-                href={LESSON_ROUTE}
-                className="panel block p-6 transition-all duration-(--duration-state) hover:-translate-y-0.5 hover:shadow-(--shadow-card-hover) focus-visible:outline-2 focus-visible:outline-primary"
-              >
-                <div className="flex flex-wrap items-center gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-primary font-display text-subheading font-bold text-surface-card"
-                  >
-                    3
-                  </span>
-                  <span className="font-display text-subheading font-semibold text-ink">
-                    {strings.pathway.sectionOneTitle}
-                  </span>
-                  <SectionStatusChip />
-                </div>
-                <p className="mt-3 text-body text-ink-muted">
-                  {strings.pathway.sectionOneDescription}
-                </p>
-                <SectionMicrostatus />
-              </TrackedLink>
-              <SectionUnits />
-            </li>
-          </ol>
+          <PathwaySections />
 
-          {/* S12 next-step preview, widened to the whole pathway: showing one
-              "coming soon" card understated a seven-section plan and left the
-              roadmap invisible (content-map.md decision 7). All seven are now
-              open, so this lists them rather than teasing them; positions stay
-              in learner order. */}
+          {/* The pathway close: passing this is what completing AI Awareness
+              means. Carries the old next-preview visibility event so the S12
+              funnel keeps its measurement point. */}
           <TrackOnVisible event="next_preview_viewed">
             <section
               id="next"
-              aria-label={strings.pathway.restOfPathwayTitle}
-              className="mt-8 rounded-(--radius-card) border border-border bg-surface-alt p-6"
+              aria-label={strings.pathway.pathwayAssessment.title}
+              className="mt-8 rounded-(--radius-card) border border-primary/25 bg-primary-tint p-6"
             >
               <h2 className="font-display text-subheading font-bold text-ink">
-                {strings.pathway.restOfPathwayTitle}
+                {strings.pathway.pathwayAssessment.title}
               </h2>
-              <p className="mt-2 text-body text-ink-muted">{strings.pathway.restOfPathwayNote}</p>
-              <ol className="mt-4 divide-y divide-border rounded-(--radius-card) border border-border bg-surface-card">
-                {strings.pathway.outline.map((entry) => (
-                  <li key={entry.position}>
-                    <Link
-                      href={`/learn/ai-awareness/${entry.slug}`}
-                      className="flex min-h-12 items-center gap-3 px-4 py-3 hover:bg-primary-tint/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-surface-alt text-caption font-bold text-ink-muted"
-                      >
-                        {entry.position}
-                      </span>
-                      <span className="flex-1 text-body text-ink">{entry.title}</span>
-                      <span className="shrink-0 text-caption font-medium text-primary">Open</span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
+              <p className="mt-2 text-body text-ink-muted">
+                {strings.pathway.pathwayAssessment.description}
+              </p>
+              <TrackedLink
+                event="cta_assessment_first_clicked"
+                href="/learn/ai-awareness/assessment"
+                className="mt-4 inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-5 py-2.5 text-body font-semibold text-surface-card shadow-(--shadow-card) hover:bg-primary-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                {strings.pathway.pathwayAssessment.cta}
+              </TrackedLink>
             </section>
           </TrackOnVisible>
           <ReviewSession />

@@ -21,23 +21,30 @@ const SKILLS: { label: string; categories: string[] }[] = [
   { label: "Evidence and ambiguity", categories: ["ambiguity", "misconceptions"] },
 ];
 
-const ASSESSMENT_KEY = "ba.v1.assessment.ai-automation-software";
+/** The pathway assessment covers every section, so its categories are the
+ * richest source; the first section's outcome is the fallback. */
+const OUTCOME_KEYS = [
+  "ba.v1.assessment.pathway-ai-awareness",
+  "ba.v1.assessment.ai-automation-software",
+];
 
 export function SkillMap() {
   const fired = useRef(false);
   const [outcome, setOutcome] = useState<StoredAssessmentOutcome | null>(null);
 
   useEffect(() => {
-    const stored = readDevice<StoredAssessmentOutcome | null>(
-      ASSESSMENT_KEY,
-      null,
-      (value) =>
-        typeof value === "object" &&
-        value !== null &&
-        (value as StoredAssessmentOutcome).version === 1,
-    );
+    const stored = OUTCOME_KEYS.map((key) =>
+      readDevice<StoredAssessmentOutcome | null>(
+        key,
+        null,
+        (value) =>
+          typeof value === "object" &&
+          value !== null &&
+          (value as StoredAssessmentOutcome).version === 1,
+      ),
+    ).find((value) => value?.categories);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount device-storage hydration
-    setOutcome(stored);
+    setOutcome(stored ?? null);
     if (stored?.categories && !fired.current) {
       fired.current = true;
       track("skill_map_viewed", {});
