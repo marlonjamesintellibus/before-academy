@@ -8,6 +8,7 @@ import { RichTextView } from "./rich-text";
 import { HookBlock } from "./hook-block";
 import { DepthPanel } from "./depth-panel";
 import { InlineCheck } from "./inline-check";
+import { LessonRail } from "./lesson-rail";
 import { PredictionGate } from "./diagrams/prediction-gate";
 import { readDevice, writeDevice } from "@/lib/device-store";
 import { track } from "@/lib/analytics";
@@ -135,6 +136,13 @@ export function SectionJourney({
       setActive(saved.active);
       setCompleted([...new Set(saved.completed.filter((i) => i >= 0 && i < stageCount))]);
     }
+    // Deep link (#stage-N) wins over the resume point: the pathway's unit rows
+    // use it to open a specific stage.
+    const match = /^#stage-(\d+)$/.exec(window.location.hash);
+    if (match) {
+      const target = Number(match[1]);
+      if (target >= 0 && target < stageCount) setActive(target);
+    }
     setHydrated(true);
   }, [progressKey, stageCount]);
 
@@ -173,50 +181,33 @@ export function SectionJourney({
   const stage = stages[active] ?? stages[0];
   if (!stage) return null;
 
-  const percentage = Math.round((completed.length / stageCount) * 100);
-  const minutesRemaining = stages.reduce(
-    (total, entry, index) => total + (completed.includes(index) ? 0 : entry.minutes),
-    0,
-  );
   const nextStage = active < lastStage ? stages[active + 1] : undefined;
   const activityCta = content.blocks.find((block) => block.type === "activity_cta");
   const checkCta = content.blocks.find((block) => block.type === "check_cta");
 
   return (
     <div className="mx-auto w-full max-w-[1280px] px-4 md:px-6">
-      <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
-        <nav aria-label="Lesson contents" className="lg:sticky lg:top-6 lg:self-start">
-          <p className="eyebrow">Contents</p>
-          <p className="mt-2 text-caption text-ink-muted">
-            {percentage}% complete · about {minutesRemaining} min left
-          </p>
-          <div className="progress-track mt-2" aria-hidden="true">
-            <div className="progress-fill" style={{ width: `${percentage}%` }} />
+      <div className="lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10">
+        <div>
+          <div className="lg:hidden">
+            <LessonRail
+              stages={stages}
+              active={active}
+              completed={completed}
+              onSelect={selectStage}
+              variant="mobile"
+            />
           </div>
-          <ol className="mt-4 flex flex-col gap-1">
-            {stages.map((entry, index) => {
-              const done = completed.includes(index);
-              return (
-                <li key={entry.label}>
-                  <button
-                    type="button"
-                    onClick={() => selectStage(index)}
-                    aria-current={index === active ? "step" : undefined}
-                    className={`flex min-h-11 w-full items-center gap-2 rounded-(--radius-control) px-3 py-2 text-left text-body focus-visible:outline-2 focus-visible:outline-primary ${
-                      index === active
-                        ? "bg-primary-tint font-semibold text-primary"
-                        : "text-ink-muted hover:bg-surface-alt"
-                    }`}
-                  >
-                    <span aria-hidden="true">{done ? "✓" : index + 1}</span>
-                    {entry.label}
-                    <span className="sr-only">{done ? ", completed" : ", not started"}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
+          <div className="hidden lg:block">
+            <LessonRail
+              stages={stages}
+              active={active}
+              completed={completed}
+              onSelect={selectStage}
+              variant="desktop"
+            />
+          </div>
+        </div>
 
         <div className="mt-8 lg:mt-0">
           <div
