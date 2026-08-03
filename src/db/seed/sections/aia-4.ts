@@ -250,6 +250,11 @@ export const aia4Seed: SectionSeed = {
       ],
     },
     {
+      type: "activity_cta",
+      id: "AIA-4-LESSON-006-ACT-CTA",
+      body: "Try it: Choose the Best Use Case. Five workplace goals, one sound choice each.",
+    },
+    {
       type: "check_cta",
       id: "AIA-4-LESSON-006-CHECK-CTA",
       body: "Four decisions about what work suits these systems. Nothing is graded.",

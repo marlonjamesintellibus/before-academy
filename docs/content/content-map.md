@@ -95,7 +95,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
-**Build status: published.** Lesson (`src/db/seed/sections/aia-1.ts`) plus a four-question knowledge check (`aia-1-check.ts`), live at `/learn/ai-awareness/what-is-artificial-intelligence`. Assessment bank published.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-1.ts`) plus its designed interaction *AI or Not AI?*, a four-question knowledge check, and a graded bank. Every step live.
 
 **Retrieval rule, clarified.** The learning framework requires retrieval "via any route", not every format. The first section carries both an activity and a check because it was the slice testing both formats. Content-lint therefore requires a published section to offer **at least one** retrieval step, and this section's is the knowledge check. Flagged for education-lead review: if the interaction named above is judged essential rather than optional, this section needs it before the pilot.
 
@@ -169,7 +169,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
-**Build status: published.** Lesson (`src/db/seed/sections/aia-4.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Assessment bank published.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-4.ts`) plus its designed interaction, a four-question knowledge check, and a graded bank. Every step live.
 
 ---
 
@@ -198,7 +198,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-5.ts`), written as one piece with AIA-4 so the boundary holds. Outstanding before publish: activity, knowledge check, assessment bank, generalized step routes.
 
-**Build status: published.** Lesson (`src/db/seed/sections/aia-2.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Assessment bank published.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-2.ts`) plus its designed interaction, a four-question knowledge check, and a graded bank. Every step live.
 
 ---
 
@@ -223,7 +223,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Should have. This is the one Level 1 section that could ship after the pathway assessment without leaving a hole.
 
-**Build status: published.** Lesson (`src/db/seed/sections/aia-6.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Assessment bank published.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-6.ts`) plus its designed interaction, a four-question knowledge check, and a graded bank. Every step live.
 
 ---
 
@@ -246,7 +246,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
-**Build status: published.** Lesson (`src/db/seed/sections/aia-7.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Assessment bank published.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-7.ts`) plus its designed interaction, a four-question knowledge check, and a graded bank. Every step live.
 
 ---
 

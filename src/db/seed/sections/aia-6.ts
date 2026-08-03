@@ -188,6 +188,11 @@ export const aia6Seed: SectionSeed = {
       ],
     },
     {
+      type: "activity_cta",
+      id: "AIA-6-LESSON-005-ACT-CTA",
+      body: "Try it: Myth or Reality. Six claims you will hear this year.",
+    },
+    {
       type: "check_cta",
       id: "AIA-6-LESSON-005-CHECK-CTA",
       body: "Four claims of the kind you will actually hear. Nothing is graded.",

@@ -239,6 +239,11 @@ export const aia5Seed: SectionSeed = {
       ],
     },
     {
+      type: "activity_cta",
+      id: "AIA-5-LESSON-006-ACT-CTA",
+      body: "Try it: Would You Trust This? Five outputs, three routes.",
+    },
+    {
       type: "check_cta",
       id: "AIA-5-LESSON-006-CHECK-CTA",
       body: "Four judgments about outputs you cannot fully verify. Nothing is graded.",

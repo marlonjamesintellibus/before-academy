@@ -8,6 +8,8 @@ import { aia2Seed } from "./aia-2";
 import { aia6Seed } from "./aia-6";
 import { aia7Seed } from "./aia-7";
 import { aia1CheckSeed } from "./aia-1-check";
+import { aia1ActivitySeed, aia2ActivitySeed, aia4ActivitySeed } from "./activities-1-2-4";
+import { aia5ActivitySeed, aia6ActivitySeed, aia7ActivitySeed } from "./activities-5-6-7";
 import { aia1AssessmentSeed } from "./aia-1-assessment";
 import { aia2AssessmentSeed, aia4AssessmentSeed } from "./banks-2-4";
 import { aia5AssessmentSeed, aia6AssessmentSeed, aia7AssessmentSeed } from "./banks-5-6-7";
@@ -51,36 +53,42 @@ export const sectionBundles: SectionBundle[] = [
   {
     seed: aia1Seed,
     status: "published",
+    activity: aia1ActivitySeed,
     check: aia1CheckSeed,
     assessment: aia1AssessmentSeed,
   },
   {
     seed: aia4Seed,
     status: "published",
+    activity: aia4ActivitySeed,
     check: aia4CheckSeed,
     assessment: aia4AssessmentSeed,
   },
   {
     seed: aia5Seed,
     status: "published",
+    activity: aia5ActivitySeed,
     check: aia5CheckSeed,
     assessment: aia5AssessmentSeed,
   },
   {
     seed: aia2Seed,
     status: "published",
+    activity: aia2ActivitySeed,
     check: aia2CheckSeed,
     assessment: aia2AssessmentSeed,
   },
   {
     seed: aia6Seed,
     status: "published",
+    activity: aia6ActivitySeed,
     check: aia6CheckSeed,
     assessment: aia6AssessmentSeed,
   },
   {
     seed: aia7Seed,
     status: "published",
+    activity: aia7ActivitySeed,
     check: aia7CheckSeed,
     assessment: aia7AssessmentSeed,
   },

@@ -186,6 +186,11 @@ export const aia7Seed: SectionSeed = {
       ],
     },
     {
+      type: "activity_cta",
+      id: "AIA-7-LESSON-005-ACT-CTA",
+      body: "Try it: the Transfer Check. Four real situations, no labels.",
+    },
+    {
       type: "check_cta",
       id: "AIA-7-LESSON-005-CHECK-CTA",
       body: "Four questions about what you now have, and where its edges are.",

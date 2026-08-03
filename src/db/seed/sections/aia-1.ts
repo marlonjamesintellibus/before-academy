@@ -282,6 +282,11 @@ export const aia1Seed: SectionSeed = {
       ],
     },
     {
+      type: "activity_cta",
+      id: "AIA-1-LESSON-006-ACT-CTA",
+      body: "Try it: AI or Not AI? Five familiar systems, one judgment each.",
+    },
+    {
       type: "check_cta",
       id: "AIA-1-LESSON-006-CHECK-CTA",
       body: "Four quick situations to think through. Nothing is graded.",

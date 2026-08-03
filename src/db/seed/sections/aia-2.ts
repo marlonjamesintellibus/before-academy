@@ -207,6 +207,11 @@ export const aia2Seed: SectionSeed = {
       ],
     },
     {
+      type: "activity_cta",
+      id: "AIA-2-LESSON-005-ACT-CTA",
+      body: "Try it: A Day With AI. Six moments from one ordinary morning.",
+    },
+    {
       type: "check_cta",
       id: "AIA-2-LESSON-005-CHECK-CTA",
       body: "Four everyday situations to think through. Nothing is graded.",

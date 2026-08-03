@@ -120,3 +120,28 @@ test("activity and check pass axe with no critical or serious violations", async
     expect(blocking.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
   }
 });
+
+test("a generic-dialect activity plays end to end with per-option feedback", async ({ page }) => {
+  // AIA-1's AI or Not AI?: options are per-scenario, not the five labels.
+  await page.goto("/learn/ai-awareness/what-is-artificial-intelligence/activity");
+  await page.getByRole("button", { name: "Start", exact: true }).click();
+
+  // The scenario's own prompt renders, with its own options.
+  await expect(page.getByText("Is learned behaviour involved?").first()).toBeVisible();
+  await page.getByRole("radio", { name: "No AI" }).check();
+  await page.getByRole("button", { name: "Check", exact: true }).click();
+
+  // Per-option feedback, verdict pair, and the evidence second step.
+  await expect(page.getByText(/lookup against a list someone compiled/)).toBeVisible();
+  await expect(page.getByText("Best-supported answer")).toBeVisible();
+  await expect(page.getByText("Which detail settles it?")).toBeVisible();
+
+  // A wrong answer offers the section's own remediation link.
+  await page.getByRole("button", { name: "Continue" }).click();
+  await page.getByRole("radio", { name: "No AI" }).check();
+  await page.getByRole("button", { name: "Check", exact: true }).click();
+  await expect(page.getByRole("link", { name: "Review this concept" })).toHaveAttribute(
+    "href",
+    /what-is-artificial-intelligence#aia-1-lesson-002/,
+  );
+});
