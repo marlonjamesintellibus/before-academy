@@ -12,6 +12,7 @@ What Before Academy teaches and the standards every piece of educational content
 
 ## Organization
 - [learning-framework.md](learning-framework.md) - competency model, layers, routes (the canonical learning model)
+- [content-map.md](content-map.md) - the AI Awareness commissioning spine: all seven sections, IDs, objectives, build order, open decisions
 - [knowledge-model.md](knowledge-model.md) - canonical concept-record structure + Phase 1 concept register
 - [lessons/](lessons/README.md) - lesson standards + the Phase 1 lesson spec
 - [assessments.md](assessments.md) - philosophy, blueprint, difficulty, retakes

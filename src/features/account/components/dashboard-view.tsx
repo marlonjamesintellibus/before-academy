@@ -139,7 +139,7 @@ export function DashboardView() {
         <div className="flex-1">
           <p className="eyebrow">What comes next</p>
           <p className="mt-2 font-display text-subheading font-bold text-ink">
-            Applying AI at Work
+            {strings.pathway.nextSectionTitle}
           </p>
           <p className="mt-1 text-body text-ink-muted">{strings.pathway.previewNote}</p>
         </div>

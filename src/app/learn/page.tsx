@@ -85,7 +85,7 @@ export default function PathwayPage() {
                       2
                     </span>
                     <span className="font-display text-subheading font-semibold text-ink-muted">
-                      Applying AI at Work
+                      {strings.pathway.nextSectionTitle}
                     </span>
                     <span className="rounded-(--radius-chip) bg-primary-tint px-3 py-0.5 text-caption font-semibold text-primary">
                       {strings.pathway.comingSoon}

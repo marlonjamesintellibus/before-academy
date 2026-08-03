@@ -50,6 +50,11 @@ export const strings = {
       "Learn to tell the three apart, classify familiar systems, and recognize when you don't have enough information to judge.",
     notStarted: "Not started",
     comingSoon: "Coming soon",
+    /** AIA-4 in docs/content/content-map.md, the section that follows the
+     * published one in learner order. Named here so the pathway page and the
+     * dashboard cannot drift apart, which is how "Applying AI at Work" (a
+     * section no plan defined) reached both. */
+    nextSectionTitle: "What AI Can Do",
     previewNote: "Coming soon - we'll open this section once it passes learner testing.",
   },
   account: {
