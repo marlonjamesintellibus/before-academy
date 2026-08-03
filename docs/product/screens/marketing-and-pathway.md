@@ -13,7 +13,7 @@ last_updated: 2026-07-31
 Objective: demonstrate the product, not describe it, and move the visitor into the lesson within one scroll. Container max 1280px, aligned with the shell header. Hero is two columns at `lg` and above: left holds the eyebrow, two-line headline (page h1, second line in sky), one-sentence promise, primary CTA **Start learning - free**, and the quiet **Already know this? Take the assessment** link; right holds the live demo card, so a real scenario is playable above the fold. Below the hero: three outcome cards overlapping the navy edge, then the pathway teaser card. The columns stack on smaller viewports with the demo directly beneath the CTAs.
 
 Hero demo: two real activity scenarios in sequence ("Scenario n of 2"), each answered from the five category buttons. Seed feedback already opens with its own verdict, so the component renders it unprefixed and uses colour only as reinforcement. After the first answer the card offers **Try a harder one**; after the second it hands over to **Learn to read them all**.
-States: default; returning guest/registered = resume banner above hero ("Continue: … → Sort the System"). CTA accessible name: "Start the AI Awareness lesson".
+States: default; returning guest/registered = resume banner above hero ("Continue: … → Sort the System"). CTA accessible name: "Start the AI Awareness pathway"; it enters at section 1, and the skip-ahead link targets the pathway assessment.
 Events: `home_viewed`, `resume_banner_shown/clicked`, `cta_start_clicked`, `cta_assessment_first_clicked`.
 
 ## S02 Pathway Overview (`/learn`)
@@ -21,8 +21,7 @@ Navy band header (eyebrow, title, plain description, meta row: seven sections at
 Events: `pathway_viewed`, `section_card_clicked`, `preview_card_clicked`, `notify_me_clicked`.
 
 ## S12 Next-Step Preview (`/learn#next`)
-Anchor section on S02: next-section preview card (title, description, sample objective, "Coming soon"), **Notify me** (guest path doubles as conversion moment), link back to Go Deeper for learners who want more now. Never promises unbuilt features.
-Events: `next_preview_viewed`, `notify_me_clicked`.
+With all seven sections open, the anchor now lands on the **pathway assessment card**, which inherits the `next_preview_viewed` event so the funnel keeps its measurement point. The Coming-soon/Notify-me preview pattern retires until a section genuinely is unbuilt again (Level 2).
 
 ## Related Documents
 - [../personas-and-journeys.md](../personas-and-journeys.md) - J1/J4 entry behaviour

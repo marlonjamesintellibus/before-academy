@@ -15,14 +15,14 @@ Canonical interface strings. Ownership split: interface strings live here (imple
 - Eyebrow: "AI Awareness · Free · No account needed"
 - Headline (two lines, second in sky): "Know what AI actually is." / "And what it isn't."
 - Promise: "Seven short sections teach you to read what a system really does, judging it on evidence instead of the label on the box. Start in the next minute; go at your own pace."
-- Outcome cards: "Read the mechanism" / "Judge a system by how it works, not by what the marketing around it calls it." · "Practice on real cases" / "Ten everyday systems to classify, with feedback that names the clue you missed." · "Know when you can't tell" / "Spot the moment the evidence runs out, and say so instead of guessing."
+- Outcome cards: "Read the mechanism" / "Judge a system by how it works, not by what the marketing around it calls it." · "Practice on real cases" / "Over forty real scenarios across seven activities, with feedback that names the clue you missed." · "Know when you can't tell" / "Spot the moment the evidence runs out, and say so instead of guessing."
 - Hero demo: "Try one right now" · "Try a harder one" · "Learn to read them all"
 
 ## Pathway (S02)
 - Progress summary: "Your progress" / "{done} of 7 sections complete" / "A section is complete when its graded questions are passed. Nothing is locked, so take them in any order."
 
 ## Core actions
-Start learning - free · Already know this? Take the assessment · Continue · Try it: Sort the System · Check · Start assessment · Submit assessment · Retake with new questions · Retake assessment (S09 bar; opens the same new-questions retake) · Review weak areas · Review the lesson first · Notify me · Exit assessment · Create free account / Continue as guest
+Start learning - free · Already know this? Take the pathway assessment · Continue · Try it: Sort the System · Check · Start assessment · Submit assessment · Retake with new questions · Retake assessment (S09 bar; opens the same new-questions retake) · Review weak areas · Review the lesson first · Notify me · Exit assessment · Create free account / Continue as guest
 
 ## Guest & account
 - Storage banner: "Your progress saves to this device. Clearing browser data will remove it. Create a free account any time to keep it everywhere."
@@ -39,7 +39,7 @@ Start learning - free · Already know this? Take the assessment · Continue · T
 - Confidence: "How confident do you feel telling AI, automation and traditional software apart?"
 
 ## System
-Load failure: "Something went wrong loading this. Check your connection and try again." · Saving toast: "Saving… we'll retry automatically." / "We couldn't save that. Try again." · Private browsing: "Progress can't be saved in this browsing mode, but you can still complete everything." · Exit confirm: "Leave the assessment? Your answers from this attempt won't be saved." (Keep going / Exit - discard this attempt) · Dashboard empty: "You haven't started yet. AI, Automation and Traditional Software takes about 20 minutes." · 404: "We can't find that page. Head home or jump back into the lesson." · Updated banner: "This lesson was updated since your last visit." · Feedback intro: "Spotted a mistake or something confusing? Tell us - it goes straight to the content team." / success: "Thanks - your report helps us fix things fast." · Preview: "Coming soon - we'll open this section once it passes learner testing."
+Load failure: "Something went wrong loading this. Check your connection and try again." · Saving toast: "Saving… we'll retry automatically." / "We couldn't save that. Try again." · Private browsing: "Progress can't be saved in this browsing mode, but you can still complete everything." · Exit confirm: "Leave the assessment? Your answers from this attempt won't be saved." (Keep going / Exit - discard this attempt) · Dashboard empty: "You have not started yet. The first section takes about twenty minutes, and there are seven." · 404: "We can't find that page. Head home or jump back into the lesson." · Updated banner: "This lesson was updated since your last visit." · Feedback intro: "Spotted a mistake or something confusing? Tell us - it goes straight to the content team." / success: "Thanks - your report helps us fix things fast." · Preview: "Coming soon - we'll open this section once it passes learner testing."
 
 ## Related Documents
 - [../shared/terminology.md](../shared/terminology.md) - fixed names and banned words
