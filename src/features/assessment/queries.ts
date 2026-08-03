@@ -1,6 +1,6 @@
 import { and, asc, eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
-import { questionOptions, questions, sections } from "@/db/schema";
+import { pathways, questionOptions, questions, sections } from "@/db/schema";
 import type { AssessmentCategory, AssessmentFormat, AssessmentQuestionSeed } from "./types";
 
 /**
@@ -9,6 +9,15 @@ import type { AssessmentCategory, AssessmentFormat, AssessmentQuestionSeed } fro
  */
 export interface BankQuestion extends AssessmentQuestionSeed {
   options: { id: string; text: string; correct: boolean }[];
+  /** Which section the item came from. Used by the pathway draw for coverage. */
+  sectionSlug?: string;
+}
+
+/** Marks a pathway-scoped attempt in the signed token: `pathway:<slug>`. */
+export const PATHWAY_SCOPE_PREFIX = "pathway:";
+
+export function pathwayScope(pathwaySlug: string): string {
+  return `${PATHWAY_SCOPE_PREFIX}${pathwaySlug}`;
 }
 
 interface QuestionMeta {
@@ -59,6 +68,31 @@ export async function getAssessmentBank(sectionSlug: string): Promise<BankQuesti
       learningOutcomes: row.learningOutcomes,
       misconceptionTags: row.misconceptionTags,
     });
+  }
+  return bank;
+}
+
+/**
+ * Every published assessment item across a pathway's sections, tagged with its
+ * section so the draw can guarantee coverage. This is the Level 1 competency
+ * bank: passing it should mean the pathway, not one section.
+ */
+export async function getPathwayAssessmentBank(pathwaySlug: string): Promise<BankQuestion[]> {
+  const db = getDb();
+  const pathway = await db.query.pathways.findFirst({
+    where: and(eq(pathways.slug, pathwaySlug), eq(pathways.status, "published")),
+  });
+  if (!pathway) return [];
+
+  const rows = await db.query.sections.findMany({
+    where: and(eq(sections.pathwayId, pathway.id), eq(sections.status, "published")),
+    orderBy: [asc(sections.position)],
+  });
+
+  const bank: BankQuestion[] = [];
+  for (const section of rows) {
+    const items = await getAssessmentBank(section.slug);
+    for (const item of items) bank.push({ ...item, sectionSlug: section.slug });
   }
   return bank;
 }

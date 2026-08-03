@@ -252,7 +252,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 ## Pathway assessment
 
-**New artifact.** Today only section assessments exist. The pathway assessment is a Level 1 competency check drawing across all seven sections, and it is what "passing AI Awareness" should mean.
+**Built.** Live at `/learn/ai-awareness/assessment`, drawing across all seven section banks. Selection covers every section first and fills afterwards, so passing means the pathway rather than whichever sections happened to be sampled. Coverage is never traded away to avoid repeating a question: an unexamined section is the larger problem. Draw size is configuration (`PATHWAY_DRAW_SIZE`, default 12), not code.
 
 | Property | Value | Label |
 |---|---|---|

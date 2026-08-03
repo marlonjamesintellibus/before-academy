@@ -64,3 +64,56 @@ export function shuffle<T>(items: T[], random: () => number = Math.random): T[] 
   }
   return copy;
 }
+
+/**
+ * Pathway draw: the Level 1 competency check across every section.
+ *
+ * Coverage first, then fill. Taking one item from each section before filling
+ * the rest is what makes passing mean the pathway rather than whichever
+ * sections happened to be sampled. Items seen in the previous attempt are
+ * deprioritised so a retake changes the surface, and coverage is never
+ * sacrificed to avoid a repeat: a repeated item is a smaller problem than an
+ * unexamined section.
+ */
+export function drawPathwayQuestions<T extends { id: string; sectionSlug?: string }>(
+  bank: T[],
+  size: number,
+  previousCombination: string[] = [],
+  random: () => number = Math.random,
+): T[] {
+  const previous = new Set(previousCombination);
+  const bySection = new Map<string, T[]>();
+  for (const item of bank) {
+    const key = item.sectionSlug ?? "unsectioned";
+    bySection.set(key, [...(bySection.get(key) ?? []), item]);
+  }
+
+  function take(items: T[]): T | undefined {
+    if (items.length === 0) return undefined;
+    const fresh = items.filter((item) => !previous.has(item.id));
+    const pool = fresh.length > 0 ? fresh : items;
+    return pool[Math.floor(random() * pool.length)];
+  }
+
+  const picked: T[] = [];
+  const pickedIds = new Set<string>();
+
+  for (const items of bySection.values()) {
+    const choice = take(items);
+    if (choice && !pickedIds.has(choice.id)) {
+      picked.push(choice);
+      pickedIds.add(choice.id);
+    }
+  }
+
+  const remaining = bank.filter((item) => !pickedIds.has(item.id));
+  while (picked.length < size && remaining.length > 0) {
+    const choice = take(remaining);
+    if (!choice) break;
+    picked.push(choice);
+    pickedIds.add(choice.id);
+    remaining.splice(remaining.indexOf(choice), 1);
+  }
+
+  return picked.slice(0, Math.max(size, bySection.size));
+}

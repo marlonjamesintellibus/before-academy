@@ -15,6 +15,8 @@ export function getAssessmentConfig() {
     passThreshold: envNumber("ASSESSMENT_PASS_THRESHOLD", 0.8),
     /** Questions per attempt (blueprint minimum forces 6). */
     drawSize: envNumber("ASSESSMENT_DRAW_SIZE", 6),
+    /** Pathway competency check: 12-15 per docs/content/content-map.md. */
+    pathwayDrawSize: envNumber("PATHWAY_DRAW_SIZE", 12),
     /** Guest attempt token TTL in milliseconds (2h). */
     tokenTtlMs: envNumber("ASSESSMENT_TOKEN_TTL_MS", 2 * 60 * 60 * 1000),
   };

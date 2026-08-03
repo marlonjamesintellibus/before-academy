@@ -11,9 +11,9 @@ import type { Result } from "@/lib/result";
 import { err, ok } from "@/lib/result";
 import { withAction } from "@/lib/with-action";
 import { SECTION_SLUG } from "@/lib/routes";
-import { getAssessmentBank } from "./queries";
+import { getAssessmentBank, getPathwayAssessmentBank, PATHWAY_SCOPE_PREFIX } from "./queries";
 import { score } from "./scoring";
-import { drawQuestions, shuffle } from "./selection";
+import { drawPathwayQuestions, drawQuestions, shuffle } from "./selection";
 import type { AttemptPayload, AttemptResult } from "./types";
 
 /**
@@ -40,12 +40,20 @@ const createAttemptHandler = withAction(
     rateLimit: "attempt",
   },
   async (input): Promise<Result<AttemptPayload>> => {
-    const bank = await getAssessmentBank(input.sectionSlug);
+    // A scope of `pathway:<slug>` draws the Level 1 competency check across
+    // every section instead of one bank (docs/content/content-map.md).
+    const isPathway = input.sectionSlug.startsWith(PATHWAY_SCOPE_PREFIX);
+    const bank = isPathway
+      ? await getPathwayAssessmentBank(input.sectionSlug.slice(PATHWAY_SCOPE_PREFIX.length))
+      : await getAssessmentBank(input.sectionSlug);
     if (bank.length === 0) {
       return err("NOT_FOUND", "The assessment is not available right now.");
     }
 
-    const drawn = drawQuestions(bank, input.previousQuestionIds);
+    const config = getAssessmentConfig();
+    const drawn = isPathway
+      ? drawPathwayQuestions(bank, config.pathwayDrawSize, input.previousQuestionIds)
+      : drawQuestions(bank, input.previousQuestionIds);
     const token = issueGuestToken({
       sectionSlug: input.sectionSlug,
       questionIds: drawn.map((question) => question.id),
@@ -105,7 +113,9 @@ const submitAttemptHandler = withAction(
       });
     }
 
-    const bank = await getAssessmentBank(claims.sectionSlug);
+    const bank = claims.sectionSlug.startsWith(PATHWAY_SCOPE_PREFIX)
+      ? await getPathwayAssessmentBank(claims.sectionSlug.slice(PATHWAY_SCOPE_PREFIX.length))
+      : await getAssessmentBank(claims.sectionSlug);
     const drawn = claims.questionIds.flatMap((id) => bank.filter((question) => question.id === id));
     if (drawn.length !== claims.questionIds.length) {
       return err(
