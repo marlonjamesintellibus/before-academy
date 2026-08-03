@@ -63,6 +63,10 @@ export const aia2Seed: SectionSeed = {
       type: "concept",
       id: "AIA-2-LESSON-002",
       title: "The invisible majority",
+      objective: "See the systems that never announce themselves.",
+      minutes: 5,
+      completion: "You can spot the quiet majority that a chat-window picture hides.",
+      tone: "rules",
       quick: [
         {
           type: "p",
@@ -97,9 +101,41 @@ export const aia2Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-2-MICRO-001",
+      prompt:
+        "Your bank texts you about an unusual purchase seconds after you tap your card. What decided that?",
+      correctOptionId: "pattern",
+      options: [
+        {
+          id: "pattern",
+          text: "Your spending pattern, compared in the background",
+          feedback:
+            "Correct. Unusual only means something relative to a learned pattern of your behaviour. That comparison ran invisibly before the text arrived.",
+        },
+        {
+          id: "person",
+          text: "A person at the bank reviewing your purchase",
+          feedback:
+            "Not quite. Seconds is the clue: people review the flagged cases, and the flagging itself is the pattern comparison.",
+        },
+        {
+          id: "rule",
+          text: "A written rule about purchase size",
+          feedback:
+            "Not quite possible to rule out, but a fixed threshold would miss the word unusual: the same purchase can be normal for one customer and unusual for another, which takes a per-person pattern.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-2-LESSON-003",
       title: "Uses AI, or is AI",
+      objective:
+        "Ask which part of a product learned its behaviour, instead of whether the product is AI.",
+      minutes: 4,
+      completion: "You can name the layer doing the work you care about.",
+      tone: "flow",
       quick: [
         {
           type: "p",
@@ -128,9 +164,40 @@ export const aia2Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-2-MICRO-002",
+      prompt:
+        "A television advertises AI-powered picture quality. What is the most useful question?",
+      correctOptionId: "which-part",
+      options: [
+        {
+          id: "which-part",
+          text: "Which part of the picture pipeline learned its behaviour?",
+          feedback:
+            "Correct. The product is a television; at most one processing step learned from examples. Naming the part tells you what the claim is worth.",
+        },
+        {
+          id: "is-it",
+          text: "Is the whole television AI or not?",
+          feedback:
+            "Not quite. Whole-product questions produce arguments. Products are layered, and only the layers have answers.",
+        },
+        {
+          id: "brand",
+          text: "Is this a reputable brand?",
+          feedback:
+            "Not quite. Reputation predicts support and build quality, not mechanisms. The claim needs the which-part question either way.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-2-LESSON-004",
       title: "Why you cannot judge from the surface",
+      objective: "Stop reading the interface as evidence about the mechanism.",
+      minutes: 4,
+      completion: "You can say when the surface has not shown you enough.",
+      tone: "pattern",
       quick: [
         {
           type: "p",
@@ -147,9 +214,45 @@ export const aia2Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-2-MICRO-003",
+      prompt:
+        "Two support-chat widgets look identical. One follows a written decision tree; one generates replies. What settles which is which?",
+      correctOptionId: "free-text",
+      options: [
+        {
+          id: "free-text",
+          text: "Typing something neither designer anticipated",
+          feedback:
+            "Correct. A decision tree handles what was written into it; free input off the script is where the mechanisms come apart.",
+        },
+        {
+          id: "speed",
+          text: "Which one answers faster",
+          feedback:
+            "Not quite. Speed reflects infrastructure and design, and both mechanisms can be fast or slow.",
+        },
+        {
+          id: "looks",
+          text: "The more polished visual design",
+          feedback:
+            "Not quite. The surface is a designer's choice on both. Polish is evidence about the design budget, not the mechanism.",
+        },
+      ],
+    },
+    {
       type: "diagram",
       id: "AIA-2-DGM-001",
       title: "An ordinary morning",
+      predict: {
+        prompt:
+          "Before walking through the morning: which moment involves no learned behaviour at all?",
+        options: [
+          { text: "The 7:00 alarm ringing as set", correct: true },
+          { text: "The card payment clearing instantly", correct: false },
+          { text: "The arrival estimate updating in traffic", correct: false },
+        ],
+      },
       claim:
         "Most of these systems are working before anyone opens something labelled AI, and none of them look like it.",
       altText: "A morning timeline with the systems working at each step named.",

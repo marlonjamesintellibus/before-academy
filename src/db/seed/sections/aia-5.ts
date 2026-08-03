@@ -64,6 +64,10 @@ export const aia5Seed: SectionSeed = {
       type: "concept",
       id: "AIA-5-LESSON-002",
       title: "No guarantee of accuracy",
+      objective: "Expect likelihoods, and ask how often, how badly, and who would notice.",
+      minutes: 5,
+      completion: "You can ask the three questions that replace will it be wrong.",
+      tone: "rules",
       quick: [
         {
           type: "p",
@@ -94,9 +98,39 @@ export const aia5Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-5-MICRO-001",
+      prompt: "A vendor's accuracy page shows one large number and nothing else. What is missing?",
+      correctOptionId: "misses",
+      options: [
+        {
+          id: "misses",
+          text: "Which cases the misses were",
+          feedback:
+            "Correct. An average hides the unusual cases, and unusual cases are usually the expensive ones. The breakdown is the evidence; the headline is the advertisement.",
+        },
+        {
+          id: "bigger",
+          text: "A bigger number",
+          feedback:
+            "Not quite. A higher average can still hide the same concentrated misses. The size of the number is not the gap.",
+        },
+        {
+          id: "date",
+          text: "The date it was measured",
+          feedback:
+            "Worth knowing, but secondary. A fresh average conceals exactly as much as a stale one.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-5-LESSON-003",
       title: "Fluent is not the same as true",
+      objective: "Hold fluency and truth apart, especially when the writing is good.",
+      minutes: 5,
+      completion: "You can read generated text without being read to.",
+      tone: "flow",
       quick: [
         {
           type: "p",
@@ -127,9 +161,40 @@ export const aia5Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-5-MICRO-002",
+      prompt:
+        "An assistant writes a confident paragraph citing a study you cannot find. What happened?",
+      correctOptionId: "composed",
+      options: [
+        {
+          id: "composed",
+          text: "The citation was composed like everything else",
+          feedback:
+            "Correct. Selecting likely continuations produces likely-looking citations. Nothing in the mechanism checks that the study exists, which is why specifics get verified separately.",
+        },
+        {
+          id: "lied",
+          text: "The system chose to deceive you",
+          feedback:
+            "Not quite. Choosing requires motives it does not have. The citation is not a lie; it is fluent output doing what fluent output does.",
+        },
+        {
+          id: "rare",
+          text: "A rare malfunction occurred",
+          feedback:
+            "Not quite. Composed specifics are ordinary behaviour, not a breakdown. Treating them as rare is what makes them dangerous.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-5-LESSON-004",
       title: "Bias is inherited, not chosen",
+      objective: "Trace bias to the examples rather than to a motive.",
+      minutes: 5,
+      completion: "You can explain inherited bias without a villain.",
+      tone: "pattern",
       quick: [
         {
           type: "p",
@@ -162,9 +227,40 @@ export const aia5Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-5-MICRO-003",
+      prompt:
+        "A rota tool trained on past schedules keeps giving the unpopular shifts to the same team. Nobody programmed that. What is the fix most likely to work?",
+      correctOptionId: "examples",
+      options: [
+        {
+          id: "examples",
+          text: "Examine the examples and what counted as success",
+          feedback:
+            "Correct. The pattern was learned from past schedules, so the past is where the fix starts. Adjusting the output without touching the examples treats the symptom.",
+        },
+        {
+          id: "motive",
+          text: "Find who biased the system",
+          feedback:
+            "Not quite. There may be no who: past decisions carried the pattern and it was learned along with everything else.",
+        },
+        {
+          id: "retrain",
+          text: "Retrain on the same data with more passes",
+          feedback:
+            "Not quite. More training on the same examples learns the same pattern more confidently.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-5-LESSON-005",
       title: "Deciding what to do with an output",
+      objective: "Make the use, review, or refuse call deliberately.",
+      minutes: 5,
+      completion: "You can route any output by consequence and reversibility.",
+      tone: "compare",
       quick: [
         {
           type: "p",
@@ -181,9 +277,44 @@ export const aia5Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-5-MICRO-004",
+      prompt:
+        "A colleague asks you to sanity-check a draft before it goes to their manager. Which route is that?",
+      correctOptionId: "review",
+      options: [
+        {
+          id: "review",
+          text: "Review first: a person depends on the result",
+          feedback:
+            "Correct. You are the named person checking before the output counts. That is the review route working exactly as designed.",
+        },
+        {
+          id: "use",
+          text: "Use as it stands: it is only internal",
+          feedback:
+            "Not quite. Internal does not mean consequence-free; the manager decision is the consequence. The draft is fine, unreviewed sending is not.",
+        },
+        {
+          id: "refuse",
+          text: "Do not use: drafts to managers are too risky",
+          feedback:
+            "Stricter than the situation needs. Review exists precisely so drafting can be used here.",
+        },
+      ],
+    },
+    {
       type: "diagram",
       id: "AIA-5-DGM-001",
       title: "Three things to do with an output",
+      predict: {
+        prompt: "Before the diagram: what do you expect decides the route for an output?",
+        options: [
+          { text: "How good the output looks", correct: false },
+          { text: "What being wrong costs, and whether it can be undone", correct: true },
+          { text: "How advanced the tool is", correct: false },
+        ],
+      },
       claim:
         "The decision is not whether to trust AI in general, it is what to do with this output, in this situation.",
       altText: "Three routes from an output: use as it stands, review first, or do not use here.",

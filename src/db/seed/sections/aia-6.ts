@@ -65,6 +65,10 @@ export const aia6Seed: SectionSeed = {
       type: "concept",
       id: "AIA-6-LESSON-002",
       title: "Why these beliefs are reasonable",
+      objective: "Respect why each belief made sense before correcting it.",
+      minutes: 4,
+      completion: "You can name the fair expectation behind a misconception.",
+      tone: "rules",
       quick: [
         {
           type: "p",
@@ -81,9 +85,40 @@ export const aia6Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-6-MICRO-001",
+      prompt:
+        "A colleague believes the office assistant tool is reliable because its answers always sound sure of themselves. What is the fair expectation underneath?",
+      correctOptionId: "transfer",
+      options: [
+        {
+          id: "transfer",
+          text: "In people, confident speech really does track knowledge",
+          feedback:
+            "Correct. The belief is a reasonable habit from human conversation carried to a mechanism where it stops holding. Naming that is what lets the correction land.",
+        },
+        {
+          id: "gullible",
+          text: "They are being careless",
+          feedback:
+            "Not quite. The inference works on people every day. Dismissing it as carelessness loses the person and misses why the error is so common.",
+        },
+        {
+          id: "marketing",
+          text: "They have been misled by advertising",
+          feedback:
+            "Not quite here. No advertising is needed: the fluency itself does the persuading, which is exactly the mechanism worth explaining.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-6-LESSON-003",
       title: "The claims worth having an answer for",
+      objective: "Carry one question that settles claims which have not been made yet.",
+      minutes: 5,
+      completion: "You can ask what would have to be true, and whether anyone showed it.",
+      tone: "flow",
       quick: [
         {
           type: "p",
@@ -115,6 +150,10 @@ export const aia6Seed: SectionSeed = {
       type: "concept",
       id: "AIA-6-LESSON-004",
       title: "Being the person who explains it",
+      objective: "Explain a distinction without leaning on the word AI at all.",
+      minutes: 4,
+      completion: "You can carry the explanation, not just the conclusion.",
+      tone: "pattern",
       quick: [
         {
           type: "p",
@@ -127,9 +166,44 @@ export const aia6Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-6-MICRO-002",
+      prompt:
+        "A headline says a model passed a famous professional qualification, so the profession is finished. What settles the claim?",
+      correctOptionId: "jobs",
+      options: [
+        {
+          id: "jobs",
+          text: "Which jobs in the role are checkable and reversible, and which are not",
+          feedback:
+            "Correct. A qualification measures written answers under controlled conditions. Roles are bundles of jobs with different costs of error, and the claim cannot be judged until it says which jobs it means.",
+        },
+        {
+          id: "score",
+          text: "How high the score was",
+          feedback:
+            "Not quite. A higher score is more of the same evidence about the same thing: written answers under controlled conditions.",
+        },
+        {
+          id: "expert",
+          text: "Whether an expert endorsed the headline",
+          feedback:
+            "Not quite. Endorsement is a claim about a claim. The missing piece is the job-by-job breakdown, whoever supplies it.",
+        },
+      ],
+    },
+    {
       type: "diagram",
       id: "AIA-6-DGM-001",
       title: "From claim to evidence",
+      predict: {
+        prompt: "Before the diagram: how do you expect most claims about AI get settled?",
+        options: [
+          { text: "By argument between informed people", correct: false },
+          { text: "By naming the evidence that is missing", correct: true },
+          { text: "By waiting to see what happens", correct: false },
+        ],
+      },
       claim:
         "A claim about AI is rarely settled by argument. It is settled by naming the evidence that is missing.",
       altText: "A claim moving through three questions to a judgment.",

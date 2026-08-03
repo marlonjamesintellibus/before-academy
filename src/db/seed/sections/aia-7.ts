@@ -58,6 +58,10 @@ export const aia7Seed: SectionSeed = {
       type: "concept",
       id: "AIA-7-LESSON-002",
       title: "What you can now do",
+      objective: "Say precisely what you can now do, and where the edge of it sits.",
+      minutes: 4,
+      completion: "You can state your own competence without inflating it.",
+      tone: "rules",
       quick: [
         {
           type: "p",
@@ -74,9 +78,39 @@ export const aia7Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-7-MICRO-001",
+      prompt: "A friend asks what this pathway actually taught you. Which answer is accurate?",
+      correctOptionId: "read",
+      options: [
+        {
+          id: "read",
+          text: "To read any system: its job, its origin, and the cost of it being wrong",
+          feedback:
+            "Correct. That is the competency, stated at its real size: bigger than recognising the word, smaller than evaluating or building systems.",
+        },
+        {
+          id: "build",
+          text: "To build AI systems",
+          feedback:
+            "Not quite. Building is a different competency with its own path. Claiming it would be exactly the label-over-evidence error this pathway corrects.",
+        },
+        {
+          id: "all",
+          text: "Everything needed to judge any AI tool",
+          feedback:
+            "Not quite. Judging a specific tool needs evidence only its builder can supply. What you have is knowing which evidence to ask for.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-7-LESSON-003",
       title: "The directions from here",
+      objective: "Choose a next direction by the decisions you actually face.",
+      minutes: 4,
+      completion: "You can pick a direction for a reason you can say out loud.",
+      tone: "flow",
       quick: [
         {
           type: "p",
@@ -110,6 +144,10 @@ export const aia7Seed: SectionSeed = {
       type: "concept",
       id: "AIA-7-LESSON-004",
       title: "Keeping it",
+      objective: "Keep the habit alive with retrieval, not rereading.",
+      minutes: 3,
+      completion: "You know what maintains this skill and what only feels like it does.",
+      tone: "pattern",
       quick: [
         {
           type: "p",
@@ -126,9 +164,46 @@ export const aia7Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-7-MICRO-002",
+      prompt: "Two weeks from now, which of these will do most to keep this skill?",
+      correctOptionId: "retrieval",
+      options: [
+        {
+          id: "retrieval",
+          text: "A two-minute review answered from memory",
+          feedback:
+            "Correct. Retrieval is what makes it stick. Two minutes of answering beats an hour of rereading, which mostly rehearses recognition.",
+        },
+        {
+          id: "reread",
+          text: "Rereading the lessons start to finish",
+          feedback:
+            "Not quite. Rereading feels productive because everything looks familiar. Familiarity is not availability when a real claim arrives.",
+        },
+        {
+          id: "news",
+          text: "Following AI news closely",
+          feedback:
+            "Not quite. News changes what you have heard of. The habit that matters is the questions you ask of whatever arrives.",
+        },
+      ],
+    },
+    {
       type: "diagram",
       id: "AIA-7-DGM-001",
       title: "Where this sits",
+      predict: {
+        prompt: "Before the map: which direction do you expect must come first?",
+        options: [
+          { text: "Deeper vocabulary, then the others in order", correct: false },
+          {
+            text: "None: each direction starts from the reading skill you now have",
+            correct: true,
+          },
+          { text: "The role-focused paths, since they are most practical", correct: false },
+        ],
+      },
       claim:
         "Awareness is the reading skill everything else is built on, and each direction from here answers a different question.",
       altText: "Awareness at the base, with three directions leading from it.",

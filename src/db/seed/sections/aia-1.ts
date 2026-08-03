@@ -64,6 +64,11 @@ export const aia1Seed: SectionSeed = {
       type: "concept",
       id: "AIA-1-LESSON-002",
       title: "Where the behaviour came from",
+      objective:
+        "Spot where a system's behaviour came from, which is the property that decides everything else.",
+      minutes: 5,
+      completion: "You can name the property that separates the categories.",
+      tone: "rules",
       quick: [
         {
           type: "p",
@@ -114,9 +119,40 @@ export const aia1Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-1-MICRO-001",
+      prompt:
+        "A banking app rounds every purchase up to the next dollar and moves the difference into savings. What is underneath?",
+      correctOptionId: "rules",
+      options: [
+        {
+          id: "rules",
+          text: "Written rules",
+          feedback:
+            "Correct. Round up, move the difference is a rule someone stated. It runs identically for every purchase, every customer, every time.",
+        },
+        {
+          id: "learned",
+          text: "Patterns learned from examples",
+          feedback:
+            "Not quite. Nothing here varies by person or adapts with data. A stated arithmetic step is authored, not learned.",
+        },
+        {
+          id: "cant-tell",
+          text: "Not enough information",
+          feedback:
+            "Not quite. This description does state the mechanism: a fixed arithmetic action on every transaction. The honest answer is available when the mechanism is hidden, and here it is not.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-1-LESSON-003",
       title: "A field, not a single thing",
+      objective: "Treat AI as a field of different methods, and ask which kind is doing what job.",
+      minutes: 4,
+      completion: "You can ask which kind, doing what job, instead of arguing about the word.",
+      tone: "flow",
       quick: [
         {
           type: "p",
@@ -151,9 +187,40 @@ export const aia1Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-1-MICRO-002",
+      prompt:
+        "A fraud score and a drafting assistant are both AI. Should you expect them to share strengths and weaknesses?",
+      correctOptionId: "no",
+      options: [
+        {
+          id: "no",
+          text: "No: different methods break down differently",
+          feedback:
+            "Correct. They share an origin in learned behaviour and little else. One produces a number from transactions, the other composes text, and their weak points have almost nothing in common.",
+        },
+        {
+          id: "yes",
+          text: "Yes: both are AI, so both behave alike",
+          feedback:
+            "Not quite. AI names a field, not a method. Expecting shared weaknesses from shared branding is like expecting surgery and physiotherapy to carry the same risks because both are medicine.",
+        },
+        {
+          id: "depends",
+          text: "Only if they come from the same vendor",
+          feedback:
+            "Not quite. The vendor changes support and pricing, not the mechanism. What decides behaviour is the method and the examples it learned from.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-1-LESSON-004",
       title: "Why the boundary keeps moving",
+      objective: "Read a moving boundary without being moved by it.",
+      minutes: 4,
+      completion: "You can turn a label dispute into a mechanism question.",
+      tone: "pattern",
       quick: [
         {
           type: "p",
@@ -184,9 +251,40 @@ export const aia1Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-1-MICRO-003",
+      prompt:
+        "A colleague says autocorrect cannot be AI because phones have had it for years. What is the most accurate reading?",
+      correctOptionId: "boundary",
+      options: [
+        {
+          id: "boundary",
+          text: "The boundary moved: judge by origin, not by novelty",
+          feedback:
+            "Correct. Solved problems get reclassified as ordinary computing. Where the behaviour came from is a question that gives the same answer this year and next.",
+        },
+        {
+          id: "agree",
+          text: "They are right: old features are not AI",
+          feedback:
+            "Not quite. Age tells you when it shipped, not how it works. Plenty of learned-behaviour systems are decades old.",
+        },
+        {
+          id: "new-only",
+          text: "Only the newest systems count as AI",
+          feedback:
+            "Not quite. That definition rewrites itself every year, which is exactly why it cannot support a decision.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-1-LESSON-005",
       title: "Doing a task is not working like a person",
+      objective: "Keep doing a task well separate from working the way a person does.",
+      minutes: 5,
+      completion: "You can hold fluency and accuracy apart, which most people cannot.",
+      tone: "compare",
       quick: [
         {
           type: "p",
@@ -217,9 +315,45 @@ export const aia1Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-1-MICRO-004",
+      prompt:
+        "A calculator has out-multiplied every person alive for fifty years. Does that mean it reasons?",
+      correctOptionId: "no",
+      options: [
+        {
+          id: "no",
+          text: "No: performance and human-style thinking are separate questions",
+          feedback:
+            "Correct. Doing a job well says nothing about doing it the way a person would. Holding those apart is what stops fluency from persuading you later.",
+        },
+        {
+          id: "yes",
+          text: "Yes: superhuman performance implies some reasoning",
+          feedback:
+            "Not quite. The calculator follows written arithmetic rules. Performance is evidence about the job, never about the mechanism.",
+        },
+        {
+          id: "partly",
+          text: "Partly: it reasons about numbers only",
+          feedback:
+            "Not quite. It applies stated rules to numbers. Nothing is weighed or considered, which is precisely why it never has a bad day.",
+        },
+      ],
+    },
+    {
       type: "diagram",
       id: "AIA-1-DGM-001",
       title: "Two ways a system gets its behaviour",
+      predict: {
+        prompt:
+          "Two systems produce identical outputs for the same input. Can you tell from the outputs alone which one learned its behaviour?",
+        options: [
+          { text: "Yes, learned output has a recognisable texture", correct: false },
+          { text: "No: the outputs can be indistinguishable", correct: true },
+          { text: "Only when the output is text", correct: false },
+        ],
+      },
       claim:
         "The difference that matters is not what the system does, it is whether a person wrote the behaviour or the system derived it from examples.",
       altText:

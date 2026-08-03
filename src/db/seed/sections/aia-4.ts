@@ -65,6 +65,10 @@ export const aia4Seed: SectionSeed = {
       type: "concept",
       id: "AIA-4-LESSON-002",
       title: "Recognising and sorting",
+      objective: "Recognise the jobs where a wrong answer is cheap and visible.",
+      minutes: 5,
+      completion: "You can name recognition and sorting when you see them.",
+      tone: "rules",
       quick: [
         {
           type: "p",
@@ -99,9 +103,41 @@ export const aia4Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-4-MICRO-001",
+      prompt:
+        "A hospital considers two uses: flagging scans for a radiologist's attention, or issuing diagnoses directly. Why is the first a better fit?",
+      correctOptionId: "reversible",
+      options: [
+        {
+          id: "reversible",
+          text: "A wrong flag is cheap and a person still decides",
+          feedback:
+            "Correct. A missed or extra flag is caught by the radiologist reading the scan. A wrong diagnosis lands on a patient. The job is chosen by the cost of being wrong, not the sophistication of the model.",
+        },
+        {
+          id: "accuracy",
+          text: "Flagging is where models are most accurate",
+          feedback:
+            "Not quite. Accuracy varies by task and data either way. What separates the two uses is what a mistake costs and who catches it.",
+        },
+        {
+          id: "speed",
+          text: "Flagging is faster than diagnosing",
+          feedback:
+            "Not quite. Both are fast. Speed is a benefit of each and the deciding property of neither.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-4-LESSON-003",
       title: "Predicting what comes next",
+      objective:
+        "Treat every prediction as a likelihood resting on the past resembling the future.",
+      minutes: 5,
+      completion: "You know what a prediction silently assumes.",
+      tone: "flow",
       quick: [
         {
           type: "p",
@@ -132,9 +168,40 @@ export const aia4Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-4-MICRO-002",
+      prompt: "A demand model performed well last year. What is that evidence about next quarter?",
+      correctOptionId: "conditional",
+      options: [
+        {
+          id: "conditional",
+          text: "Useful only while conditions still resemble the past",
+          feedback:
+            "Correct. The estimate rests on the future being drawn from the same patterns. When the world moves, performance degrades with no error message.",
+        },
+        {
+          id: "strong",
+          text: "Strong evidence: models that worked keep working",
+          feedback:
+            "Not quite. Nothing in the mechanism notices that conditions changed. Last year's performance is evidence about last year's world.",
+        },
+        {
+          id: "none",
+          text: "No evidence at all",
+          feedback:
+            "Too strong the other way. It is real evidence, conditional on the world staying similar, which is exactly why prediction systems need monitoring rather than one-off approval.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-4-LESSON-004",
       title: "Generating and summarising",
+      objective:
+        "Use generation and summarising where a person reviews and a poor draft costs minutes.",
+      minutes: 4,
+      completion: "You can say why composed output needs a reader.",
+      tone: "pattern",
       quick: [
         {
           type: "p",
@@ -167,9 +234,39 @@ export const aia4Seed: SectionSeed = {
       },
     },
     {
+      type: "inline_check",
+      id: "AIA-4-MICRO-003",
+      prompt: "A generated project report is due in an hour. Which part gets checked first?",
+      correctOptionId: "specifics",
+      options: [
+        {
+          id: "specifics",
+          text: "The names, figures and citations",
+          feedback:
+            "Correct. Specifics are composed as fluently as everything else and are the costliest to get wrong. Structure and tone can wait; the facts cannot.",
+        },
+        {
+          id: "structure",
+          text: "The overall structure",
+          feedback:
+            "Not quite. Structure is usually sound, and a structural weakness is visible on any read. The dangerous parts are the ones that look right.",
+        },
+        {
+          id: "tone",
+          text: "The tone and register",
+          feedback:
+            "Not quite. Tone problems embarrass; wrong figures mislead. Check in order of harm.",
+        },
+      ],
+    },
+    {
       type: "concept",
       id: "AIA-4-LESSON-005",
       title: "Supporting a decision, not making it",
+      objective: "Keep the decision with a person and let the system narrow the field.",
+      minutes: 4,
+      completion: "You can tell decision support from decision making.",
+      tone: "compare",
       quick: [
         {
           type: "p",
@@ -186,9 +283,44 @@ export const aia4Seed: SectionSeed = {
       ],
     },
     {
+      type: "inline_check",
+      id: "AIA-4-MICRO-004",
+      prompt: "What keeps decision support defensible in a way full automation is not?",
+      correctOptionId: "accountability",
+      options: [
+        {
+          id: "accountability",
+          text: "A person still owns the decision",
+          feedback:
+            "Correct. The system narrows the field; the person chooses and is accountable. That structure survives audits, appeals and mistakes.",
+        },
+        {
+          id: "volume",
+          text: "It processes fewer cases",
+          feedback:
+            "Not quite. Decision support can run at full volume. What changes is who decides, not how much gets processed.",
+        },
+        {
+          id: "cost",
+          text: "It is cheaper to run",
+          feedback:
+            "Not quite. It is often more expensive, because people stay in the loop. The defensibility is what the expense buys.",
+        },
+      ],
+    },
+    {
       type: "diagram",
       id: "AIA-4-DGM-001",
       title: "Choosing by the cost of being wrong",
+      predict: {
+        prompt:
+          "Before the diagram: what property do you expect orders these jobs from safe to risky?",
+        options: [
+          { text: "How technically difficult the job is", correct: false },
+          { text: "What a wrong answer costs, and whether anyone would notice", correct: true },
+          { text: "How new the underlying technology is", correct: false },
+        ],
+      },
       claim:
         "Suitability is decided less by the job than by what a wrong answer costs and whether anyone would notice.",
       altText:

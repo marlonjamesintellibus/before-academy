@@ -160,3 +160,39 @@ test("seeded lesson passes axe with no critical or serious violations", async ({
   );
   expect(blocking.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
 });
+
+test("generic lessons carry the enriched journey: stages, inline checks, predict gate", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-awareness/what-is-artificial-intelligence");
+
+  // The rail speaks minutes, like the original journey.
+  await expect(page.getByText(/% complete · about \d+ min left/)).toBeVisible();
+
+  // Transitions are labelled with the destination stage.
+  await page.getByRole("button", { name: "Continue to Where the behaviour came from" }).click();
+
+  // The stage carries its objective and, once present, its completion line.
+  await expect(
+    page.getByText("Spot where a system's behaviour came from", { exact: false }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("You can name the property that separates the categories."),
+  ).toBeVisible();
+
+  // The inline check lives inside this stage and teaches on answer.
+  await expect(page.getByText(/rounds every purchase up to the next dollar/)).toBeVisible();
+  await page.getByRole("radio", { name: "Written rules" }).check();
+  await page.getByRole("button", { name: "Check answer" }).click();
+  await expect(page.getByText(/rule someone stated/)).toBeVisible();
+
+  // The final stage's diagram sits behind a committed prediction.
+  await page.getByRole("button", { name: /Keep doing a task well|Continue to/ }).first();
+  const rail = page.getByRole("navigation", { name: "Lesson contents" });
+  await rail.getByRole("button", { name: /Doing a task is not working like a person/ }).click();
+  await expect(
+    page.getByText("Two systems produce identical outputs for the same input", { exact: false }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "No: the outputs can be indistinguishable" }).click();
+  await expect(page.getByText("Two ways a system gets its behaviour")).toBeVisible();
+});
