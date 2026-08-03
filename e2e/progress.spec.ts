@@ -186,3 +186,25 @@ test("reset progress clears the section after an explicit confirm", async ({ pag
   );
   expect(cleared).toBe(true);
 });
+
+test("another section's assessment result never marks section 3 complete", async ({ page }) => {
+  // The regression this guards: all assessments once shared one outcome key,
+  // so passing any section marked the first one complete.
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      "ba.v1.assessment.what-is-artificial-intelligence",
+      JSON.stringify({
+        version: 1,
+        attempts: 1,
+        bestScore: 6,
+        total: 6,
+        passed: true,
+        lastAttemptAt: "2026-08-03T12:00:00.000Z",
+      }),
+    );
+  });
+  await page.goto("/learn");
+  await expect(page.getByText("Not started").first()).toBeVisible();
+  await expect(page.getByText(/Section complete - your result is saved/)).not.toBeVisible();
+  await expect(page.getByText(/Assessment passed/)).not.toBeVisible();
+});

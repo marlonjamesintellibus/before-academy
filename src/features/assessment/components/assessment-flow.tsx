@@ -12,6 +12,7 @@ import type { AttemptPayload, AttemptResult, SanitizedQuestion } from "../types"
 import { CATEGORY_DISPLAY } from "../types";
 import { ConfidencePrompt, readConfidence, readDiagnostic } from "@/features/content";
 import { CompletionPanel } from "./completion-panel";
+import { assessmentStorageKeys, CLASSIC_ASSESSMENT_SECTION } from "../storage-keys";
 import { useAnonymousId } from "../use-anonymous-id";
 
 /**
@@ -25,10 +26,6 @@ type Stage =
   | { name: "review"; payload: AttemptPayload }
   | { name: "results"; result: AttemptResult };
 
-const LAST_COMBINATION_KEY = "ba.v1.last_combination";
-const ATTEMPT_COUNT_KEY = "ba.v1.attempt_count";
-const ATTEMPT_MIRROR_KEY = "ba.v1.attempt_mirror";
-
 interface AttemptMirror {
   payload: AttemptPayload;
   answers: Record<string, string[]>;
@@ -37,9 +34,9 @@ interface AttemptMirror {
 }
 
 /** Refresh survival (assessment-engine.md): the in-flight attempt mirrors to sessionStorage. */
-function readAttemptMirror(): AttemptMirror | null {
+function readAttemptMirror(mirrorKey: string): AttemptMirror | null {
   try {
-    const raw = window.sessionStorage.getItem(ATTEMPT_MIRROR_KEY);
+    const raw = window.sessionStorage.getItem(mirrorKey);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as AttemptMirror;
     if (!parsed?.payload?.token || !Array.isArray(parsed.payload.questions)) return null;
@@ -49,17 +46,17 @@ function readAttemptMirror(): AttemptMirror | null {
   }
 }
 
-function writeAttemptMirror(mirror: AttemptMirror): void {
+function writeAttemptMirror(mirrorKey: string, mirror: AttemptMirror): void {
   try {
-    window.sessionStorage.setItem(ATTEMPT_MIRROR_KEY, JSON.stringify(mirror));
+    window.sessionStorage.setItem(mirrorKey, JSON.stringify(mirror));
   } catch {
     // Private browsing: the attempt continues in memory only.
   }
 }
 
-function clearAttemptMirror(): void {
+function clearAttemptMirror(mirrorKey: string): void {
   try {
-    window.sessionStorage.removeItem(ATTEMPT_MIRROR_KEY);
+    window.sessionStorage.removeItem(mirrorKey);
   } catch {
     // nothing to clear
   }
@@ -79,6 +76,10 @@ export function AssessmentFlow({
 }) {
   const anonymousId = useAnonymousId();
   const router = useRouter();
+  // Every stored artifact of an attempt is scoped to its section (or pathway
+  // scope); before this, all eight assessments shared one set of keys and any
+  // pass marked the first section complete.
+  const keys = assessmentStorageKeys(sectionSlug);
   const [stage, setStage] = useState<Stage>({ name: "intro" });
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const [index, setIndex] = useState(0);
@@ -92,7 +93,7 @@ export function AssessmentFlow({
   useEffect(() => {
     if (!introViewed.current) {
       introViewed.current = true;
-      const mirror = readAttemptMirror();
+      const mirror = readAttemptMirror(keys.mirror);
       if (mirror) {
         // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time refresh restore
         setAnswers(mirror.answers);
@@ -107,18 +108,18 @@ export function AssessmentFlow({
         route: assessmentFirst ? "assessment_first" : "lesson_first",
       });
     }
-  }, [assessmentFirst]);
+  }, [assessmentFirst, keys.mirror]);
 
   useEffect(() => {
     if (stage.name === "attempt" || stage.name === "review") {
-      writeAttemptMirror({
+      writeAttemptMirror(keys.mirror, {
         payload: stage.payload,
         answers,
         index,
         review: stage.name === "review",
       });
     }
-  }, [stage, answers, index]);
+  }, [stage, answers, index, keys.mirror]);
 
   async function start() {
     if (!anonymousId || busy || inFlight.current) return;
@@ -126,9 +127,9 @@ export function AssessmentFlow({
     setBusy(true);
     setErrorMessage(null);
     // Device storage through the safe wrapper only (private-browsing promise).
-    const storedCount = readDevice<number>(ATTEMPT_COUNT_KEY, 0, (v) => typeof v === "number");
+    const storedCount = readDevice<number>(keys.attemptCount, 0, (v) => typeof v === "number");
     const attemptNumber = (Number.isFinite(storedCount) ? storedCount : 0) + 1;
-    const previous = readDevice<string[]>(LAST_COMBINATION_KEY, [], Array.isArray);
+    const previous = readDevice<string[]>(keys.lastCombination, [], Array.isArray);
     const result = await createAttempt({
       sectionSlug,
       anonymousId,
@@ -141,9 +142,9 @@ export function AssessmentFlow({
       setErrorMessage(result.error.message);
       return;
     }
-    writeDevice(ATTEMPT_COUNT_KEY, attemptNumber);
+    writeDevice(keys.attemptCount, attemptNumber);
     writeDevice(
-      LAST_COMBINATION_KEY,
+      keys.lastCombination,
       result.data.questions.map((question) => question.id),
     );
     setAnswers({});
@@ -176,10 +177,10 @@ export function AssessmentFlow({
       setErrorMessage(result.error.message);
       return;
     }
-    clearAttemptMirror();
+    clearAttemptMirror(keys.mirror);
     setStage({ name: "results", result: result.data });
     // Guest completion state (ADR-025): outcome summary only - no answers, no PII.
-    const outcomeKey = "ba.v1.assessment.ai-automation-software";
+    const outcomeKey = keys.outcome;
     const previous = readDevice<{
       version: 1;
       attempts: number;
@@ -341,7 +342,7 @@ export function AssessmentFlow({
               type="button"
               onClick={() => {
                 track("assessment_abandoned", { question_index: index });
-                clearAttemptMirror();
+                clearAttemptMirror(keys.mirror);
                 router.push(lessonRoute);
               }}
               className="min-h-11 rounded-(--radius-control) border border-danger px-4 text-body font-semibold text-danger hover:bg-surface-alt focus-visible:outline-2 focus-visible:outline-danger"
@@ -412,7 +413,15 @@ export function AssessmentFlow({
     );
   }
 
-  return <Results result={stage.result} lessonRoute={lessonRoute} onRetake={start} busy={busy} />;
+  return (
+    <Results
+      sectionSlug={sectionSlug}
+      result={stage.result}
+      lessonRoute={lessonRoute}
+      onRetake={start}
+      busy={busy}
+    />
+  );
 }
 
 function QuestionCard({
@@ -474,16 +483,22 @@ function QuestionCard({
 }
 
 function Results({
+  sectionSlug,
   result,
   lessonRoute,
   onRetake,
   busy,
 }: {
+  sectionSlug: string;
   result: AttemptResult;
   lessonRoute: string;
   onRetake: () => void;
   busy: boolean;
 }) {
+  // The focused-review route, the diagnostic and the confidence pair are the
+  // first section's instruments; other scopes suppress them rather than link
+  // to a 404 or show another section's deltas.
+  const hasRemediation = sectionSlug === CLASSIC_ASSESSMENT_SECTION;
   const outcomeRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // The single most important state change in the app announces itself:
@@ -495,8 +510,8 @@ function Results({
       result.review.filter((entry) => !entry.correct).flatMap((entry) => entry.misconceptions),
     ),
   ];
-  const diagnostic = readDiagnostic();
-  const storedConfidence = readConfidence();
+  const diagnostic = hasRemediation ? readDiagnostic() : null;
+  const storedConfidence = hasRemediation ? readConfidence() : null;
   const strengths = result.review
     .filter((entry) => entry.correct)
     .map((entry) => CATEGORY_DISPLAY[entry.category]);
@@ -526,7 +541,7 @@ function Results({
 
       {result.passed ? <CompletionPanel perfect={result.score === result.total} /> : null}
 
-      {result.categoriesFailed.length > 0 ? (
+      {result.categoriesFailed.length > 0 && hasRemediation ? (
         <section aria-label="What to review" className="mt-6">
           <h3 className="text-subheading font-semibold">Your study plan</h3>
           <p className="mt-2 text-body text-ink-muted">
@@ -570,27 +585,29 @@ function Results({
         </ul>
       </section>
 
-      <section aria-label="How your judgment changed" className="mt-6 panel p-5">
-        <h3 className="font-display text-subheading font-bold">How your judgment changed</h3>
-        {diagnostic ? (
-          <p className="mt-2 text-body">
-            Before the lesson you read {diagnostic.correct} of {diagnostic.total} situations
-            accurately on instinct. In this graded attempt you classified {result.score} of{" "}
-            {result.total} correctly - with named reasons instead of guesses.
-          </p>
-        ) : (
-          <p className="mt-2 text-body text-ink-muted">
-            Take the one-minute opening diagnostic before your next lesson visit and this panel will
-            show how your instincts changed.
-          </p>
-        )}
-        {storedConfidence.pre !== undefined ? (
-          <p className="mt-2 text-body text-ink-muted">
-            Confidence before the lesson: {storedConfidence.pre} of 5. Where is it now?
-          </p>
-        ) : null}
-        <ConfidencePrompt stage="post" />
-      </section>
+      {hasRemediation ? (
+        <section aria-label="How your judgment changed" className="mt-6 panel p-5">
+          <h3 className="font-display text-subheading font-bold">How your judgment changed</h3>
+          {diagnostic ? (
+            <p className="mt-2 text-body">
+              Before the lesson you read {diagnostic.correct} of {diagnostic.total} situations
+              accurately on instinct. In this graded attempt you classified {result.score} of{" "}
+              {result.total} correctly - with named reasons instead of guesses.
+            </p>
+          ) : (
+            <p className="mt-2 text-body text-ink-muted">
+              Take the one-minute opening diagnostic before your next lesson visit and this panel
+              will show how your instincts changed.
+            </p>
+          )}
+          {storedConfidence?.pre !== undefined ? (
+            <p className="mt-2 text-body text-ink-muted">
+              Confidence before the lesson: {storedConfidence.pre} of 5. Where is it now?
+            </p>
+          ) : null}
+          <ConfidencePrompt stage="post" />
+        </section>
+      ) : null}
 
       <div className="mt-8 flex flex-wrap gap-4">
         <button
