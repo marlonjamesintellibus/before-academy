@@ -1,7 +1,9 @@
 import { lintActivity, lintAssessment, lintCheck } from "@/features/content/activity-lint";
 import { lintSection } from "@/features/content/lint";
+import { lintCanonicalRecords } from "@/features/content/canonical-lint";
 import { activitySeed, checkSeed } from "./activity-content";
 import { assessmentSeed } from "./assessment-content";
+import { canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY } from "./canonical-content";
 import { sectionSeed } from "./section-content";
 
 /** Standalone content-lint runner for CI (no database needed). */
@@ -10,6 +12,7 @@ const issues = [
   ...lintActivity(activitySeed, sectionSeed),
   ...lintCheck(checkSeed, sectionSeed),
   ...lintAssessment(assessmentSeed),
+  ...lintCanonicalRecords(canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY, sectionSeed),
 ];
 if (issues.length > 0) {
   console.error(`content-lint: ${issues.length} issue(s)`);

@@ -137,7 +137,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Misconceptions addressed.** M1, M2, M4, M5, M6, with M1 featured.
 
-**Known gap.** This section's canonical records are specified but not populated; see Phase B of the current work.
+**Canonical records.** Populated and lint-enforced for all eleven Phase 1 concepts ([knowledge-model.md](knowledge-model.md)).
 
 ---
 
@@ -270,6 +270,7 @@ Formats currently implemented are multiple choice, multiple select, and scenario
 | 5 | Decide whether AIA-6 is required or optional | education lead | Pathway assessment blueprint |
 | 6 | Confirm total pathway time is acceptable for the beginner persona | education lead | Section scoping |
 | 7 | Whether the pathway page lists all seven sections publicly before they are approved | product owner | UI change already prepared |
+| 8 | Bring canonical records to the 3-6 approved examples the knowledge model asks for (several ship with 1-2) | education lead + SME | Record approval; lint currently requires at least one |
 
 ## Related Documents
 - [learning-framework.md](learning-framework.md) - the model every section inherits

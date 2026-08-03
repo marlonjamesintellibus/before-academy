@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { and, eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import {
+  canonicalRecords,
   contentBlocks,
   contentVersions,
   glossaryTerms,
@@ -13,6 +14,8 @@ import {
 } from "@/db/schema";
 import { lintSection } from "@/features/content/lint";
 import { lintActivity, lintAssessment, lintCheck } from "@/features/content/activity-lint";
+import { lintCanonicalRecords } from "@/features/content/canonical-lint";
+import { canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY } from "./canonical-content";
 import { sectionSeed } from "./section-content";
 import { activitySeed, checkSeed } from "./activity-content";
 import { assessmentSeed } from "./assessment-content";
@@ -29,6 +32,7 @@ async function publish() {
     ...lintActivity(activitySeed, sectionSeed),
     ...lintCheck(checkSeed, sectionSeed),
     ...lintAssessment(assessmentSeed),
+    ...lintCanonicalRecords(canonicalRecordSeeds, GLOSSARY_TERM_BY_KEY, sectionSeed),
   ];
   if (issues.length > 0) {
     console.error("content-lint failed:");
@@ -37,7 +41,16 @@ async function publish() {
   }
 
   const db = getDb();
-  const snapshot = JSON.stringify({ sectionSeed, activitySeed, checkSeed, assessmentSeed });
+  // Canonical records are content: a changed definition must produce a new
+  // version and snapshot, so they belong inside the idempotency hash. Leaving
+  // them out would make an edit to a definition a silent no-op.
+  const snapshot = JSON.stringify({
+    sectionSeed,
+    activitySeed,
+    checkSeed,
+    assessmentSeed,
+    canonicalRecordSeeds,
+  });
   const hash = createHash("sha256").update(snapshot).digest("hex");
 
   await db.transaction(async (tx) => {
@@ -110,11 +123,66 @@ async function publish() {
       })),
     );
 
+    // Canonical records first: the glossary links to them, so they must exist
+    // before terms are written (docs/content/knowledge-model.md, rule of one).
+    const recordIdByKey = new Map<string, string>();
+    for (const record of canonicalRecordSeeds) {
+      const [row] = await tx
+        .insert(canonicalRecords)
+        .values({
+          key: record.key,
+          title: record.title,
+          definition: record.definition,
+          technicalDefinition: record.technicalDefinition,
+          whyItMatters: record.whyItMatters,
+          examples: record.examples,
+          analogies: record.analogies,
+          misconceptionIds: [...record.misconceptionIds],
+          relatedKeys: [...record.relatedKeys],
+          presentationSummary: record.presentationSummary,
+          speakerNotes: record.speakerNotes,
+          sources: [...record.sources],
+          status: "published",
+          version,
+          owner: "content-owner",
+          technicalReviewer: "sme",
+          educationalReviewer: "education-lead",
+        })
+        .onConflictDoUpdate({
+          target: canonicalRecords.key,
+          set: {
+            title: record.title,
+            definition: record.definition,
+            technicalDefinition: record.technicalDefinition,
+            whyItMatters: record.whyItMatters,
+            examples: record.examples,
+            analogies: record.analogies,
+            misconceptionIds: [...record.misconceptionIds],
+            relatedKeys: [...record.relatedKeys],
+            presentationSummary: record.presentationSummary,
+            speakerNotes: record.speakerNotes,
+            sources: [...record.sources],
+            status: "published",
+            version,
+          },
+        })
+        .returning({ id: canonicalRecords.id });
+      if (row) recordIdByKey.set(record.key, row.id);
+    }
+
+    const recordIdByTerm = new Map<string, string>();
+    for (const [key, term] of Object.entries(GLOSSARY_TERM_BY_KEY)) {
+      const recordId = recordIdByKey.get(key);
+      if (recordId) recordIdByTerm.set(term, recordId);
+    }
+
     for (const entry of sectionSeed.glossary) {
+      const canonicalRecordId = recordIdByTerm.get(entry.term) ?? null;
       await tx
         .insert(glossaryTerms)
         .values({
           term: entry.term,
+          canonicalRecordId,
           definition: entry.definition,
           example: entry.example ?? null,
           isChip: entry.chip,
@@ -124,6 +192,7 @@ async function publish() {
         .onConflictDoUpdate({
           target: glossaryTerms.term,
           set: {
+            canonicalRecordId,
             definition: entry.definition,
             example: entry.example ?? null,
             isChip: entry.chip,

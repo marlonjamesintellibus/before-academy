@@ -11,6 +11,8 @@ last_updated: 2026-07-31
 
 Every concept is one canonical record; lessons, questions, scenarios, glossary, diagram text, and the presentation export reference it. **Rule of one:** a fact lives in exactly one record; others link.
 
+**Implementation status.** The eleven Phase 1 records below are authored in `src/db/seed/canonical-content.ts`, published into `canonical_records` by the seed pipeline, and linked from their glossary terms. `canonical-lint` fails the build when a glossary definition drifts from its record, when a record cites an unregistered misconception, when a related key resolves to nothing, when a definition exceeds 25 words, or when an analogy ships without its boundary. The rule of one is therefore enforced, not asserted. Records carry `presentation_summary` and `speaker_notes` so the presentation export consumes approved wording rather than re-summarizing lesson prose.
+
 ## Record fields & standards
 - **Plain-language definition** - ≤25 words, Grade 8, behaviour-first ("Software that…"); the most-reviewed sentence in the record
 - **Technical definition** - 1–3 sentences, SME-accurate; feeds Go Deeper and future Literacy

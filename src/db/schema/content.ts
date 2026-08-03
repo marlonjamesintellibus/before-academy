@@ -56,16 +56,46 @@ export const sections = pgTable(
   ],
 );
 
+/**
+ * One approved record per concept (docs/content/knowledge-model.md). Lessons,
+ * glossary, questions, diagram text and the presentation export all quote it:
+ * the "rule of one" is only real because these columns exist and content-lint
+ * checks the quotes against them.
+ *
+ * Prose lives in the singular fields; anything repeated is jsonb or an array so
+ * a record can be rendered without a join. Misconceptions are register IDs
+ * (M1..Mn), never free text, so a correction is written once.
+ */
 export const canonicalRecords = pgTable(
   "canonical_records",
   {
     id: id(),
     key: text("key").notNull(),
+    /** Nullable at the database so the expand migration can never fail on a
+     * populated table; content-lint requires it, which is where this repo
+     * enforces content completeness. */
+    title: text("title"),
+    /** Plain language, 25 words or fewer, behaviour-first. The most-reviewed sentence we own. */
     definition: text("definition").notNull(),
+    technicalDefinition: text("technical_definition"),
+    whyItMatters: text("why_it_matters"),
+    /** [{ text, clue }] - each approved example carries the clue that identifies it. */
+    examples: jsonb("examples").notNull().default([]),
+    /** [{ analogy, boundary }] - an analogy without its boundary is how drift starts. */
+    analogies: jsonb("analogies").notNull().default([]),
+    misconceptionIds: text("misconception_ids").array().notNull().default([]),
+    relatedKeys: text("related_keys").array().notNull().default([]),
+    /** Presentation reuse (roadmap brief s19): approved wording, not a re-summary. */
+    presentationSummary: text("presentation_summary"),
+    speakerNotes: text("speaker_notes"),
+    sources: text("sources").array().notNull().default([]),
     status: contentStatus("status").notNull().default("draft"),
     version: integer("version").notNull().default(1),
     owner: text("owner"),
+    technicalReviewer: text("technical_reviewer"),
+    educationalReviewer: text("educational_reviewer"),
     reviewedAt: text("reviewed_at"),
+    nextReviewAt: text("next_review_at"),
     ...locale,
     ...timestamps,
   },
