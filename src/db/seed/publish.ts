@@ -436,6 +436,35 @@ async function publish() {
         checkCount = bundle.check.questions.length;
       }
 
+      let scenarioCount = 0;
+      if (bundle?.activity) {
+        await tx.delete(scenarios).where(eq(scenarios.sectionId, extraSection.id));
+        await tx.insert(scenarios).values(
+          bundle.activity.scenarios.map((scenario) => ({
+            sectionId: extraSection.id,
+            contentId: scenario.id,
+            position: scenario.position,
+            body: scenario.body,
+            correctCategory: scenario.correctCategory ?? null,
+            acceptedCategories: scenario.accepted ?? [],
+            clue: scenario.clue,
+            ambiguityNote: scenario.ambiguityNote ?? null,
+            feedback: {
+              title: scenario.title,
+              difficulty: scenario.difficulty,
+              byCategory: scenario.feedback ?? {},
+              ...(scenario.options ? { options: scenario.options } : {}),
+              ...(scenario.prompt ? { prompt: scenario.prompt } : {}),
+              ...(scenario.explanation ? { explanation: scenario.explanation } : {}),
+              remediationAnchor: scenario.remediationAnchor,
+            },
+            status: "published" as const,
+            version: extraVersion,
+          })),
+        );
+        scenarioCount = bundle.activity.scenarios.length;
+      }
+
       let bankCount = 0;
       if (bundle?.assessment) {
         const priorBank = await tx.query.questions.findMany({
@@ -483,7 +512,7 @@ async function publish() {
       }
 
       console.log(
-        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks, ${checkCount} check questions, ${bankCount} bank items`,
+        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks, ${scenarioCount} scenarios, ${checkCount} check questions, ${bankCount} bank items`,
       );
     }
   });

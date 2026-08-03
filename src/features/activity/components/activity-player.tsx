@@ -19,13 +19,16 @@ export function ActivityPlayer({
   intro,
   instructions,
   lessonRoute,
+  storageKey,
 }: {
   scenarios: PublishedScenario[];
   intro: string;
   instructions: string;
   lessonRoute: string;
+  /** Device-storage key; defaults to the classic section's original key. */
+  storageKey?: string;
 }) {
-  const { state, hydrated, update, retry } = useActivityState();
+  const { state, hydrated, update, retry } = useActivityState(storageKey);
   const [selected, setSelected] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [answerHint, setAnswerHint] = useState(false);

@@ -8,7 +8,11 @@ import { useCallback, useEffect, useState } from "react";
  * resume survives refresh; storage failure degrades to in-memory (private
  * browsing keeps working, ux-copy promise).
  */
-const STORAGE_KEY = "ba.v1.activity";
+/**
+ * The first section keeps the original bare key so nobody's mid-activity
+ * progress is lost by this generalization; every other section scopes by slug.
+ */
+export const CLASSIC_ACTIVITY_KEY = "ba.v1.activity";
 
 export interface ScenarioAnswer {
   chosen: string;
@@ -26,9 +30,9 @@ export interface ActivityState {
 
 const EMPTY: ActivityState = { answers: {}, index: 0, completed: false };
 
-function read(): ActivityState {
+function read(storageKey: string): ActivityState {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey);
     if (!raw) return EMPTY;
     const parsed = JSON.parse(raw) as ActivityState;
     if (typeof parsed.index !== "number" || typeof parsed.answers !== "object") return EMPTY;
@@ -38,7 +42,7 @@ function read(): ActivityState {
   }
 }
 
-export function useActivityState() {
+export function useActivityState(storageKey: string = CLASSIC_ACTIVITY_KEY) {
   const [state, setState] = useState<ActivityState>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
 
@@ -46,18 +50,21 @@ export function useActivityState() {
     // Hydrate from device storage after mount: the server render must not read
     // localStorage, so the one-time post-mount setState is intentional.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setState(read());
+    setState(read(storageKey));
     setHydrated(true);
-  }, []);
+  }, [storageKey]);
 
-  const update = useCallback((next: ActivityState) => {
-    setState(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // Private browsing: progress can't persist but the activity still works.
-    }
-  }, []);
+  const update = useCallback(
+    (next: ActivityState) => {
+      setState(next);
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(next));
+      } catch {
+        // Private browsing: progress can't persist but the activity still works.
+      }
+    },
+    [storageKey],
+  );
 
   /**
    * "Try the set again": shuffled order, except the fixed 6→7 minimal pair

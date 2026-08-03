@@ -1,5 +1,5 @@
 import type { SectionSeed } from "@/features/content/types";
-import type { CheckSeed } from "@/features/content/activity-types";
+import type { ActivitySeed, CheckSeed } from "@/features/content/activity-types";
 import type { AssessmentSeed } from "@/features/assessment";
 import { aia1Seed } from "./aia-1";
 import { aia4Seed } from "./aia-4";
@@ -39,6 +39,8 @@ export interface SectionBundle {
   status: SeedStatus;
   /** Retrieval step. A published section needs at least one (lint enforces). */
   check?: CheckSeed;
+  /** The section's designed interaction (content-map.md), generic dialect. */
+  activity?: ActivitySeed;
   /** Graded bank. Optional: Level 1 grading may sit with the pathway assessment. */
   assessment?: AssessmentSeed;
   /** What the section still needs before it can move to published. */
@@ -91,3 +93,8 @@ export const additionalSectionSeeds: SectionSeed[] = sectionBundles
 
 /** Every authored seed, published or not, for the copy-quality gates. */
 export const allAuthoredSectionSeeds: SectionSeed[] = sectionBundles.map((bundle) => bundle.seed);
+
+/** Activity meta (title/intro/instructions) for a section's route. */
+export function activityForSection(sectionSlug: string): ActivitySeed | undefined {
+  return sectionBundles.find((bundle) => bundle.seed.section.slug === sectionSlug)?.activity;
+}
