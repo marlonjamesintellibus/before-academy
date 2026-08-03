@@ -9,6 +9,8 @@ import { aia6Seed } from "./aia-6";
 import { aia7Seed } from "./aia-7";
 import { aia1CheckSeed } from "./aia-1-check";
 import { aia1AssessmentSeed } from "./aia-1-assessment";
+import { aia2AssessmentSeed, aia4AssessmentSeed } from "./banks-2-4";
+import { aia5AssessmentSeed, aia6AssessmentSeed, aia7AssessmentSeed } from "./banks-5-6-7";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -54,31 +56,31 @@ export const sectionBundles: SectionBundle[] = [
     seed: aia4Seed,
     status: "published",
     check: aia4CheckSeed,
-    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
+    assessment: aia4AssessmentSeed,
   },
   {
     seed: aia5Seed,
     status: "published",
     check: aia5CheckSeed,
-    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
+    assessment: aia5AssessmentSeed,
   },
   {
     seed: aia2Seed,
     status: "published",
     check: aia2CheckSeed,
-    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
+    assessment: aia2AssessmentSeed,
   },
   {
     seed: aia6Seed,
     status: "published",
     check: aia6CheckSeed,
-    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
+    assessment: aia6AssessmentSeed,
   },
   {
     seed: aia7Seed,
     status: "published",
     check: aia7CheckSeed,
-    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
+    assessment: aia7AssessmentSeed,
   },
 ];
 
