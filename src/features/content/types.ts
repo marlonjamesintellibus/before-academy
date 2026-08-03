@@ -27,6 +27,14 @@ export type LessonBlock =
       type: "concept";
       id: string;
       title: string;
+      /** Learner-voice stage objective, shown under the stage heading. */
+      objective?: string;
+      /** Estimated minutes for the stage; feeds the progress rail. */
+      minutes?: number;
+      /** What the learner has after finishing the stage; shown at transition. */
+      completion?: string;
+      /** Visual identity for the stage card; auto-cycled when absent. */
+      tone?: "start" | "rules" | "flow" | "pattern" | "compare";
       quick: RichText;
       explore?: { label: string; minutes: number; body: RichText };
       deeper?: { label: string; minutes: number; body: RichText };
@@ -38,7 +46,20 @@ export type LessonBlock =
       claim: string;
       altText: string;
       longText: string;
+      /** Commit-first gate: the learner predicts before the diagram reveals. */
+      predict?: {
+        prompt: string;
+        options: { text: string; correct: boolean }[];
+        revealLabel?: string;
+      };
       layers: { id: string; label: string; description: string }[];
+    }
+  | {
+      type: "inline_check";
+      id: string;
+      prompt: string;
+      correctOptionId: string;
+      options: { id: string; text: string; feedback: string }[];
     }
   | {
       type: "misconception";

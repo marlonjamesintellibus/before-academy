@@ -59,10 +59,15 @@ function learnerStrings(block: LessonBlock): string[] {
         block.claim,
         block.altText,
         block.longText,
+        ...(block.predict
+          ? [block.predict.prompt, ...block.predict.options.map((option) => option.text)]
+          : []),
         ...block.layers.flatMap((layer) => [layer.label, layer.description]),
       ];
     case "misconception":
       return [block.claim, block.correction];
+    case "inline_check":
+      return [block.prompt, ...block.options.flatMap((option) => [option.text, option.feedback])];
     case "activity_cta":
     case "check_cta":
     case "next_step":
@@ -113,6 +118,35 @@ export function lintSection(
   for (const block of blocks) {
     if (seenIds.has(block.id)) issues.push({ blockId: block.id, message: "duplicate block id" });
     seenIds.add(block.id);
+
+    if (block.type === "inline_check") {
+      if (block.options.length < 2) {
+        issues.push({ blockId: block.id, message: "an inline check needs at least 2 options" });
+      }
+      if (!block.options.some((option) => option.id === block.correctOptionId)) {
+        issues.push({
+          blockId: block.id,
+          message: `correctOptionId ${block.correctOptionId} matches no option`,
+        });
+      }
+      const optionIds = new Set(block.options.map((option) => option.id));
+      if (optionIds.size !== block.options.length) {
+        issues.push({ blockId: block.id, message: "duplicate inline-check option ids" });
+      }
+      for (const option of block.options) {
+        if (!option.feedback.trim()) {
+          issues.push({
+            blockId: block.id,
+            message: `inline-check option ${option.id} has no feedback`,
+          });
+        }
+      }
+    }
+    if (block.type === "diagram" && block.predict) {
+      if (!block.predict.options.some((option) => option.correct)) {
+        issues.push({ blockId: block.id, message: "diagram prediction has no correct option" });
+      }
+    }
   }
 
   const objectives = blocks.find((block) => block.type === "objectives");
