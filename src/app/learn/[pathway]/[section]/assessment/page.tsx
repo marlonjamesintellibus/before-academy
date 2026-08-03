@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { AssessmentFlow } from "@/features/assessment";
-import { LESSON_ROUTE, PATHWAY_SLUG, SECTION_SLUG } from "@/lib/routes";
-import { strings } from "@/lib/strings";
+import { PATHWAY_SLUG } from "@/lib/routes";
 import { assessmentSeed } from "@/db/seed/assessment-content";
 
 export const metadata: Metadata = { title: "Assessment" };
@@ -19,7 +18,7 @@ interface AssessmentPageProps {
  */
 export default async function AssessmentPage({ params, searchParams }: AssessmentPageProps) {
   const { pathway, section } = await params;
-  if (pathway !== PATHWAY_SLUG || section !== SECTION_SLUG) notFound();
+  if (pathway !== PATHWAY_SLUG) notFound();
   const { route } = await searchParams;
 
   return (
@@ -27,7 +26,7 @@ export default async function AssessmentPage({ params, searchParams }: Assessmen
       <Breadcrumbs
         items={[
           { label: "AI Awareness", href: "/learn" },
-          { label: strings.pathway.sectionOneTitle, href: LESSON_ROUTE },
+          { label: "Lesson", href: `/learn/${pathway}/${section}` },
           { label: "Assessment" },
         ]}
       />
@@ -35,7 +34,8 @@ export default async function AssessmentPage({ params, searchParams }: Assessmen
       <div className="mt-8">
         <AssessmentFlow
           intro={assessmentSeed.intro}
-          lessonRoute={LESSON_ROUTE}
+          lessonRoute={`/learn/${pathway}/${section}`}
+          sectionSlug={section}
           assessmentFirst={route === "assessment_first"}
         />
       </div>

@@ -33,19 +33,21 @@ const createAttemptHandler = withAction(
     name: "createAttempt",
     schema: z.object({
       anonymousId: z.string().min(8).max(64),
+      sectionSlug: z.string().min(1).max(64).default(SECTION_SLUG),
       attemptNumber: z.number().int().min(1).max(1000),
       previousQuestionIds: z.array(z.string().max(64)).max(20).default([]),
     }),
     rateLimit: "attempt",
   },
   async (input): Promise<Result<AttemptPayload>> => {
-    const bank = await getAssessmentBank(SECTION_SLUG);
+    const bank = await getAssessmentBank(input.sectionSlug);
     if (bank.length === 0) {
       return err("NOT_FOUND", "The assessment is not available right now.");
     }
 
     const drawn = drawQuestions(bank, input.previousQuestionIds);
     const token = issueGuestToken({
+      sectionSlug: input.sectionSlug,
       questionIds: drawn.map((question) => question.id),
       issuedAt: Date.now(),
       attemptNumber: input.attemptNumber,
@@ -83,6 +85,7 @@ const submitAttemptHandler = withAction(
         )
         .min(1)
         .max(10),
+      sectionSlug: z.string().min(1).max(64).default(SECTION_SLUG),
       idempotencyKey: z.string().min(8).max(64),
     }),
     rateLimit: "attempt",
@@ -90,13 +93,19 @@ const submitAttemptHandler = withAction(
   async (input): Promise<Result<AttemptResult>> => {
     const config = getAssessmentConfig();
     const claims = verifyGuestToken(input.token, config.tokenTtlMs);
-    if (!claims || claims.anonymousId !== input.anonymousId) {
+    // The section must match the signed claim as well as the guest: a token is
+    // authorization for one bank, not for whichever bank the caller names.
+    if (
+      !claims ||
+      claims.anonymousId !== input.anonymousId ||
+      claims.sectionSlug !== input.sectionSlug
+    ) {
       return err("VALIDATION", "This attempt has expired. Start a fresh one - no penalty.", {
         fields: { token: "expired" },
       });
     }
 
-    const bank = await getAssessmentBank(SECTION_SLUG);
+    const bank = await getAssessmentBank(claims.sectionSlug);
     const drawn = claims.questionIds.flatMap((id) => bank.filter((question) => question.id === id));
     if (drawn.length !== claims.questionIds.length) {
       return err(
@@ -146,6 +155,7 @@ async function callerIp(): Promise<string> {
 
 export async function createAttempt(input: {
   anonymousId: string;
+  sectionSlug: string;
   attemptNumber: number;
   previousQuestionIds: string[];
 }): Promise<Result<AttemptPayload>> {
@@ -158,6 +168,7 @@ export async function createAttempt(input: {
 
 export async function submitAttempt(input: {
   anonymousId: string;
+  sectionSlug: string;
   token: string;
   answers: { questionId: string; optionIds: string[] }[];
   idempotencyKey: string;

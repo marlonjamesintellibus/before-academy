@@ -7,6 +7,12 @@ import { createHmac, timingSafeEqual } from "node:crypto";
  * while scoring stays server-side.
  */
 export interface GuestAttemptClaims {
+  /**
+   * The section the attempt belongs to. Part of the signed claims so a token
+   * issued for one section cannot be replayed against another: without it, a
+   * token would authorize any bank whose question ids happened to match.
+   */
+  sectionSlug: string;
   questionIds: string[];
   issuedAt: number;
   attemptNumber: number;
@@ -43,6 +49,7 @@ export function verifyGuestToken(
   try {
     const claims = JSON.parse(Buffer.from(payload, "base64url").toString()) as GuestAttemptClaims;
     if (!Array.isArray(claims.questionIds) || typeof claims.issuedAt !== "number") return null;
+    if (typeof claims.sectionSlug !== "string" || claims.sectionSlug.length === 0) return null;
     if (typeof claims.attemptNumber !== "number" || typeof claims.anonymousId !== "string")
       return null;
     if (now - claims.issuedAt > ttlMs) return null;

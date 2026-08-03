@@ -68,10 +68,13 @@ function clearAttemptMirror(): void {
 export function AssessmentFlow({
   intro,
   lessonRoute,
+  sectionSlug,
   assessmentFirst,
 }: {
   intro: string;
   lessonRoute: string;
+  /** Scopes the attempt: the token is signed against this section. */
+  sectionSlug: string;
   assessmentFirst: boolean;
 }) {
   const anonymousId = useAnonymousId();
@@ -127,6 +130,7 @@ export function AssessmentFlow({
     const attemptNumber = (Number.isFinite(storedCount) ? storedCount : 0) + 1;
     const previous = readDevice<string[]>(LAST_COMBINATION_KEY, [], Array.isArray);
     const result = await createAttempt({
+      sectionSlug,
       anonymousId,
       attemptNumber,
       previousQuestionIds: previous,
@@ -157,6 +161,7 @@ export function AssessmentFlow({
     setBusy(true);
     setErrorMessage(null);
     const result = await submitAttempt({
+      sectionSlug,
       anonymousId,
       token: payload.token,
       answers: Object.entries(answers).map(([questionId, optionIds]) => ({
