@@ -250,6 +250,11 @@ export const aia4Seed: SectionSeed = {
       ],
     },
     {
+      type: "check_cta",
+      id: "AIA-4-LESSON-006-CHECK-CTA",
+      body: "Four decisions about what work suits these systems. Nothing is graded.",
+    },
+    {
       type: "next_step",
       id: "AIA-4-LESSON-007-NEXT",
       body: "Next: the same systems, viewed from the other side. What they cannot be relied on for, and why that follows from how they work.",

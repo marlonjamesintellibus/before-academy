@@ -51,12 +51,12 @@ Misconception IDs (`M1`…`M6`) stay pathway-wide and unprefixed by design: a mi
 | ID | Section | Status | Priority | Est. time | Depends on |
 |---|---|---|---|---|---|
 | AIA-1 | What Is Artificial Intelligence? | **Published** | Must have | 15-20 min | none |
-| AIA-2 | AI in Everyday Life | Planned | Must have | 15-20 min | AIA-1 concepts |
+| AIA-2 | AI in Everyday Life | **Published** | Must have | 15-20 min | AIA-1 concepts |
 | AIA-3 | AI, Automation and Traditional Software | **Published** | Must have | ~20 min | none (built as the vertical slice) |
-| AIA-4 | What AI Can Do | Planned | Must have | 15-20 min | AIA-1, AIA-3 |
-| AIA-5 | What AI Cannot Reliably Do | Planned | Must have | 20-25 min | AIA-4 |
-| AIA-6 | Myths and Misconceptions | Planned | Should have | 15-20 min | AIA-1 through AIA-5 |
-| AIA-7 | Where to Go Next | Planned | Must have | 10-15 min | all; ends in the pathway assessment |
+| AIA-4 | What AI Can Do | **Published** | Must have | 15-20 min | AIA-1, AIA-3 |
+| AIA-5 | What AI Cannot Reliably Do | **Published** | Must have | 20-25 min | AIA-4 |
+| AIA-6 | Myths and Misconceptions | **Published** | Should have | 15-20 min | AIA-1 through AIA-5 |
+| AIA-7 | Where to Go Next | **Published** | Must have | 10-15 min | all; ends in the pathway assessment |
 
 Learner order is 1 to 7. **Build order is not learner order:** AIA-3 was built first deliberately, because it is the section that best tests the platform ([roadmap brief, vertical slice rationale](../roadmap/milestones.md)). Recommended build order for the remainder: **AIA-1 → AIA-4 → AIA-5 → AIA-2 → AIA-6 → AIA-7**. Rationale: AIA-1 is the foundation every other section assumes; AIA-4 and AIA-5 form a matched pair (capability and its limits) and should be written together by one author to keep the boundary consistent; AIA-2 is the most example-heavy and benefits from the audit; AIA-6 mostly recombines misconceptions already corrected elsewhere, so it is cheapest last; AIA-7 must be written last because it summarizes the others.
 
@@ -169,7 +169,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
-**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-4.ts`). Outstanding before publish: activity, knowledge check, assessment bank, generalized step routes.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-4.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Outstanding: assessment bank; Level 1 grading is intended to sit with the pathway assessment.
 
 ---
 
@@ -198,7 +198,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-5.ts`), written as one piece with AIA-4 so the boundary holds. Outstanding before publish: activity, knowledge check, assessment bank, generalized step routes.
 
-**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-2.ts`). Outstanding before publish: activity, knowledge check, assessment bank.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-2.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Outstanding: assessment bank; Level 1 grading is intended to sit with the pathway assessment.
 
 ---
 
@@ -223,7 +223,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Should have. This is the one Level 1 section that could ship after the pathway assessment without leaving a hole.
 
-**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-6.ts`). Outstanding before publish: activity, knowledge check, assessment bank.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-6.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Outstanding: assessment bank; Level 1 grading is intended to sit with the pathway assessment.
 
 ---
 
@@ -246,7 +246,7 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
-**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-7.ts`). Outstanding before publish: activity, knowledge check, assessment bank.
+**Build status: published.** Lesson (`src/db/seed/sections/aia-7.ts`) plus a four-question knowledge check (`remaining-checks.ts`). Outstanding: assessment bank; Level 1 grading is intended to sit with the pathway assessment.
 
 ---
 

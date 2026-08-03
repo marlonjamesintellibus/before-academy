@@ -239,6 +239,11 @@ export const aia5Seed: SectionSeed = {
       ],
     },
     {
+      type: "check_cta",
+      id: "AIA-5-LESSON-006-CHECK-CTA",
+      body: "Four judgments about outputs you cannot fully verify. Nothing is graded.",
+    },
+    {
       type: "next_step",
       id: "AIA-5-LESSON-007-NEXT",
       body: "Next: the claims about AI you will hear most often, and what evidence would settle each one.",

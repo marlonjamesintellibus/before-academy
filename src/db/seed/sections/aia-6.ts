@@ -188,6 +188,11 @@ export const aia6Seed: SectionSeed = {
       ],
     },
     {
+      type: "check_cta",
+      id: "AIA-6-LESSON-005-CHECK-CTA",
+      body: "Four claims of the kind you will actually hear. Nothing is graded.",
+    },
+    {
       type: "next_step",
       id: "AIA-6-LESSON-006-NEXT",
       body: "Last in the pathway: what you can now do, and where to take it.",

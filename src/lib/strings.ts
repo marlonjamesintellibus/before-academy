@@ -57,7 +57,7 @@ export const strings = {
     nextSectionTitle: "What AI Can Do",
     restOfPathwayTitle: "The rest of the AI Awareness pathway",
     restOfPathwayNote:
-      "Seven sections in total. Section 3 is open now; the others are planned and open as each passes learner testing.",
+      "Seven sections in total, all open. Each is a lesson with a practice check; graded assessment currently sits with section 3.",
     /**
      * The AI Awareness outline exactly as commissioned in
      * docs/content/content-map.md. Positions are learner order, so the open
@@ -65,12 +65,16 @@ export const strings = {
      * like the beginning of the pathway.
      */
     outline: [
-      { position: 1, title: "What Is Artificial Intelligence?" },
-      { position: 2, title: "AI in Everyday Life" },
-      { position: 4, title: "What AI Can Do" },
-      { position: 5, title: "What AI Cannot Reliably Do" },
-      { position: 6, title: "Myths and Misconceptions" },
-      { position: 7, title: "Where to Go Next" },
+      {
+        position: 1,
+        title: "What Is Artificial Intelligence?",
+        slug: "what-is-artificial-intelligence",
+      },
+      { position: 2, title: "AI in Everyday Life", slug: "ai-in-everyday-life" },
+      { position: 4, title: "What AI Can Do", slug: "what-ai-can-do" },
+      { position: 5, title: "What AI Cannot Reliably Do", slug: "what-ai-cannot-reliably-do" },
+      { position: 6, title: "Myths and Misconceptions", slug: "myths-and-misconceptions" },
+      { position: 7, title: "Where to Go Next", slug: "where-to-go-next" },
     ],
     previewNote: "Coming soon - we'll open this section once it passes learner testing.",
   },

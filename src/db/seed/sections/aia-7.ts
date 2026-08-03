@@ -186,6 +186,11 @@ export const aia7Seed: SectionSeed = {
       ],
     },
     {
+      type: "check_cta",
+      id: "AIA-7-LESSON-005-CHECK-CTA",
+      body: "Four questions about what you now have, and where its edges are.",
+    },
+    {
       type: "next_step",
       id: "AIA-7-LESSON-006-NEXT",
       body: "Take a two-minute review in a few days, and pick the direction that matches the decisions you actually face.",

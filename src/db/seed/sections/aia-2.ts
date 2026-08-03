@@ -207,6 +207,11 @@ export const aia2Seed: SectionSeed = {
       ],
     },
     {
+      type: "check_cta",
+      id: "AIA-2-LESSON-005-CHECK-CTA",
+      body: "Four everyday situations to think through. Nothing is graded.",
+    },
+    {
       type: "next_step",
       id: "AIA-2-LESSON-006-NEXT",
       body: "Next: the difference between these systems, ordinary automation, and software that follows written rules.",

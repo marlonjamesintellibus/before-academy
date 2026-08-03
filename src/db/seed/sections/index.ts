@@ -7,6 +7,13 @@ import { aia2Seed } from "./aia-2";
 import { aia6Seed } from "./aia-6";
 import { aia7Seed } from "./aia-7";
 import { aia1CheckSeed } from "./aia-1-check";
+import {
+  aia2CheckSeed,
+  aia4CheckSeed,
+  aia5CheckSeed,
+  aia6CheckSeed,
+  aia7CheckSeed,
+} from "./remaining-checks";
 
 /**
  * Sections beyond the first published one (docs/content/content-map.md).
@@ -41,29 +48,33 @@ export const sectionBundles: SectionBundle[] = [
   },
   {
     seed: aia4Seed,
-    status: "drafting",
-    outstanding: "activity, knowledge check and assessment bank, plus generalized step routes",
+    status: "published",
+    check: aia4CheckSeed,
+    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
   },
   {
     seed: aia5Seed,
-    status: "drafting",
-    outstanding: "activity, knowledge check and assessment bank, plus generalized step routes",
+    status: "published",
+    check: aia5CheckSeed,
+    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
   },
   {
     seed: aia2Seed,
-    status: "drafting",
-    outstanding:
-      "activity, knowledge check and assessment bank; examples pending the document audit",
+    status: "published",
+    check: aia2CheckSeed,
+    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
   },
   {
     seed: aia6Seed,
-    status: "drafting",
-    outstanding: "the Myth or Reality activity, knowledge check and assessment bank",
+    status: "published",
+    check: aia6CheckSeed,
+    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
   },
   {
     seed: aia7Seed,
-    status: "drafting",
-    outstanding: "pathway self-assessment and the cross-section pathway assessment",
+    status: "published",
+    check: aia7CheckSeed,
+    outstanding: "assessment bank; Level 1 grading sits with the pathway assessment",
   },
 ];
 
