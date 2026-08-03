@@ -167,6 +167,8 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 
 **Priority.** Must have.
 
+**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-4.ts`). Outstanding before publish: activity, knowledge check, assessment bank, generalized step routes.
+
 ---
 
 ### AIA-5 · What AI Cannot Reliably Do
@@ -191,6 +193,8 @@ Each record carries the field set the roadmap brief specifies. Fields that are i
 **Prerequisites.** AIA-4.
 
 **Priority.** Must have.
+
+**Build status: drafting.** Lesson authored (`src/db/seed/sections/aia-5.ts`), written as one piece with AIA-4 so the boundary holds. Outstanding before publish: activity, knowledge check, assessment bank, generalized step routes.
 
 ---
 

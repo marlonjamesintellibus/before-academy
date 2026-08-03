@@ -1,5 +1,7 @@
 import type { SectionSeed } from "@/features/content/types";
 import { aia1Seed } from "./aia-1";
+import { aia4Seed } from "./aia-4";
+import { aia5Seed } from "./aia-5";
 
 /**
  * Sections beyond the first published one (docs/content/content-map.md).
@@ -29,6 +31,16 @@ export const sectionBundles: SectionBundle[] = [
     status: "drafting",
     outstanding:
       "activity, knowledge check and assessment bank, plus generalized step routes; see content-map.md",
+  },
+  {
+    seed: aia4Seed,
+    status: "drafting",
+    outstanding: "activity, knowledge check and assessment bank, plus generalized step routes",
+  },
+  {
+    seed: aia5Seed,
+    status: "drafting",
+    outstanding: "activity, knowledge check and assessment bank, plus generalized step routes",
   },
 ];
 
