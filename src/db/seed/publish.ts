@@ -55,7 +55,10 @@ async function publish() {
     checkSeed,
     assessmentSeed,
     canonicalRecordSeeds,
-    additionalSectionSeeds,
+    // The whole bundle, not just the seeds: checks and assessment banks are
+    // content too, and hashing only the lessons made adding a bank a silent
+    // no-op. Same class of gap as canonical records had.
+    sectionBundles,
   });
   const hash = createHash("sha256").update(snapshot).digest("hex");
 
@@ -431,8 +434,54 @@ async function publish() {
         checkCount = bundle.check.questions.length;
       }
 
+      let bankCount = 0;
+      if (bundle?.assessment) {
+        const priorBank = await tx.query.questions.findMany({
+          where: and(eq(questions.sectionId, extraSection.id), eq(questions.kind, "assessment")),
+        });
+        for (const row of priorBank) {
+          await tx.delete(questions).where(eq(questions.id, row.id));
+        }
+        for (const question of bundle.assessment.questions) {
+          const [inserted] = await tx
+            .insert(questions)
+            .values({
+              sectionId: extraSection.id,
+              contentId: question.id,
+              kind: "assessment" as const,
+              format: question.format,
+              category: question.category,
+              difficulty: question.difficulty,
+              stem: question.stem,
+              explanation: JSON.stringify({
+                correctExplanation: question.correctExplanation,
+                incorrectExplanation: question.incorrectExplanation,
+                fixedDraw: question.fixedDraw,
+                rotateOptions: question.rotateOptions,
+              }),
+              remediationBlockId: question.category,
+              learningOutcomes: question.learningOutcomes,
+              misconceptionTags: question.misconceptionTags,
+              useTags: ["assessment"],
+              status: "published" as const,
+              version: extraVersion,
+            })
+            .returning();
+          if (!inserted) throw new Error("assessment question insert returned nothing");
+          await tx.insert(questionOptions).values(
+            question.options.map((option, position) => ({
+              questionId: inserted.id,
+              position,
+              body: option.text,
+              isCorrect: option.correct,
+            })),
+          );
+        }
+        bankCount = bundle.assessment.questions.length;
+      }
+
       console.log(
-        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks, ${checkCount} check questions`,
+        `published ${extraSection.slug} v${extraVersion}: ${seed.blocks.length} blocks, ${checkCount} check questions, ${bankCount} bank items`,
       );
     }
   });

@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { AssessmentFlow } from "@/features/assessment";
 import { PATHWAY_SLUG } from "@/lib/routes";
 import { assessmentSeed } from "@/db/seed/assessment-content";
+import { getAssessmentBank } from "@/features/assessment/queries";
 
 export const metadata: Metadata = { title: "Assessment" };
 
@@ -19,6 +20,12 @@ interface AssessmentPageProps {
 export default async function AssessmentPage({ params, searchParams }: AssessmentPageProps) {
   const { pathway, section } = await params;
   if (pathway !== PATHWAY_SLUG) notFound();
+
+  // A section without a bank must not advertise an assessment: the intro would
+  // promise a step that createAttempt would then refuse.
+  const bank = await getAssessmentBank(section);
+  if (bank.length === 0) notFound();
+
   const { route } = await searchParams;
 
   return (
