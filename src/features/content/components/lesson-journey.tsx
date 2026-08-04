@@ -13,7 +13,7 @@ import { ConceptDiagram } from "./diagrams/concept-diagram";
 import { DiagnosticProbe } from "./diagnostic-probe";
 import { DiagramObservation } from "./diagrams/diagram-parts";
 import { DepthPanel } from "./depth-panel";
-import { DiagramFigure } from "./diagram-figure";
+import { CombinedSystemFigure } from "./diagrams/combined-system-figure";
 import { HookBlock } from "./hook-block";
 import { InlineCheck } from "./inline-check";
 import { LessonScrollTracker } from "./lesson-scroll-tracker";
@@ -531,7 +531,7 @@ function CompareStage({
       </section>
       {diagram ? (
         <div id={diagram.id.toLowerCase()} className="mt-8">
-          <DiagramFigure
+          <CombinedSystemFigure
             title={diagram.title}
             claim={diagram.claim}
             altText={diagram.altText}

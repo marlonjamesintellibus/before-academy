@@ -203,4 +203,18 @@ test("generic lessons carry the enriched journey: stages, inline checks, predict
   ).toBeVisible();
   await page.getByRole("button", { name: "No: the outputs can be indistinguishable" }).click();
   await expect(page.getByText("Two ways a system gets its behaviour")).toBeVisible();
+
+  // The diagram draws THIS section's layers, not another section's flow. Its
+  // predecessor hardcoded section 3's support-ticket story for every section.
+  await expect(page.getByRole("button", { name: "A person writes rules" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "A pattern is derived" })).toBeVisible();
+  await expect(page.getByText(/routes it to the shipping queue/)).toHaveCount(0);
+  await expect(page.getByText(/84% confident/)).toHaveCount(0);
+
+  // Selecting a step reveals its own description.
+  await page.getByRole("button", { name: "A pattern is derived" }).click();
+  await expect(page.getByText(/works out what the examples have in common/)).toBeVisible();
+
+  // The trace is playable, and there is exactly one prediction gate, already used.
+  await expect(page.getByRole("button", { name: "Play the trace" })).toBeVisible();
 });
