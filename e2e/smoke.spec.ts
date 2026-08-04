@@ -82,3 +82,21 @@ test("section cards expand into unit rows with completion and deep links", async
     page.getByRole("heading", { level: 2, name: "A field, not a single thing" }),
   ).toBeVisible();
 });
+
+test("assessment routes stream a loading shell before their content", async ({ request }) => {
+  // The assessment routes read searchParams, so they render on demand every
+  // time and are the ones where a learner waits. Without a Suspense boundary
+  // the browser sat on the previous page showing nothing. Asserted on the
+  // streamed document rather than a click, because Next prefetches links and
+  // a prefetched navigation legitimately shows no loading state at all.
+  const response = await request.get("/learn/ai-awareness/assessment");
+  expect(response.ok()).toBe(true);
+  const html = await response.text();
+  expect(html).toContain("Loading the assessment");
+
+  // The fast ISR lesson pages deliberately have NO boundary: a skeleton flash
+  // and a mid-interaction DOM swap on a sub-second cached page is a regression,
+  // not a courtesy.
+  const lesson = await request.get("/learn/ai-awareness/ai-automation-software");
+  expect(await lesson.text()).not.toContain("Loading the assessment");
+});

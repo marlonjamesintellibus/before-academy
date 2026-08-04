@@ -4,6 +4,7 @@
  * pure and exported for tests.
  */
 export { AssessmentFlow } from "./components/assessment-flow";
+export { AssessmentLoading } from "./components/assessment-loading";
 export { score } from "./scoring";
 export { drawQuestions, shuffle } from "./selection";
 export {
