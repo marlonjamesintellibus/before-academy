@@ -7,6 +7,7 @@ import {
   DiagramTextAlternative,
   InteractiveBadge,
 } from "./diagrams/diagram-parts";
+import { PredictionGate } from "./diagrams/prediction-gate";
 
 interface Layer {
   id: string;
@@ -32,12 +33,23 @@ export function DiagramFigure({
   altText,
   longText,
   layers,
+  predict,
 }: {
   title: string;
   claim: string;
   altText: string;
   longText: string;
   layers: Layer[];
+  /**
+   * Commit-first gate around the INTERACTION only. The figcaption stays
+   * visible, matching the validated combined figure: a prediction needs the
+   * title and claim as context, or the prompt floats meaninglessly.
+   */
+  predict?: {
+    prompt: string;
+    options: { text: string; correct: boolean }[];
+    revealLabel?: string;
+  };
 }) {
   const [selected, setSelected] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -83,73 +95,99 @@ export function DiagramFigure({
         <span className="mt-1 block text-body text-ink-muted">{claim}</span>
       </figcaption>
 
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={play}
-          disabled={playing}
-          className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-4 py-2 text-body font-semibold text-surface-card hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      <MaybeGate predict={predict} gateId={`${title}-predict`}>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={play}
+            disabled={playing}
+            className="inline-flex min-h-11 items-center rounded-(--radius-control) bg-primary px-4 py-2 text-body font-semibold text-surface-card hover:bg-primary-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          >
+            {traced ? "Play the trace again" : "Play the trace"}
+          </button>
+          <span className="text-caption text-ink-muted">or select any step to read it</span>
+        </div>
+
+        <ol
+          className={`mt-4 grid gap-2 ${
+            { 1: "", 2: "md:grid-cols-2", 3: "md:grid-cols-3", 4: "md:grid-cols-4" }[
+              Math.min(layers.length, 5)
+            ] ?? "md:grid-cols-5"
+          }`}
+          aria-label="Diagram steps"
         >
-          {traced ? "Play the trace again" : "Play the trace"}
-        </button>
-        <span className="text-caption text-ink-muted">or select any step to read it</span>
-      </div>
-
-      <ol
-        className={`mt-4 grid gap-2 ${
-          { 1: "", 2: "md:grid-cols-2", 3: "md:grid-cols-3", 4: "md:grid-cols-4" }[
-            Math.min(layers.length, 5)
-          ] ?? "md:grid-cols-5"
-        }`}
-        aria-label="Diagram steps"
-      >
-        {layers.map((layer, index) => (
-          <li key={layer.id} className="relative">
-            <button
-              type="button"
-              aria-pressed={index === selected}
-              onClick={() => {
-                setPlaying(false);
-                setSelected(index);
-                track("diagram_component_opened", { component: layer.id });
-              }}
-              className={`h-full min-h-24 w-full rounded-(--radius-control) border p-3 text-left focus-visible:outline-2 focus-visible:outline-primary ${
-                index === selected
-                  ? "border-primary bg-primary-tint"
-                  : "border-border bg-surface-card hover:border-primary"
-              }`}
-            >
-              <span
-                className={`flex h-7 w-7 items-center justify-center rounded-full text-caption font-bold ${
-                  index <= selected ? "bg-primary text-white" : "bg-surface-alt text-ink-muted"
-                } ${playing && index === selected ? "thinking" : ""}`}
+          {layers.map((layer, index) => (
+            <li key={layer.id} className="relative">
+              <button
+                type="button"
+                aria-pressed={index === selected}
+                onClick={() => {
+                  setPlaying(false);
+                  setSelected(index);
+                  track("diagram_component_opened", { component: layer.id });
+                }}
+                className={`h-full min-h-24 w-full rounded-(--radius-control) border p-3 text-left focus-visible:outline-2 focus-visible:outline-primary ${
+                  index === selected
+                    ? "border-primary bg-primary-tint"
+                    : "border-border bg-surface-card hover:border-primary"
+                }`}
               >
-                {index + 1}
-              </span>
-              <span className="mt-2 block text-body font-semibold">{layer.label}</span>
-            </button>
-            {index < layers.length - 1 ? (
-              <span
-                aria-hidden="true"
-                className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 text-primary md:block"
-              >
-                →
-              </span>
-            ) : null}
-          </li>
-        ))}
-      </ol>
+                <span
+                  className={`flex h-7 w-7 items-center justify-center rounded-full text-caption font-bold ${
+                    index <= selected ? "bg-primary text-white" : "bg-surface-alt text-ink-muted"
+                  } ${playing && index === selected ? "thinking" : ""}`}
+                >
+                  {index + 1}
+                </span>
+                <span className="mt-2 block text-body font-semibold">{layer.label}</span>
+              </button>
+              {index < layers.length - 1 ? (
+                <span
+                  aria-hidden="true"
+                  className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 text-primary md:block"
+                >
+                  →
+                </span>
+              ) : null}
+            </li>
+          ))}
+        </ol>
 
-      <DiagramObservation>
-        <strong>
-          Step {selected + 1} · {active.label}:
-        </strong>{" "}
-        {active.description}
-      </DiagramObservation>
+        <DiagramObservation>
+          <strong>
+            Step {selected + 1} · {active.label}:
+          </strong>{" "}
+          {active.description}
+        </DiagramObservation>
 
-      <DiagramTextAlternative>
-        <p>{longText}</p>
-      </DiagramTextAlternative>
+        <DiagramTextAlternative>
+          <p>{longText}</p>
+        </DiagramTextAlternative>
+      </MaybeGate>
     </figure>
+  );
+}
+
+function MaybeGate({
+  predict,
+  gateId,
+  children,
+}: {
+  predict?:
+    | { prompt: string; options: { text: string; correct: boolean }[]; revealLabel?: string }
+    | undefined;
+  gateId: string;
+  children: React.ReactNode;
+}) {
+  if (!predict) return <>{children}</>;
+  return (
+    <PredictionGate
+      id={gateId}
+      prompt={predict.prompt}
+      options={predict.options}
+      revealLabel={predict.revealLabel ?? "Now check your prediction:"}
+    >
+      {children}
+    </PredictionGate>
   );
 }

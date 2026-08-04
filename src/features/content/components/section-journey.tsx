@@ -9,7 +9,6 @@ import { HookBlock } from "./hook-block";
 import { DepthPanel } from "./depth-panel";
 import { InlineCheck } from "./inline-check";
 import { LessonRail } from "./lesson-rail";
-import { PredictionGate } from "./diagrams/prediction-gate";
 import { readDevice, writeDevice } from "@/lib/device-store";
 import { track } from "@/lib/analytics";
 import type { LessonBlock, PublishedSection } from "../types";
@@ -364,33 +363,19 @@ function StageBlock({ block, content }: { block: LessonBlock; content: Published
           }}
         />
       );
-    case "diagram": {
-      const figure = (
-        <DiagramFigure
-          title={block.title}
-          claim={block.claim}
-          altText={block.altText}
-          longText={block.longText}
-          layers={block.layers}
-        />
-      );
+    case "diagram":
       return (
         <div id={block.id.toLowerCase()} className="mt-8">
-          {block.predict ? (
-            <PredictionGate
-              id={block.id}
-              prompt={block.predict.prompt}
-              options={block.predict.options}
-              revealLabel={block.predict.revealLabel ?? "Now check your prediction:"}
-            >
-              {figure}
-            </PredictionGate>
-          ) : (
-            figure
-          )}
+          <DiagramFigure
+            title={block.title}
+            claim={block.claim}
+            altText={block.altText}
+            longText={block.longText}
+            layers={block.layers}
+            {...(block.predict ? { predict: block.predict } : {})}
+          />
         </div>
       );
-    }
     case "misconception":
       return (
         <div id={`${block.id.toLowerCase()}-misconception`} className="mt-6">

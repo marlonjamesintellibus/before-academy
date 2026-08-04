@@ -198,11 +198,15 @@ test("generic lessons carry the enriched journey: stages, inline checks, predict
   await page.getByRole("button", { name: /Keep doing a task well|Continue to/ }).first();
   if (isMobile) await rail.getByRole("button", { name: "Outline" }).click();
   await rail.getByRole("button", { name: /Doing a task is not working like a person/ }).click();
+  // The figure's title and claim give the prediction its context (they were
+  // once hidden behind the gate, leaving the prompt floating), while the
+  // interaction itself stays gated until the learner commits.
+  await expect(page.getByText("Two ways a system gets its behaviour")).toBeVisible();
   await expect(
     page.getByText("Two systems produce identical outputs for the same input", { exact: false }),
   ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play the trace" })).toHaveCount(0);
   await page.getByRole("button", { name: "No: the outputs can be indistinguishable" }).click();
-  await expect(page.getByText("Two ways a system gets its behaviour")).toBeVisible();
 
   // The diagram draws THIS section's layers, not another section's flow. Its
   // predecessor hardcoded section 3's support-ticket story for every section.
