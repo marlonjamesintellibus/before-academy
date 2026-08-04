@@ -96,3 +96,12 @@ test("assessment screens pass axe", async ({ page }) => {
     attempt.violations.filter((v) => ["critical", "serious"].includes(v.impact ?? "")),
   ).toEqual([]);
 });
+
+test("a new section's assessment starts and reaches question one", async ({ page }) => {
+  // Regression guard: the draw once hardcoded section 3's category slots, so
+  // pressing Start anywhere else threw "empty question pool".
+  await page.goto("/learn/ai-awareness/what-is-artificial-intelligence/assessment");
+  await page.getByRole("button", { name: "Start assessment" }).click();
+  await expect(page.getByText("Question 1 of 6")).toBeVisible();
+  await expect(page.getByRole("radio").first()).toBeVisible();
+});

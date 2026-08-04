@@ -117,3 +117,67 @@ export function drawPathwayQuestions<T extends { id: string; sectionSlug?: strin
 
   return picked.slice(0, Math.max(size, bySection.size));
 }
+
+/**
+ * Generic section draw, for banks whose categories differ from the first
+ * section's blueprint (every section teaches different things, so hardcoded
+ * category slots cannot generalize). Fixed-draw items are always included,
+ * then the remaining slots cover as many distinct categories as possible in
+ * random order before any category repeats. The previous attempt's questions
+ * are deprioritised and the exact previous combination is never repeated.
+ */
+export function drawSectionQuestions<T extends AssessmentQuestionSeed>(
+  bank: T[],
+  size: number,
+  previousCombination: string[] = [],
+  random: () => number = Math.random,
+): T[] {
+  const previous = new Set(previousCombination);
+
+  function take(items: T[]): T | undefined {
+    if (items.length === 0) return undefined;
+    const fresh = items.filter((question) => !previous.has(question.id));
+    const pool = fresh.length > 0 ? fresh : items;
+    return pool[Math.floor(random() * pool.length)];
+  }
+
+  const attempt = (): T[] => {
+    const fixed = bank.filter((question) => question.fixedDraw);
+    const picked: T[] = [...fixed];
+    const pickedIds = new Set(picked.map((question) => question.id));
+
+    // Coverage first: one per category not yet represented, in random order.
+    const categories = shuffle(
+      [...new Set(bank.map((question) => question.category))],
+      random,
+    ).filter((category) => !picked.some((question) => question.category === category));
+    for (const category of categories) {
+      if (picked.length >= size) break;
+      const choice = take(
+        bank.filter((question) => question.category === category && !pickedIds.has(question.id)),
+      );
+      if (choice) {
+        picked.push(choice);
+        pickedIds.add(choice.id);
+      }
+    }
+
+    // Fill any remaining slots from the whole bank.
+    while (picked.length < size) {
+      const choice = take(bank.filter((question) => !pickedIds.has(question.id)));
+      if (!choice) break;
+      picked.push(choice);
+      pickedIds.add(choice.id);
+    }
+    return picked;
+  };
+
+  for (let tries = 0; tries < 10; tries += 1) {
+    const draw = attempt();
+    const ids = draw.map((question) => question.id).sort();
+    if (previous.size === 0 || ids.join(",") !== [...previous].sort().join(",")) {
+      return draw;
+    }
+  }
+  return attempt();
+}

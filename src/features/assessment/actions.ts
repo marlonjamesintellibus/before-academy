@@ -13,7 +13,7 @@ import { withAction } from "@/lib/with-action";
 import { SECTION_SLUG } from "@/lib/routes";
 import { getAssessmentBank, getPathwayAssessmentBank, PATHWAY_SCOPE_PREFIX } from "./queries";
 import { score } from "./scoring";
-import { drawPathwayQuestions, drawQuestions, shuffle } from "./selection";
+import { drawPathwayQuestions, drawQuestions, drawSectionQuestions, shuffle } from "./selection";
 import type { AttemptPayload, AttemptResult } from "./types";
 
 /**
@@ -51,9 +51,14 @@ const createAttemptHandler = withAction(
     }
 
     const config = getAssessmentConfig();
+    // The classic blueprint draw is exactly the first section's validated
+    // behaviour; other banks have different category mixes and use the
+    // generic coverage-first draw.
     const drawn = isPathway
       ? drawPathwayQuestions(bank, config.pathwayDrawSize, input.previousQuestionIds)
-      : drawQuestions(bank, input.previousQuestionIds);
+      : input.sectionSlug === SECTION_SLUG
+        ? drawQuestions(bank, input.previousQuestionIds)
+        : drawSectionQuestions(bank, config.drawSize, input.previousQuestionIds);
     const token = issueGuestToken({
       sectionSlug: input.sectionSlug,
       questionIds: drawn.map((question) => question.id),
