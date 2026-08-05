@@ -64,6 +64,17 @@ export const blueprintCategory = pgEnum("blueprint_category", [
   "js_async",
   "js_coercion_tricks",
   "js_prototypes",
+  // React families (UIE-6 Foundations, UIE-7 Hooks in Depth).
+  "react_components_props",
+  "react_rendering",
+  "react_state",
+  "react_lists_keys",
+  "react_forms_events",
+  "react_effects",
+  "react_refs",
+  "react_memoization",
+  "react_context_state",
+  "react_hooks_rules",
 ]);
 
 export const questionDifficulty = pgEnum("question_difficulty", [

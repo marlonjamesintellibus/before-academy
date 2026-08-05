@@ -38,6 +38,16 @@ export type AssessmentCategory =
   | "js_async"
   | "js_coercion_tricks"
   | "js_prototypes"
+  | "react_components_props"
+  | "react_rendering"
+  | "react_state"
+  | "react_lists_keys"
+  | "react_forms_events"
+  | "react_effects"
+  | "react_refs"
+  | "react_memoization"
+  | "react_context_state"
+  | "react_hooks_rules"
   | "misconceptions";
 
 export type AssessmentFormat = "multiple_choice" | "multiple_select" | "scenario_decision";
@@ -148,4 +158,14 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   js_async: "Promises and async/await",
   js_coercion_tricks: "Coercion and the trick zoo",
   js_prototypes: "Prototypes and classes",
+  react_components_props: "Components and props",
+  react_rendering: "The rendering model",
+  react_state: "State as snapshots",
+  react_lists_keys: "Lists and keys",
+  react_forms_events: "Forms and events",
+  react_effects: "Effects and cleanup",
+  react_refs: "Refs",
+  react_memoization: "Memoization and identity",
+  react_context_state: "Context and where state lives",
+  react_hooks_rules: "The rules of hooks",
 };

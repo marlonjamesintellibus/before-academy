@@ -28,6 +28,9 @@ import { uie4AssessmentSeed } from "./uie-4-assessment";
 import { uie5Seed } from "./uie-5";
 import { uie5ActivitySeed, uie5CheckSeed } from "./uie-5-activity";
 import { uie5AssessmentSeed } from "./uie-5-assessment";
+import { uie6Seed } from "./uie-6";
+import { uie6ActivitySeed, uie6CheckSeed } from "./uie-6-activity";
+import { uie6AssessmentSeed } from "./uie-6-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -153,6 +156,15 @@ export const sectionBundles: SectionBundle[] = [
     activity: uie5ActivitySeed,
     check: uie5CheckSeed,
     assessment: uie5AssessmentSeed,
+  },
+  {
+    // UIE-6: React Foundations, first of the two React courses: the
+    // rendering model the hooks course stands on.
+    seed: uie6Seed,
+    status: "published",
+    activity: uie6ActivitySeed,
+    check: uie6CheckSeed,
+    assessment: uie6AssessmentSeed,
   },
 ];
 
