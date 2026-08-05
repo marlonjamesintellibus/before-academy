@@ -1,17 +1,18 @@
 import type { AssessmentSeed } from "@/features/assessment";
 
 /**
- * UIE-3 graded bank: ten items over the five web-foundations families, two per
- * family, difficulty at the blueprint mix (four foundational, five applied,
- * one challenging). Two fixedDraw habits ride every attempt: the label wiring
- * item (accessibility is not optional polish) and the specificity scoring
- * item (the cascade is computable, not mystical). Inline code carries every
- * snippet; no item needs a block-level example to be answerable.
+ * UIE-3 graded bank, deepened with the lesson: sixteen items over seven
+ * families (semantics, box and flow, positioning, layout, responsive,
+ * cascade, accessibility). Two fixedDraw habits ride every attempt: the
+ * label wiring item (accessibility is not optional polish) and the
+ * specificity scoring item (the cascade is computable, not mystical).
+ * Inline code carries every snippet; no item needs a block-level example
+ * to be answerable.
  */
 export const uie3AssessmentSeed: AssessmentSeed = {
   id: "UIE-3-ASM-001",
   intro:
-    "Six questions drawn from a ten-item bank across the five foundations. Pass at 80 percent, retake any time with a different combination.",
+    "Six questions drawn from a sixteen-item bank across the foundations. Pass at 80 percent, retake any time with a different combination.",
   questions: [
     {
       id: "UIE-3-QB-001",
@@ -246,6 +247,145 @@ export const uie3AssessmentSeed: AssessmentSeed = {
       fixedDraw: false,
       rotateOptions: true,
       learningOutcomes: ["UIE-3-LO5"],
+      misconceptionTags: [],
+    },
+
+    {
+      id: "UIE-3-QB-011",
+      format: "multiple_choice",
+      category: "css_box_model",
+      difficulty: "applied",
+      stem: "Two stacked sections have `margin-bottom: 32px` and `margin-top: 20px`, and the designer measures a 32px gap instead of 52. What is happening?",
+      options: [
+        {
+          text: "Vertical margins in normal flow collapse to the larger of the two",
+          correct: true,
+        },
+        { text: "The browser is rounding the margins down", correct: false },
+        { text: "The second rule overrode the first in the cascade", correct: false },
+        { text: "Percent-based line height absorbed the difference", correct: false },
+      ],
+      correctExplanation:
+        "Correct. Adjacent vertical margins merge into one gap the size of the larger: 32. Wrapping the stack in a flex or grid parent with `gap`, or spacing in one direction only, makes gaps mean what they say.",
+      incorrectExplanation:
+        "Not quite. This is margin collapse: touching vertical margins in normal flow merge to the larger value, 32, and no cascade or rounding is involved. Flex and grid children never collapse, which is one reason `gap` reads truer than stacked margins. Review: boxes and flow.",
+      fixedDraw: false,
+      rotateOptions: true,
+      learningOutcomes: ["UIE-3-LO2"],
+      misconceptionTags: ["UIE-M-004"],
+    },
+    {
+      id: "UIE-3-QB-012",
+      format: "multiple_choice",
+      category: "css_positioning",
+      difficulty: "foundational",
+      stem: "A tooltip inside a card uses `position: absolute; top: 100%;` but appears at the bottom of the page instead of under the card. What is the fix?",
+      options: [
+        { text: "Give the card `position: relative` so the tooltip anchors to it", correct: true },
+        { text: "Raise the tooltip's `z-index` until it looks right", correct: false },
+        { text: "Switch the tooltip to `position: fixed`", correct: false },
+        { text: "Move the tooltip element outside the card in the HTML", correct: false },
+      ],
+      correctExplanation:
+        "Correct. Absolute positioning anchors to the nearest positioned ancestor, and without one the search walks up to the page itself. `position: relative` on the card, changing nothing visually, is the anchor the tooltip was missing.",
+      incorrectExplanation:
+        "Not quite. The tooltip is not mislayered, it is mis-anchored: `absolute` positions against the nearest positioned ancestor, and no ancestor qualifies. Give the card `position: relative` and `top: 100%` starts meaning 'below the card'. Review: positioning, layers and the stacking game.",
+      fixedDraw: false,
+      rotateOptions: true,
+      learningOutcomes: ["UIE-3-LO3"],
+      misconceptionTags: [],
+    },
+    {
+      id: "UIE-3-QB-013",
+      format: "multiple_choice",
+      category: "css_positioning",
+      difficulty: "challenging",
+      stem: "A modal has `z-index: 1000` yet renders beneath a toast with `z-index: 3`. The modal's ancestor has `transform: scale(1)`. Why does the toast win?",
+      options: [
+        {
+          text: "The transform created a stacking context, so the modal's 1000 competes only inside it",
+          correct: true,
+        },
+        { text: "The toast's later source position breaks the tie", correct: false },
+        { text: "`z-index` values above 999 are clamped by browsers", correct: false },
+        { text: "Toasts render in a privileged browser layer", correct: false },
+      ],
+      correctExplanation:
+        "Correct. Any transform, even a no-op `scale(1)`, creates a stacking context. The modal's 1000 ranks it among siblings inside that context, while the context itself stacks at its ancestor's level against the toast's 3, and loses. Remove the transform or portal the modal out.",
+      incorrectExplanation:
+        "Not quite. Nothing clamps z-index and no element is privileged: the no-op `transform` created a stacking context, capping the modal's 1000 inside it while the ancestor competes at its own level against the toast. The mechanism, not the numbers, decides. Review: positioning, layers and the stacking game.",
+      fixedDraw: false,
+      rotateOptions: true,
+      learningOutcomes: ["UIE-3-LO3"],
+      misconceptionTags: ["UIE-M-004"],
+    },
+    {
+      id: "UIE-3-QB-014",
+      format: "multiple_choice",
+      category: "css_layout",
+      difficulty: "applied",
+      stem: "An app frame is `display: flex`. The sidebar must hold exactly 240px while the content area takes everything else. Which pair does it?",
+      options: [
+        { text: "Sidebar `flex: 0 0 240px`, content `flex: 1`", correct: true },
+        { text: "Sidebar `width: 240px`, content `width: 100%`", correct: false },
+        { text: "Sidebar `flex: 240`, content `flex: 1`", correct: false },
+        { text: "Sidebar `flex-basis: 240px`, content `margin-left: 240px`", correct: false },
+      ],
+      correctExplanation:
+        "Correct. `flex: 0 0 240px` exempts the sidebar from growing and shrinking at a fixed basis, and `flex: 1` lets the content claim all spare space. The shorthand states the whole contract in two declarations.",
+      incorrectExplanation:
+        "Not quite. `width: 100%` on a flex child invites overflow because it ignores the sibling, `flex: 240` makes the sidebar grow 240 times faster rather than sit at 240px, and pairing a basis with a margin double-books the same 240 pixels. The contract is `flex: 0 0 240px` beside `flex: 1`. Review: flexbox, one axis distributed.",
+      fixedDraw: false,
+      rotateOptions: true,
+      learningOutcomes: ["UIE-3-LO3"],
+      misconceptionTags: [],
+    },
+    {
+      id: "UIE-3-QB-015",
+      format: "multiple_choice",
+      category: "responsive_design",
+      difficulty: "foundational",
+      stem: "A stylesheet is written mobile-first. Which shape do its media queries take?",
+      options: [
+        {
+          text: "`@media (min-width: ...)` blocks that add enhancements for wider screens",
+          correct: true,
+        },
+        {
+          text: "`@media (max-width: ...)` blocks that strip features away for phones",
+          correct: false,
+        },
+        { text: "One `@media` block per device brand", correct: false },
+        { text: "No media queries: mobile-first means mobile-only", correct: false },
+      ],
+      correctExplanation:
+        "Correct. The base styles serve the smallest screen, and `min-width` queries layer on columns, grids and larger type as room appears. Nothing ever needs undoing, which is the architecture's whole advantage.",
+      incorrectExplanation:
+        "Not quite. Mobile-first writes the constrained layout as the default and adds upward with `min-width` queries. `max-width` stacks describe desktop-first, subtracting features from an assumed large screen, and device-brand queries chase hardware instead of describing the design's own breakpoints. Review: smallest screen first.",
+      fixedDraw: false,
+      rotateOptions: true,
+      learningOutcomes: ["UIE-3-LO4"],
+      misconceptionTags: [],
+    },
+    {
+      id: "UIE-3-QB-016",
+      format: "multiple_choice",
+      category: "responsive_design",
+      difficulty: "applied",
+      stem: "A reader raises their browser's base font size from 16px to 20px. Which body-text declaration honours that change?",
+      options: [
+        { text: "`font-size: 1rem`, now rendering at 20px", correct: true },
+        { text: "`font-size: 16px`, staying at 16px", correct: false },
+        { text: "`font-size: 4vw`, tracking the window width", correct: false },
+        { text: "`font-size: larger` on every paragraph", correct: false },
+      ],
+      correctExplanation:
+        "Correct. `rem` multiplies the root size the reader chose, so their 20px setting becomes the page's 20px reality. Pixels freeze the old value, and viewport units answer to the window rather than the person.",
+      incorrectExplanation:
+        "Not quite. The unit that listens to the reader's setting is `rem`: 1rem renders 20px the moment they ask for 20. Fixed pixels overrule the setting, `vw` follows the window instead of the person, and relative keywords compound unpredictably through nesting. Review: units that respect people.",
+      fixedDraw: false,
+      rotateOptions: true,
+      learningOutcomes: ["UIE-3-LO4"],
       misconceptionTags: [],
     },
   ],

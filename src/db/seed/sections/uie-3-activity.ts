@@ -10,7 +10,7 @@ export const uie3ActivitySeed: ActivitySeed = {
   id: "UIE-3-ACT-001",
   title: "The review queue",
   intro:
-    "Six review calls on real markup and CSS. Decide what renders, what wins, or which version ships, and check your model against the one that decides it.",
+    "Eight review calls on real markup and CSS. Decide what renders, what wins, or which version ships, and check your model against the one that decides it.",
   instructions:
     "Read the snippet, make the call, and check. The feedback walks the model that settles it: semantics, the box, the axes, the score, or the habits.",
   scenarios: [
@@ -212,6 +212,73 @@ export const uie3ActivitySeed: ActivitySeed = {
         },
       ],
       remediationAnchor: "UIE-3-LESSON-004",
+    },
+    {
+      id: "UIE-3-ACT-001-S07",
+      position: 7,
+      title: "The buried dropdown",
+      body: "A menu opens with `z-index: 500` but renders beneath the page header, which has `z-index: 10`. The menu's parent section has `transform: translateY(0)` left over from an animation.",
+      difficulty: "challenging",
+      clue: "what did that leftover transform create?",
+      prompt: "What does the review say?",
+      options: [
+        {
+          id: "context",
+          label: "Remove the stale `transform`: it created a stacking context that caps the menu",
+          correct: true,
+          feedback:
+            "Correct. The transform made the section a stacking context, so the menu's 500 competes only inside it, and the section as a whole stacks below the header's 10. Delete the no-op transform and the contest returns to the level where the numbers actually meet.",
+        },
+        {
+          id: "raise",
+          label: "Raise the menu to `z-index: 99999`",
+          correct: false,
+          feedback:
+            "No number wins from inside a losing context: the menu's value competes against siblings inside the section, and the section itself sits under the header. The leftover `transform` is the cause; the number is a symptom.",
+        },
+        {
+          id: "header-down",
+          label: "Lower the header to `z-index: 1` and hope",
+          correct: false,
+          feedback:
+            "This may appear to work until the next positioned element arrives, because the real mechanism, the transform-created stacking context, is still there. Reviews that name the mechanism beat reviews that tune the numbers.",
+        },
+      ],
+      remediationAnchor: "UIE-3-LESSON-004",
+    },
+    {
+      id: "UIE-3-ACT-001-S08",
+      position: 8,
+      title: "The pixel-perfect type scale",
+      body: "A design system PR defines every font size in `px` (12, 14, 16, 20) because the mock-ups are in pixels and the team wants fidelity.",
+      difficulty: "applied",
+      clue: "who gets overruled when the sizes are fixed?",
+      prompt: "What does the review say?",
+      options: [
+        {
+          id: "rem",
+          label:
+            "Convert the scale to `rem`: fidelity at default settings, respect at every other one",
+          correct: true,
+          feedback:
+            "Correct. At the default root size, 0.75rem, 0.875rem, 1rem and 1.25rem render exactly the mock-up's pixels. The difference appears only for readers who changed their base size, and it is exactly the difference they asked for.",
+        },
+        {
+          id: "px-fine",
+          label: "Approve it: the mock-ups are the source of truth",
+          correct: false,
+          feedback:
+            "Pixel fidelity to the mock-up costs fidelity to the reader: a raised base font size changes nothing, which silently overrules an accessibility setting. A rem scale reproduces the mock-up at defaults and follows the reader everywhere else.",
+        },
+        {
+          id: "vw-scale",
+          label: "Use `vw` so the type scales with the window",
+          correct: false,
+          feedback:
+            "Viewport-scaled type follows the window, not the person: narrow screens shrink text that settings asked to enlarge, and wide screens balloon it. The unit tied to the reader's own setting is `rem`, which is what the scale should speak.",
+        },
+      ],
+      remediationAnchor: "UIE-3-LESSON-007",
     },
   ],
 };

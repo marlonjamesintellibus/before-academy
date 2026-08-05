@@ -36,6 +36,13 @@ export default async function SectionPage({ params }: SectionPageProps) {
   const content = await getPublishedSection(pathway, section);
   if (!content) notFound();
   const sectionRoute = `/learn/${pathway}/${section}`;
+  // Honest estimate from the stages themselves; "20 minutes" was hardcoded
+  // for every section and understated the deeper modules.
+  const minutes =
+    3 +
+    content.blocks
+      .filter((block) => block.type === "concept")
+      .reduce((total, block) => total + (block.minutes ?? 4), 0);
 
   return (
     <main id="main" className="w-full flex-1 py-8">
@@ -48,7 +55,9 @@ export default async function SectionPage({ params }: SectionPageProps) {
           <li className="rounded-(--radius-chip) bg-primary-tint px-3 py-1 text-primary">
             {meta.levelChip}
           </li>
-          <li className="rounded-(--radius-chip) bg-surface-alt px-3 py-1">About 20 minutes</li>
+          <li className="rounded-(--radius-chip) bg-surface-alt px-3 py-1">
+            About {minutes} minutes
+          </li>
           <li className="rounded-(--radius-chip) bg-surface-alt px-3 py-1">
             Lesson → activity → practice → assessment
           </li>

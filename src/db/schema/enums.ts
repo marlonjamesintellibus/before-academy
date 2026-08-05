@@ -51,6 +51,8 @@ export const blueprintCategory = pgEnum("blueprint_category", [
   "css_layout",
   "css_specificity",
   "web_accessibility",
+  "css_positioning",
+  "responsive_design",
 ]);
 
 export const questionDifficulty = pgEnum("question_difficulty", [

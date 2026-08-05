@@ -4,10 +4,17 @@ import type { SectionSeed } from "@/features/content/types";
  * UIE-3: HTML & CSS Foundations, the first code-bearing module (readiness
  * deck: "HTML & CSS foundations: core concepts and best practices").
  *
+ * Second, deepened edition (education-lead direction: this guides people
+ * toward being working UI engineers, not toward reciting interview answers).
+ * Eight models instead of five: semantics, the box and flow, positioning and
+ * stacking, flexbox's distribution, grid's tracks, responsive units,
+ * the cascade with inheritance and custom properties, and the accessibility
+ * habits that ride along with each.
+ *
  * First consumer of the code content model: RichText `code` nodes render as
  * highlighted, copyable blocks, and backtick spans carry inline code through
- * stems, options and feedback. Every example is small enough to read on a
- * phone, per the lint's line-length rule.
+ * stems, options and feedback. Every example stays inside the lint's
+ * line-length rule so a phone never scrolls sideways to learn.
  */
 export const uie3Seed: SectionSeed = {
   pathway: {
@@ -20,7 +27,7 @@ export const uie3Seed: SectionSeed = {
     slug: "html-css-foundations",
     title: "HTML & CSS Foundations",
     description:
-      "The five foundations interviews probe: semantic structure, the box model, flexbox and grid, specificity, and the accessibility habits that ride along with all of them.",
+      "The eight models working UI engineers lean on daily: semantic structure, boxes and flow, positioning, flexbox, grid, responsive units, the cascade, and the accessibility habits that ride along with all of them.",
     position: 3,
   },
   blocks: [
@@ -43,7 +50,7 @@ export const uie3Seed: SectionSeed = {
       body: [
         {
           type: "p",
-          text: "HTML and CSS questions in evaluations are rarely about memorising properties. They probe whether you understand the model underneath: what markup means, how boxes get their size, how layout distributes space, and which rule wins when two disagree. Understand the four models and the individual properties become look-ups; memorise properties without the models and every question is a coin flip.",
+          text: "HTML and CSS look memorisable, which is the trap: the property list is endless and the models underneath are few. A working UI engineer runs on the models: what markup means, how boxes get sized and stacked, how layout distributes space, how a design adapts to the screen it lands on, and which rule wins when two disagree. Own the eight models in this section and unfamiliar properties become look-ups; skip them and every layout bug is an afternoon.",
         },
       ],
     },
@@ -51,11 +58,11 @@ export const uie3Seed: SectionSeed = {
       type: "objectives",
       id: "UIE-3-LESSON-001-OBJ",
       items: [
-        "Choose elements for what they mean, reaching for `<div>` last",
-        "Compute a rendered box size from width, padding and border",
-        "Pick flexbox for one axis and grid for two, and centre things without guessing",
-        "Predict which CSS rule wins using specificity, not trial and error",
-        "Carry the accessibility habits that make the rest of it usable",
+        "Choose elements for what they mean and keep the document navigable by structure",
+        "Compute rendered sizes and predict flow: box model, display types, margin collapse",
+        "Lay out with intent: positioned layers, flexbox's axes and shorthand, grid's tracks",
+        "Build mobile-first, in units that respect user settings",
+        "Predict the winning rule with specificity, inheritance and custom properties",
       ],
     },
 
@@ -88,6 +95,7 @@ export const uie3Seed: SectionSeed = {
             "Navigation is `<nav>`, standalone content is `<article>`, page regions are `<header>`, `<main>`, `<footer>`",
             "Headings are an outline, not a font size: `h1` to `h6` in order, no levels skipped",
             "Anything clickable that performs an action is a `<button>`; anything that navigates is an `<a>`",
+            "Forms group related fields with `<fieldset>` and name the group with `<legend>`",
             "If a `<div>` has a click handler, that is usually a `<button>` wearing a costume",
           ],
         },
@@ -133,14 +141,15 @@ export const uie3Seed: SectionSeed = {
     {
       type: "concept",
       id: "UIE-3-LESSON-003",
-      title: "The box model: everything is a rectangle",
-      objective: "Compute what size a box actually renders at, before the browser shows you.",
-      minutes: 4,
-      completion: "You can compute rendered size under both box-sizing models without guessing.",
+      title: "Boxes and flow: sizes you can compute",
+      objective: "Compute rendered size, predict display behaviour, and expect margin collapse.",
+      minutes: 5,
+      completion:
+        "You can compute box sizes under both sizing models, place display types, and explain a collapsed margin.",
       quick: [
         {
           type: "p",
-          text: "Every element is a rectangle of content wrapped in padding, then border, then margin. The classic interview probe: what width does this card render at?",
+          text: "Every element is a rectangle of content wrapped in padding, then border, then margin. The classic probe: what width does this card render at?",
         },
         {
           type: "code",
@@ -149,43 +158,57 @@ export const uie3Seed: SectionSeed = {
         },
         {
           type: "p",
-          text: "By default, `width` sets only the content, so the visible box is 200 plus 40 of padding plus 4 of border: 244 pixels, with margin outside pushing neighbours away. Setting `box-sizing: border-box` changes the question: `width` then means the visible box, and the content shrinks to fit inside it, which is why most codebases set it globally and most layout arithmetic gets saner.",
+          text: "By default, `width` sets only the content, so the visible box is 200 plus 40 of padding plus 4 of border: 244 pixels. Setting `box-sizing: border-box` changes the question: `width` then means the visible box and the content shrinks to fit, which is why most codebases set it globally.",
+        },
+        {
+          type: "p",
+          text: "Boxes then enter flow, and flow has two behaviours worth owning. Display: `block` elements stack and take the full line, `inline` elements sit in the text and ignore `width` and `height` entirely, and `inline-block` sits in the text while keeping its box properties. And vertical margins between stacked blocks collapse: two touching margins of 24 and 16 produce one gap of 24, the larger, not 40. The classic surprise is a child's top margin collapsing through its parent and moving the parent instead.",
         },
         {
           type: "ul",
           items: [
-            "Content, then padding, then border, then margin, inside out",
-            "Default sizing: `width` is content only; padding and border add on top",
-            "`border-box`: `width` is the visible box; the content absorbs the difference",
-            "Margin is spacing between boxes, never part of the box's own size",
+            "Content, padding, border, margin, inside out; margin is never part of the box's own size",
+            "Default sizing: `width` is content only. `border-box`: `width` is the visible box",
+            "`inline` ignores `width`, `height` and vertical margins; `inline-block` respects them",
+            "Adjacent vertical margins collapse to the larger; padding or a border stops the collapse",
           ],
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Margin collapse is why experienced stylesheets space stacks in one direction, `margin-top` or `margin-bottom` but not both, or hand the spacing to a parent's `gap`. The rule only applies to vertical margins in normal flow: flex and grid children never collapse, which is one more quiet argument for laying out with them.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
       id: "UIE-3-LESSON-003-CHECK",
       prompt:
-        "With the default `box-sizing`, how wide does this render: `width: 300px; padding: 10px; border: 5px solid;`?",
-      correctOptionId: "threethirty",
+        "Two stacked paragraphs have `margin-bottom: 24px` and `margin-top: 16px`. How far apart do they sit?",
+      correctOptionId: "twentyfour",
       options: [
         {
-          id: "threethirty",
-          text: "330px",
+          id: "twentyfour",
+          text: "24px: the margins collapse to the larger",
           feedback:
-            "Correct. 300 of content plus 10 of padding on each side plus 5 of border on each side: 300 + 20 + 10. Under `border-box` the same declaration would render at exactly 300.",
+            "Correct. Adjacent vertical margins in normal flow merge into one gap the size of the larger. The 16 disappears into the 24, which is why doubling up spacing directions produces gaps that refuse to add up.",
         },
         {
-          id: "threehundred",
-          text: "300px",
+          id: "forty",
+          text: "40px: the margins add",
           feedback:
-            "300 would be the `border-box` answer. Under the default model, `width` sets the content alone, and both sides of padding and border stack on top: 300 + 20 + 10 = 330.",
+            "Horizontal margins add; vertical margins between stacked blocks collapse to the larger: 24. Flex and grid children are the exception, where nothing collapses and `gap` says what it means.",
         },
         {
-          id: "threefifteen",
-          text: "315px",
+          id: "sixteen",
+          text: "16px: the later rule wins",
           feedback:
-            "This counts one side of the padding and border. Boxes have two of each: left and right. 300 + (10 × 2) + (5 × 2) = 330. Drawing the rectangle catches the single-side slip every time.",
+            "Margin collapse is not the cascade: no rule beats another. Both margins exist, and the gap between the blocks becomes the larger of the two, 24. Later-wins applies to conflicting declarations on one element, not to two elements' margins.",
         },
       ],
     },
@@ -193,32 +216,37 @@ export const uie3Seed: SectionSeed = {
     {
       type: "concept",
       id: "UIE-3-LESSON-004",
-      title: "Layout: flexbox for one axis, grid for two",
-      objective: "Pick the right layout tool and centre things deliberately.",
+      title: "Positioning: layers and the stacking game",
+      objective: "Take elements out of flow deliberately, and win the z-index argument on paper.",
       minutes: 5,
       completion:
-        "You can choose between flexbox and grid on sight and centre a child both ways without searching.",
+        "You can pick the right position value, anchor an absolute child, and diagnose a losing z-index.",
       quick: [
         {
           type: "p",
-          text: "Flexbox distributes space along one axis: a row of buttons, a column of cards. Grid places items in two dimensions at once: a dashboard, a photo wall. The interview probe is usually the centring question, and it has a two-line answer worth owning:",
+          text: "Normal flow handles most of a page. Positioning exists for the pieces that float above it: tooltips, dropdowns, sticky headers, modals. Each value answers one question, where does this element anchor:",
         },
         {
           type: "code",
           language: "css",
-          code: ".parent {\n  display: flex;\n  justify-content: center; /* main axis */\n  align-items: center; /* cross axis */\n}",
+          label: "the tooltip pattern",
+          code: ".card {\n  position: relative; /* the anchor */\n}\n.card .tooltip {\n  position: absolute;\n  top: 100%;\n  left: 0;\n}",
         },
         {
           type: "p",
-          text: "The distinction doing the work: `justify-content` distributes along the main axis and `align-items` along the cross axis, and which is horizontal depends on `flex-direction`. Change the direction and the two properties swap their visible effect, which is the follow-up question interviewers reach for next.",
+          text: "`absolute` anchors to the nearest positioned ancestor, and that is the fact doing all the work: without `position: relative` on the card, the tooltip anchors to the page and drifts. `relative` nudges an element while keeping its space, `fixed` anchors to the viewport, and `sticky` behaves normally until its scroll threshold, then pins, provided no ancestor clips overflow.",
+        },
+        {
+          type: "p",
+          text: "Stacking is the second half of the game. `z-index` only applies to positioned elements, and it competes inside its stacking context, not globally. An ancestor with `opacity` below 1, a `transform`, or its own z-index creates a new context, and no child value, however large, escapes it. The famous unbeatable `z-index: 9999` almost always sits inside a context that loses to a sibling context.",
         },
         {
           type: "ul",
           items: [
-            "One axis of distribution: flexbox. Two axes of placement: grid",
-            "`justify-content` works the main axis, `align-items` the cross axis",
-            "`flex-direction: column` rotates what those two visibly do",
-            "Grid rows and columns come from `grid-template-columns`, and `gap` replaces margin juggling in both tools",
+            "`absolute` anchors to the nearest positioned ancestor: give the parent `position: relative`",
+            "`sticky` needs a scroll threshold like `top: 0`, and an ancestor with `overflow` clipping defeats it",
+            "`z-index` competes within its stacking context; `opacity`, `transform` and friends create new ones",
+            "Fewer layers, lower numbers: a stylesheet full of large z-indexes is a stacking-context mystery",
           ],
         },
       ],
@@ -227,26 +255,26 @@ export const uie3Seed: SectionSeed = {
       type: "inline_check",
       id: "UIE-3-LESSON-004-CHECK",
       prompt:
-        "A flex container has `flex-direction: column` and `justify-content: center`. What does the centring apply to?",
-      correctOptionId: "vertical",
+        "A dropdown has `z-index: 9999` yet renders under a sibling card with `z-index: 2`. What is the likeliest cause?",
+      correctOptionId: "context",
       options: [
         {
-          id: "vertical",
-          text: "Vertical position: the main axis now runs top to bottom",
+          id: "context",
+          text: "An ancestor of the dropdown creates a stacking context that loses to the card's",
           feedback:
-            "Correct. `justify-content` always works the main axis, and `column` points that axis downward, so the children centre vertically. Horizontal centring now belongs to `align-items`.",
+            "Correct. The 9999 competes inside its own context, and the whole context stacks against the sibling as one unit at its ancestor's level. Find the ancestor with `transform`, `opacity` or its own z-index, and fix the contest there.",
         },
         {
-          id: "horizontal",
-          text: "Horizontal position, as always",
+          id: "bigger",
+          text: "The card's z-index is being raised elsewhere; go higher than 9999",
           feedback:
-            "That holds only while the main axis runs horizontally. `flex-direction: column` rotates the axes, and `justify-content` follows the main axis wherever it points: downward here, so vertical.",
+            "If numbers alone decided, 9999 would already have won. When a huge z-index loses to a tiny one, the contest is between ancestor contexts, and raising the child's number cannot move its ancestor. The fix lives at the ancestor level.",
         },
         {
-          id: "both",
-          text: "Both axes at once",
+          id: "order",
+          text: "Source order: the card comes later in the HTML",
           feedback:
-            "One property, one axis: `justify-content` distributes along the main axis only. Centring both ways takes its partner `align-items` on the cross axis, which is what the two-line pattern does.",
+            "Source order only breaks ties between elements at the same stacked level. A 2 beating a 9999 is the signature of separate stacking contexts, where the ancestors compete and the children's numbers never meet.",
         },
       ],
     },
@@ -254,11 +282,227 @@ export const uie3Seed: SectionSeed = {
     {
       type: "concept",
       id: "UIE-3-LESSON-005",
-      title: "Specificity: who wins and why",
-      objective: "Predict the winning rule from the selector, not from trial and error.",
+      title: "Flexbox: one axis, distributed",
+      objective: "Own the axes, and the grow-shrink-basis shorthand that does the real work.",
+      minutes: 5,
+      completion:
+        "You can centre on both axes, and predict what `flex: 1` does to a row's spare space.",
+      quick: [
+        {
+          type: "p",
+          text: "Flexbox distributes space along one axis: a row of buttons, a column of cards. The centring question has a two-line answer worth owning, and the axis distinction underneath it:",
+        },
+        {
+          type: "code",
+          language: "css",
+          code: ".parent {\n  display: flex;\n  justify-content: center; /* main axis */\n  align-items: center; /* cross axis */\n}",
+        },
+        {
+          type: "p",
+          text: "`justify-content` distributes along the main axis and `align-items` along the cross axis, and which is horizontal depends on `flex-direction`. Change the direction and the two properties swap their visible effect.",
+        },
+        {
+          type: "p",
+          text: "The working-engineer half is the `flex` shorthand: grow, shrink, basis. `flex: 1` means grow to claim an equal share of spare space, shrink when tight, start from zero basis. The classic app frame is one line each:",
+        },
+        {
+          type: "code",
+          language: "css",
+          label: "sidebar and content",
+          code: ".sidebar {\n  flex: 0 0 240px; /* never grow, never shrink, 240 wide */\n}\n.content {\n  flex: 1; /* claim the rest */\n}",
+        },
+        {
+          type: "ul",
+          items: [
+            "`justify-content` works the main axis, `align-items` the cross axis; `flex-direction` rotates both",
+            "`flex: 1` is grow 1, shrink 1, basis 0: equal shares of the container",
+            "`flex: 0 0 240px` is a fixed panel: exempt from growing and shrinking",
+            "`gap` spaces flex children without margin arithmetic, and their margins never collapse",
+          ],
+        },
+      ],
+    },
+    {
+      type: "inline_check",
+      id: "UIE-3-LESSON-005-CHECK",
+      prompt:
+        "A flex row holds two children: `flex: 2` and `flex: 1`. The container has 300px of spare space. Who gets what?",
+      correctOptionId: "twothirds",
+      options: [
+        {
+          id: "twothirds",
+          text: "200px and 100px: spare space divides by grow factors",
+          feedback:
+            "Correct. Grow factors are shares: 2 and 1 make three shares of the 300, so 200 and 100. With basis 0 the shares apply to the whole width, which is why `flex: 2` reads as 'twice the room of a `flex: 1` sibling'.",
+        },
+        {
+          id: "double-width",
+          text: "The first child renders at exactly twice the second's total width, whatever the content",
+          feedback:
+            "Close, and true here because `flex: 1` and `flex: 2` zero the basis. With a non-zero basis the factors divide only the spare space on top of each basis, so the totals stop being a clean ratio. The precise rule: grow factors share the spare.",
+        },
+        {
+          id: "first-takes-all",
+          text: "The higher factor claims all 300px",
+          feedback:
+            "Grow factors are proportional shares, not a contest with one winner: 2 against 1 splits the spare space 200 to 100. A child only takes everything when the others have `flex-grow: 0`.",
+        },
+      ],
+    },
+
+    {
+      type: "concept",
+      id: "UIE-3-LESSON-006",
+      title: "Grid: two axes, declared",
+      objective:
+        "Declare tracks with fr and minmax, and let auto-fit do the responsive arithmetic.",
       minutes: 4,
       completion:
-        "You can score two selectors and name the winner before the browser breaks the tie.",
+        "You can write a track list for a real layout and build a wrapping gallery with no media query.",
+      quick: [
+        {
+          type: "p",
+          text: "Grid places items on rows and columns at once: dashboards, calendars, photo walls. You declare the tracks and the browser does the distribution:",
+        },
+        {
+          type: "code",
+          language: "css",
+          code: ".gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n  gap: 16px;\n}",
+        },
+        {
+          type: "p",
+          text: "That one declaration is a responsive gallery: `minmax(200px, 1fr)` says columns never shrink below 200 and share the surplus equally, and `auto-fit` fits as many such columns as the width allows, re-flowing as the container resizes. No media query, no breakpoint arithmetic, no JavaScript.",
+        },
+        {
+          type: "ul",
+          items: [
+            "`fr` shares remaining space the way flex-grow shares spare: `1fr 2fr` is one third, two thirds",
+            "`repeat(3, 1fr)` declares three equal columns; `gap` spaces both axes",
+            "`minmax(min, max)` bounds a track; with `auto-fit` it becomes wrap-without-breakpoints",
+            "Choosing: one axis of distribution is flexbox; rows and columns that must agree is grid",
+          ],
+        },
+      ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "A subtle companion: grid and flex children default to `min-width: auto`, so long unbreakable content can refuse to shrink and blow out a track. The idiom `minmax(0, 1fr)` in track lists, or `min-width: 0` on a flex child, is the working engineer's fix for the column that will not compress.",
+          },
+        ],
+      },
+    },
+    {
+      type: "inline_check",
+      id: "UIE-3-LESSON-006-CHECK",
+      prompt:
+        "A gallery uses `repeat(auto-fit, minmax(200px, 1fr))`. The container narrows from 900px to 500px. What happens?",
+      correctOptionId: "fewer",
+      options: [
+        {
+          id: "fewer",
+          text: "Fewer columns fit, so items re-flow into more rows, each column at least 200px",
+          feedback:
+            "Correct. Four 200px columns no longer fit at 500, so the grid re-declares itself with two, and the 1fr maximum shares the spare width. The responsiveness is in the track definition, with no breakpoint anywhere.",
+        },
+        {
+          id: "shrink",
+          text: "The columns shrink below 200px to keep their count",
+          feedback:
+            "The `minmax` floor forbids exactly that: 200px is the minimum a column will accept. What gives way is the count, `auto-fit` refitting fewer columns and wrapping the rest into new rows.",
+        },
+        {
+          id: "overflow",
+          text: "The grid overflows horizontally until a media query intervenes",
+          feedback:
+            "There is no media query to wait for: the track list itself is the responsive rule. `auto-fit` recounts the columns that satisfy the 200px floor and the layout re-flows, which is the point of declaring tracks instead of breakpoints.",
+        },
+      ],
+    },
+
+    {
+      type: "concept",
+      id: "UIE-3-LESSON-007",
+      title: "Responsive: smallest screen first, units that respect people",
+      objective: "Layer styles mobile-first and pick units that follow the user's settings.",
+      minutes: 5,
+      completion:
+        "You can structure a mobile-first stylesheet and justify rem over px where it matters.",
+      quick: [
+        {
+          type: "p",
+          text: "Responsive design is a stylesheet architecture, not a pile of breakpoints. Mobile-first means the base styles serve the smallest screen and `min-width` queries layer enhancements upward, so the default path is the constrained one and nothing needs undoing:",
+        },
+        {
+          type: "code",
+          language: "css",
+          label: "mobile-first layering",
+          code: ".layout {\n  display: block; /* small screens: one column */\n}\n@media (min-width: 48rem) {\n  .layout {\n    display: grid;\n    grid-template-columns: 240px 1fr;\n  }\n}",
+        },
+        {
+          type: "p",
+          text: "Units decide who your design respects. `px` is fixed: it ignores the reader who raised their base font size. `rem` scales from the root font size, so text and the spacing around it follow the user's setting. `em` scales from the current element, compounding through nesting, useful and occasionally surprising. Percentages follow the parent, and `vw`/`vh` follow the viewport.",
+        },
+        {
+          type: "ul",
+          items: [
+            "Base styles are the mobile styles; `min-width` queries add, never undo",
+            "Type and spacing in `rem`: the design follows the user's font-size setting",
+            "`px` for hairlines and borders, where scaling has nothing to protect",
+            "Images and media: `max-width: 100%` so nothing escapes its container",
+          ],
+        },
+      ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Writing breakpoints in `rem`, like the `48rem` above, keeps even the layout switch respectful: a user with a larger base font size reaches the roomier layout sooner, which is usually what their setting was asking for.",
+          },
+        ],
+      },
+    },
+    {
+      type: "inline_check",
+      id: "UIE-3-LESSON-007-CHECK",
+      prompt:
+        "A reader sets their browser's base font size to 20px. Which declaration respects that choice?",
+      correctOptionId: "rem",
+      options: [
+        {
+          id: "rem",
+          text: "`font-size: 1.25rem`: it scales from the root, rendering 25px for this reader",
+          feedback:
+            "Correct. `rem` multiplies the root size the user chose: 1.25 × 20 = 25px here, 20px for defaults. The design breathes with the setting instead of overruling it, which is the accessibility case for rem type.",
+        },
+        {
+          id: "px",
+          text: "`font-size: 20px`: it matches their chosen number",
+          feedback:
+            "It matches today's number and ignores the choice itself: set the base to 24 and the pixel value stays 20, overruling the reader. Fixed pixels freeze one person's comfort into everyone's page.",
+        },
+        {
+          id: "vw",
+          text: "`font-size: 2vw`: it adapts to their screen",
+          feedback:
+            "Viewport units track the window, not the person: a narrow window shrinks the text regardless of what the reader asked for, and font settings change nothing. The unit that listens to the setting is `rem`.",
+        },
+      ],
+    },
+
+    {
+      type: "concept",
+      id: "UIE-3-LESSON-008",
+      title: "The cascade: specificity, inheritance, custom properties",
+      objective:
+        "Predict the winning rule on paper, and know which properties travel down the tree.",
+      minutes: 5,
+      completion:
+        "You can score selectors, say what inherits, and thread a design token through custom properties.",
       quick: [
         {
           type: "p",
@@ -272,14 +516,23 @@ export const uie3Seed: SectionSeed = {
         },
         {
           type: "p",
-          text: "Navy wins: one id outranks any number of classes. That is also the argument against reaching for ids and `!important` in everyday styling: every escalation forces the next override to escalate further, and the file becomes an arms race. Flat, class-based selectors keep the cascade predictable.",
+          text: "Navy wins: one id outranks any number of classes, which is also the argument against ids and `!important` in everyday styling. Every escalation forces the next override to escalate further.",
+        },
+        {
+          type: "p",
+          text: "Two companions complete the model. Inheritance: text properties like `color` and `font-family` flow down the tree until something overrides them, while box properties like `padding` and `border` never do, which is why setting a font once works and setting a border once does not. And custom properties ride inheritance by design: declare `--accent` high in the tree, read it anywhere below with `var()`, override it per subtree for theming:",
+        },
+        {
+          type: "code",
+          language: "css",
+          code: ":root {\n  --accent: #0057ea;\n}\n.button {\n  background: var(--accent);\n}\n.danger-zone {\n  --accent: #b3261e; /* every button inside goes red */\n}",
         },
         {
           type: "ul",
           items: [
-            "Score (ids, classes, elements); compare left to right",
-            "One id outranks any number of classes; one class outranks any number of elements",
-            "Equal scores: the later rule wins, which is why source order matters",
+            "Score (ids, classes, elements); compare left to right; ties fall to source order",
+            "Text properties inherit; box properties do not",
+            "Custom properties inherit like text and cascade like any declaration: theming without repetition",
             "`!important` beats them all and starts an arms race: treat it as a debt marker",
           ],
         },
@@ -287,15 +540,15 @@ export const uie3Seed: SectionSeed = {
     },
     {
       type: "misconception",
-      id: "UIE-3-LESSON-005-MISCONCEPTION",
+      id: "UIE-3-LESSON-008-MISCONCEPTION",
       misconceptionId: "UIE-M-004",
       claim: "CSS is unpredictable: sometimes rules just do not apply and you add `!important`.",
       correction:
-        "Every 'unpredictable' rule lost a specificity contest or a source-order tie, and both are computable on paper. Score the selectors and the mystery dissolves; reach for `!important` and the next person inherits a rule that can only be beaten by another `!important`.",
+        "Every 'unpredictable' rule lost a specificity contest, a source-order tie, or was never going to apply because the property does not inherit. All three are computable on paper. Score the selectors and the mystery dissolves; reach for `!important` and the next person inherits a rule that can only be beaten by another `!important`.",
     },
     {
       type: "inline_check",
-      id: "UIE-3-LESSON-005-CHECK",
+      id: "UIE-3-LESSON-008-CHECK",
       prompt: "Both rules target the same link: `nav a.active` and `.menu .item a`. Which wins?",
       correctOptionId: "menu",
       options: [
@@ -322,16 +575,16 @@ export const uie3Seed: SectionSeed = {
 
     {
       type: "concept",
-      id: "UIE-3-LESSON-006",
+      id: "UIE-3-LESSON-009",
       title: "Accessibility rides along, or it never arrives",
-      objective: "Carry the four habits that make the rest of the foundations usable.",
+      objective: "Carry the habits that make the other seven models usable by everyone.",
       minutes: 4,
       completion:
-        "You can name the four riding habits and attach each to the markup or CSS decision it belongs to.",
+        "You can name the riding habits and attach each to the markup or CSS decision it belongs to.",
       quick: [
         {
           type: "p",
-          text: "Accessibility is not a layer applied at the end; it is a property of the choices this lesson already made. Semantic elements gave the page its landmarks and outline. The remaining habits are small and they ride along with everyday markup:",
+          text: "Accessibility is not a layer applied at the end; it is a property of the choices this lesson already made. Semantic elements gave the page its landmarks and outline, rem gave the reader's font setting its authority. The remaining habits are small and they ride along with everyday markup:",
         },
         {
           type: "code",
@@ -345,23 +598,24 @@ export const uie3Seed: SectionSeed = {
             'Every meaningful image gets `alt` text that says what the image is for; decorative ones get `alt=""`',
             "Focus must stay visible: style `:focus-visible`, never `outline: none` and walk away",
             "Text needs contrast against its background, and colour alone never carries a meaning",
+            "Motion respects `prefers-reduced-motion`: the animation is delivery, never the content",
           ],
         },
         {
           type: "p",
-          text: "Evaluations probe these because they are cheap to do at build time and expensive to retrofit, and because a candidate who ships them by habit needs no policing later.",
+          text: "Evaluations probe these because they are cheap at build time and expensive to retrofit, and because a candidate who ships them by habit needs no policing later. This platform practises the same habits it teaches: the lessons you are reading honour reduced motion and keep focus visible.",
         },
       ],
     },
 
     {
       type: "diagram",
-      id: "UIE-3-LESSON-006-DIAGRAM",
+      id: "UIE-3-LESSON-009-DIAGRAM",
       title: "From your files to pixels",
       claim: "What the browser does with HTML and CSS, and why some changes cost more than others.",
       altText: "The browser rendering pipeline as five sequential steps",
       longText:
-        "The pipeline runs five steps. Parse HTML into the DOM, the tree of elements. Parse CSS into the CSSOM, the tree of rules. Combine them into the render tree of visible, styled boxes. Layout computes every box's size and position, which is the step the box model and layout properties feed. Paint fills in the pixels: colours, borders, shadows. A width change re-runs layout and everything after it; a colour change re-runs only paint, which is why the two edits cost differently.",
+        "The pipeline runs five steps. Parse HTML into the DOM, the tree of elements. Parse CSS into the CSSOM, the tree of rules. Combine them into the render tree of visible, styled boxes. Layout computes every box's size and position, which is the step the box model, flow and layout properties feed. Paint fills in the pixels: colours, borders, shadows. A width change re-runs layout and everything after it; a colour change re-runs only paint, which is why the two edits cost differently.",
       layers: [
         {
           id: "dom",
@@ -379,13 +633,13 @@ export const uie3Seed: SectionSeed = {
           id: "render-tree",
           label: "Build the render tree",
           description:
-            "DOM and CSSOM combine: visible elements paired with the rules that won their specificity contests.",
+            "DOM and CSSOM combine: visible elements paired with the rules that won their specificity contests, inheritance filled in.",
         },
         {
           id: "layout",
           label: "Layout",
           description:
-            "Every box gets its size and position: the box model arithmetic and the flexbox and grid distribution happen here.",
+            "Every box gets its size and position: box-model arithmetic, flow, flex distribution and grid tracks all resolve here.",
         },
         {
           id: "paint",
@@ -408,28 +662,28 @@ export const uie3Seed: SectionSeed = {
 
     {
       type: "takeaway",
-      id: "UIE-3-LESSON-007-TAKEAWAY",
+      id: "UIE-3-LESSON-010-TAKEAWAY",
       body: [
         {
           type: "p",
-          text: "Four models carry the round: elements mean things, boxes are rectangles with computable sizes, flexbox distributes one axis while grid places two, and specificity is a score you can run on paper. Accessibility rides along with each one. The drills put real markup in front of you until the models answer before the guessing does.",
+          text: "Eight models carry the work: elements mean things, boxes have computable sizes and collapsing margins, positioning anchors layers inside stacking contexts, flexbox distributes one axis while grid declares two, mobile-first units respect the reader, and the cascade is a score plus inheritance you can run on paper. Accessibility rides along with each one. The drills put real markup in front of you until the models answer before the guessing does.",
         },
       ],
     },
     {
       type: "activity_cta",
-      id: "UIE-3-LESSON-007-ACT",
-      body: "Six review calls on real markup and CSS: pick what renders, what wins, or what the accessible version looks like, and the feedback walks the model that decides it.",
+      id: "UIE-3-LESSON-010-ACT",
+      body: "Eight review calls on real markup and CSS: pick what renders, what wins, or what the accessible version looks like, and the feedback walks the model that decides it.",
     },
     {
       type: "check_cta",
-      id: "UIE-3-LESSON-007-CHECK",
-      body: "Four short problems, one per model. Nothing is graded, and every answer shows the computation, not just the letter.",
+      id: "UIE-3-LESSON-010-CHECK",
+      body: "Four short problems across the models. Nothing is graded, and every answer shows the computation, not just the letter.",
     },
     {
       type: "next_step",
-      id: "UIE-3-LESSON-007-NEXT",
-      body: "JavaScript depth and React hooks practice are the remaining modules of this pathway. The models here are their floor: the DOM that JavaScript manipulates is the tree your markup just built.",
+      id: "UIE-3-LESSON-010-NEXT",
+      body: "JavaScript depth and React hooks practice are the remaining modules of this pathway. The models here are their floor: the DOM that JavaScript manipulates is the tree your markup just built, and the layers React renders into are the ones you just learned to stack.",
     },
   ],
   glossary: [],

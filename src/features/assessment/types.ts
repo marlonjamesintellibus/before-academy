@@ -26,6 +26,8 @@ export type AssessmentCategory =
   | "css_layout"
   | "css_specificity"
   | "web_accessibility"
+  | "css_positioning"
+  | "responsive_design"
   | "misconceptions";
 
 export type AssessmentFormat = "multiple_choice" | "multiple_select" | "scenario_decision";
@@ -124,4 +126,6 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   css_layout: "Flexbox and grid",
   css_specificity: "Specificity and the cascade",
   web_accessibility: "Accessibility foundations",
+  css_positioning: "Flow, positioning and stacking",
+  responsive_design: "Responsive design and units",
 };
