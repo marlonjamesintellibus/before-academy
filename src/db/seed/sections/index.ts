@@ -25,6 +25,9 @@ import { uie3AssessmentSeed } from "./uie-3-assessment";
 import { uie4Seed } from "./uie-4";
 import { uie4ActivitySeed, uie4CheckSeed } from "./uie-4-activity";
 import { uie4AssessmentSeed } from "./uie-4-assessment";
+import { uie5Seed } from "./uie-5";
+import { uie5ActivitySeed, uie5CheckSeed } from "./uie-5-activity";
+import { uie5AssessmentSeed } from "./uie-5-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -141,6 +144,15 @@ export const sectionBundles: SectionBundle[] = [
     activity: uie4ActivitySeed,
     check: uie4CheckSeed,
     assessment: uie4AssessmentSeed,
+  },
+  {
+    // UIE-5: JavaScript in Depth, the deck's tricky tier, standing on the
+    // fundamentals course.
+    seed: uie5Seed,
+    status: "published",
+    activity: uie5ActivitySeed,
+    check: uie5CheckSeed,
+    assessment: uie5AssessmentSeed,
   },
 ];
 
