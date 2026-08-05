@@ -1,3 +1,4 @@
+import type { AssessmentCategory } from "@/features/assessment";
 /**
  * Activity + knowledge check content model (docs/product/screens/activity-and-check.md,
  * phase1-content/02-diagrams-and-activities/classification-activity.md,
@@ -130,14 +131,9 @@ export interface CheckQuestionSeed {
   incorrectFeedback: string;
   /** Remediation chip: label + lesson block anchor. */
   chip: { label: string; anchor: string };
-  category:
-    | "traditional_software"
-    | "automation"
-    | "ai_characteristics"
-    | "combined_systems"
-    | "classification"
-    | "ambiguity"
-    | "misconceptions";
+  // The check taxonomy is the assessment taxonomy; the union previously lived
+  // here as a copy and silently fell out of date when categories grew.
+  category: AssessmentCategory;
   difficulty: "foundational" | "applied" | "challenging";
   misconceptionTags: string[];
   learningOutcomes: string[];

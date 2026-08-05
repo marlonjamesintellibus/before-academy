@@ -29,6 +29,13 @@
       "when": 1785796833176,
       "tag": "0003_fantastic_jimmy_woo",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1785892797576,
+      "tag": "0004_square_joseph",
+      "breakpoints": true
     }
   ]
 }

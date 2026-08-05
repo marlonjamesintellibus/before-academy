@@ -13,6 +13,9 @@ import { aia5ActivitySeed, aia6ActivitySeed, aia7ActivitySeed } from "./activiti
 import { aia1AssessmentSeed } from "./aia-1-assessment";
 import { aia2AssessmentSeed, aia4AssessmentSeed } from "./banks-2-4";
 import { aia5AssessmentSeed, aia6AssessmentSeed, aia7AssessmentSeed } from "./banks-5-6-7";
+import { uie1Seed } from "./uie-1";
+import { uie1ActivitySeed, uie1CheckSeed } from "./uie-1-activity";
+import { uie1AssessmentSeed } from "./uie-1-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -92,6 +95,16 @@ export const sectionBundles: SectionBundle[] = [
     check: aia7CheckSeed,
     assessment: aia7AssessmentSeed,
   },
+  {
+    // UI Engineer Readiness pilot (readiness evaluation deck): the one module
+    // of six that ships without code rendering, run first to buy engagement
+    // signal before the platform invests in code blocks and timers.
+    seed: uie1Seed,
+    status: "published",
+    activity: uie1ActivitySeed,
+    check: uie1CheckSeed,
+    assessment: uie1AssessmentSeed,
+  },
 ];
 
 /** Seeds the publish pipeline writes. */
@@ -110,4 +123,9 @@ export function activityForSection(sectionSlug: string): ActivitySeed | undefine
 /** Check meta (label/intro/completion) for a section's route. */
 export function checkForSection(sectionSlug: string): CheckSeed | undefined {
   return sectionBundles.find((bundle) => bundle.seed.section.slug === sectionSlug)?.check;
+}
+
+/** Bank meta (intro) for a section's assessment route. */
+export function assessmentForSection(sectionSlug: string): AssessmentSeed | undefined {
+  return sectionBundles.find((bundle) => bundle.seed.section.slug === sectionSlug)?.assessment;
 }

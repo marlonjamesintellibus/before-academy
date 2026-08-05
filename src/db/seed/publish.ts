@@ -46,10 +46,16 @@ async function publish() {
   }
 
   const db = getDb();
+  // Bumped when the pipeline's WRITE SEMANTICS change: identical seeds can
+  // produce different rows after a pipeline fix (e.g. sections were once all
+  // filed under the classic pathway), and a content-only hash would no-op the
+  // rerun that repairs them. Same class of gap as canonical records had.
+  const PIPELINE_VERSION = 2;
   // Canonical records are content: a changed definition must produce a new
   // version and snapshot, so they belong inside the idempotency hash. Leaving
   // them out would make an edit to a definition a silent no-op.
   const snapshot = JSON.stringify({
+    PIPELINE_VERSION,
     sectionSeed,
     activitySeed,
     checkSeed,
@@ -337,8 +343,24 @@ async function publish() {
     // activity, check and assessment arrive with each section's own phase
     // (docs/content/content-map.md build order).
     for (const seed of additionalSectionSeeds) {
+      // Each bundle names its own pathway. The loop previously reused the
+      // classic seed's pathway id for every section, which silently filed the
+      // first non-AI-Awareness section under AI Awareness.
+      const [seedPathway] = await tx
+        .insert(pathways)
+        .values({ ...seed.pathway, status: "published" })
+        .onConflictDoUpdate({
+          target: pathways.slug,
+          set: {
+            title: seed.pathway.title,
+            description: seed.pathway.description,
+          },
+        })
+        .returning();
+      if (!seedPathway) throw new Error(`pathway upsert returned nothing: ${seed.pathway.slug}`);
+
       const existingExtra = await tx.query.sections.findFirst({
-        where: and(eq(sections.pathwayId, pathway.id), eq(sections.slug, seed.section.slug)),
+        where: and(eq(sections.pathwayId, seedPathway.id), eq(sections.slug, seed.section.slug)),
       });
       const extraVersion = existingExtra ? existingExtra.version + 1 : 1;
 
@@ -352,7 +374,7 @@ async function publish() {
             .insert(sections)
             .values({
               ...seed.section,
-              pathwayId: pathway.id,
+              pathwayId: seedPathway.id,
               status: "published",
               version: extraVersion,
             })

@@ -32,6 +32,13 @@ export const blueprintCategory = pgEnum("blueprint_category", [
   "classification",
   "ambiguity",
   "misconceptions",
+  // Reasoning taxonomy (UI Engineer Readiness pilot). Enum values are
+  // append-only: expand-then-contract (ADR-023) allows adding, never removing.
+  "constraint_reading",
+  "decomposition",
+  "edge_cases",
+  "estimation",
+  "reasoning_communication",
 ]);
 
 export const questionDifficulty = pgEnum("question_difficulty", [

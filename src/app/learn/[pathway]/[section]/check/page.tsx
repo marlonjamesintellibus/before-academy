@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { CheckPlayer } from "@/features/activity";
 import { getPublishedCheckQuestions } from "@/features/content/server";
-import { PATHWAY_SLUG } from "@/lib/routes";
+import { isKnownPathway } from "@/lib/routes";
 import { checkSeed } from "@/db/seed/activity-content";
 import { checkForSection } from "@/db/seed/sections";
 import { SECTION_SLUG } from "@/lib/routes";
@@ -18,7 +18,7 @@ interface CheckPageProps {
 /** S05 Knowledge check (docs/product/screens/activity-and-check.md): practice, never graded. */
 export default async function CheckPage({ params }: CheckPageProps) {
   const { pathway, section } = await params;
-  if (pathway !== PATHWAY_SLUG) notFound();
+  if (!isKnownPathway(pathway)) notFound();
 
   const questions = await getPublishedCheckQuestions(section);
   if (questions.length === 0) notFound();

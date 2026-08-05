@@ -7,8 +7,10 @@ import {
   ResetProgress,
   PathwayProgress,
   PathwaySections,
+  PilotSectionCard,
 } from "@/features/progress";
 import { strings } from "@/lib/strings";
+import { PATHWAY_SLUG } from "@/lib/routes";
 import { sectionBundles } from "@/db/seed/sections";
 import type { SectionUnitsData } from "@/features/progress";
 
@@ -23,21 +25,22 @@ export const metadata: Metadata = { title: "AI Awareness" };
 export default function PathwayPage() {
   // Unit metadata comes from the seeds server-side; completion state is read
   // from the device client-side. The pathway page is the only place both meet.
+  const unitsFor = (bundle: (typeof sectionBundles)[number]): SectionUnitsData => ({
+    stages: [
+      { label: "Start here", minutes: 3 },
+      ...bundle.seed.blocks
+        .filter((block) => block.type === "concept")
+        .map((block) => ({ label: block.title, minutes: block.minutes ?? 4 })),
+    ],
+    activity: bundle.activity ? bundle.activity.title : null,
+    check: bundle.check ? bundle.check.label : null,
+    assessment: Boolean(bundle.assessment),
+  });
+  const pilotBundles = sectionBundles.filter(
+    (bundle) => bundle.seed.pathway.slug !== PATHWAY_SLUG && bundle.status === "published",
+  );
   const units: Record<string, SectionUnitsData> = Object.fromEntries(
-    sectionBundles.map((bundle) => [
-      bundle.seed.section.slug,
-      {
-        stages: [
-          { label: "Start here", minutes: 3 },
-          ...bundle.seed.blocks
-            .filter((block) => block.type === "concept")
-            .map((block) => ({ label: block.title, minutes: block.minutes ?? 4 })),
-        ],
-        activity: bundle.activity ? bundle.activity.title : null,
-        check: bundle.check ? bundle.check.label : null,
-        assessment: Boolean(bundle.assessment),
-      },
-    ]),
+    sectionBundles.map((bundle) => [bundle.seed.section.slug, unitsFor(bundle)]),
   );
 
   return (
@@ -88,6 +91,14 @@ export default function PathwayPage() {
               </TrackedLink>
             </section>
           </TrackOnVisible>
+          {pilotBundles.map((bundle) => (
+            <PilotSectionCard
+              key={bundle.seed.section.slug}
+              pathway={bundle.seed.pathway}
+              section={bundle.seed.section}
+              units={unitsFor(bundle)}
+            />
+          ))}
           <ReviewSession />
         </div>
 

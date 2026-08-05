@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ActivityPlayer } from "@/features/activity";
 import { getPublishedScenarios } from "@/features/content/server";
-import { PATHWAY_SLUG, SECTION_SLUG } from "@/lib/routes";
+import { isKnownPathway, SECTION_SLUG } from "@/lib/routes";
 import { activitySeed } from "@/db/seed/activity-content";
 import { activityForSection } from "@/db/seed/sections";
 
@@ -21,7 +21,7 @@ interface ActivityPageProps {
 /** S04 Sort the System (docs/product/screens/activity-and-check.md). */
 export default async function ActivityPage({ params }: ActivityPageProps) {
   const { pathway, section } = await params;
-  if (pathway !== PATHWAY_SLUG) notFound();
+  if (!isKnownPathway(pathway)) notFound();
 
   // Meta comes from the section's seed; a section with no activity 404s
   // rather than serving another section's framing around no scenarios.

@@ -100,3 +100,31 @@ test("assessment routes stream a loading shell before their content", async ({ r
   const lesson = await request.get("/learn/ai-awareness/ai-automation-software");
   expect(await lesson.text()).not.toContain("Loading the assessment");
 });
+
+test("the pilot pathway card leads into a working logic lesson and assessment", async ({
+  page,
+}) => {
+  await page.goto("/learn");
+
+  // The pilot is present, honestly labelled, and expandable like any section.
+  const pilot = page.getByRole("region", { name: "UI Engineer Readiness" });
+  await expect(pilot.getByText("Pilot pathway")).toBeVisible();
+  await pilot.getByText("Show the steps").click();
+  await expect(pilot.getByRole("link", { name: /Sweep the edges/ })).toBeVisible();
+  await expect(pilot.getByRole("link", { name: /Sound or shaky\?/ })).toBeVisible();
+
+  // The lesson serves on the new pathway with its own chrome.
+  await pilot
+    .getByRole("link", { name: /Logic and Reasoning/ })
+    .first()
+    .click();
+  await expect(page.getByRole("heading", { level: 1, name: "Logic and Reasoning" })).toBeVisible();
+  await expect(page.getByText("Pilot · UI Engineer Readiness")).toBeVisible();
+
+  // The graded assessment starts and reaches question one (the draw serves
+  // the reasoning bank through the generic coverage-first path).
+  await page.goto("/learn/ui-engineer-readiness/logic-and-reasoning/assessment");
+  await expect(page.getByText(/one reasoning decision each/)).toBeVisible();
+  await page.getByRole("button", { name: "Start assessment" }).click();
+  await expect(page.getByText("Question 1 of 6")).toBeVisible();
+});

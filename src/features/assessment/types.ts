@@ -11,6 +11,11 @@ export type AssessmentCategory =
   | "combined_systems"
   | "classification"
   | "ambiguity"
+  | "constraint_reading"
+  | "decomposition"
+  | "edge_cases"
+  | "estimation"
+  | "reasoning_communication"
   | "misconceptions";
 
 export type AssessmentFormat = "multiple_choice" | "multiple_select" | "scenario_decision";
@@ -94,4 +99,9 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   classification: "Classification",
   ambiguity: "Ambiguity",
   misconceptions: "Misconceptions",
+  constraint_reading: "Reading the problem",
+  decomposition: "Breaking problems down",
+  edge_cases: "Edge cases",
+  estimation: "Estimation and checking",
+  reasoning_communication: "Reasoning out loud",
 };
