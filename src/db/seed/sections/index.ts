@@ -31,6 +31,9 @@ import { uie5AssessmentSeed } from "./uie-5-assessment";
 import { uie6Seed } from "./uie-6";
 import { uie6ActivitySeed, uie6CheckSeed } from "./uie-6-activity";
 import { uie6AssessmentSeed } from "./uie-6-assessment";
+import { uie7Seed } from "./uie-7";
+import { uie7ActivitySeed, uie7CheckSeed } from "./uie-7-activity";
+import { uie7AssessmentSeed } from "./uie-7-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -165,6 +168,15 @@ export const sectionBundles: SectionBundle[] = [
     activity: uie6ActivitySeed,
     check: uie6CheckSeed,
     assessment: uie6AssessmentSeed,
+  },
+  {
+    // UIE-7: React Hooks in Depth, the deck's named module and the
+    // pathway's close.
+    seed: uie7Seed,
+    status: "published",
+    activity: uie7ActivitySeed,
+    check: uie7CheckSeed,
+    assessment: uie7AssessmentSeed,
   },
 ];
 
