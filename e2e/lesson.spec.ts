@@ -244,3 +244,17 @@ test("code blocks render highlighted with copy, and inline code carries stems", 
   await page.getByRole("button", { name: "Start assessment" }).click();
   await expect(page.getByText("Question 1 of 6")).toBeVisible();
 });
+
+test("go-deeper panels exist in the pilot modules and expand", async ({ page }) => {
+  // The depth layers were explore-only (and sparse) in the pilot modules;
+  // this pins both layers present on the positioning stage.
+  await page.goto("/learn/ui-engineer-readiness/html-css-foundations");
+  await goToStage(page, "Positioning");
+  const explore = page.getByRole("button", { name: /Explore further/ });
+  const deeper = page.getByRole("button", { name: /Go deeper/ });
+  await expect(explore).toBeVisible();
+  await expect(deeper).toBeVisible();
+  await deeper.click();
+  await expect(deeper).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByText(/top layer/).first()).toBeVisible();
+});

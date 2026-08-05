@@ -96,6 +96,16 @@ export const uie2Seed: SectionSeed = {
           },
         ],
       },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "Interleaved sequences weave two rules into one list: 1, 10, 2, 20, 3, 30 is a counter and its tenfold riding in alternation. When a ladder produces nonsense, split the sequence by odd and even positions and ladder each half separately. Two clean rules hiding in one messy list is a favourite construction at the challenging tier.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
@@ -157,6 +167,26 @@ export const uie2Seed: SectionSeed = {
             "The analogy stops at discovery: viewports are enumerable and drawings are not, so the discipline is to actively hunt for the breaking drawing rather than admire the first one that works.",
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Some items offer conclusions where none follows, and 'no valid conclusion' deserves the same confidence as any other answer. The discipline is identical to the drawing hunt: if every offered conclusion breaks in some legal drawing, saying so is the correct answer, not a concession.",
+          },
+        ],
+      },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "One reversal is always valid: the contrapositive. 'If rain then cancelled' flips soundly to 'if not cancelled then no rain'. The four forms are worth owning as a table: affirming the condition is valid, denying the outcome is valid, affirming the outcome and denying the condition are the two planted traps. The cancelled-match family of items is this table in costume.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
@@ -213,6 +243,16 @@ export const uie2Seed: SectionSeed = {
           ],
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Two variants complete the family: shifts that run backward, where the sample pair shows minus one and applying plus one by reflex is the planted trap, and position-number codes, where A is 1 through Z as 26 and a word becomes a sum or a product. When a code resists shifting, try numbering.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
@@ -310,6 +350,26 @@ export const uie2Seed: SectionSeed = {
           text: "Approach items: two trains closing at 40 and 80 combine to 120, and the slower one covers 40 over 120, one third, of whatever distance separated them. Notice what that sentence needs: the separation. Asked without it, the only correct answer is that the distance travelled cannot be determined, only the share. Evaluations plant that missing-given trap deliberately.",
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Percentages compound rather than add: two successive 10 percent discounts leave 81 percent of the price, a 19 percent cut, not 20. The same per-unit habit disarms it: multiply the remaining fractions, 0.9 times 0.9, instead of adding the discounts.",
+          },
+        ],
+      },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "Combined work rates pool by addition: a person who paints a room in 4 hours and one who takes 6 together contribute a quarter plus a sixth per hour, five twelfths, so the room takes twelve fifths of an hour, 2.4. The trap is averaging the times to 5 hours; rates add, times do not. The same structure prices parallel uploads and teams sharing a queue.",
+          },
+        ],
+      },
     },
     {
       type: "diagram",

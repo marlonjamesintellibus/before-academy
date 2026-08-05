@@ -216,6 +216,26 @@ export const uie1Seed: SectionSeed = {
           text: "The sweep is five questions asked in order: what happens with nothing, with exactly one, exactly at the limit, far past the limit, and with input that should never exist. It takes under a minute to say and catches the majority of breakage a feature will ever produce.",
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "The sweep transfers far beyond lists. Dates are edge-rich territory: no history at all, a single event, the last day of a month, the day the clocks change, and a malformed timestamp are the same five questions wearing calendars. Whenever a feature touches time, money or names, run the sweep against that domain's own edges.",
+          },
+        ],
+      },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "Edges combine, and the combinations breed the strangest defects: an empty list on the boundary day, an invalid id arriving many times. You cannot check every pair under a clock, so rank by blast radius: which combination, if broken, corrupts data rather than pixels? Naming one such pair out loud in an evaluation shows judgment that a memorised checklist cannot.",
+          },
+        ],
+      },
     },
     {
       type: "diagram",
@@ -322,6 +342,26 @@ export const uie1Seed: SectionSeed = {
           text: "In the caching problem, the extreme check settles it in one line: if caching removed server time entirely, the page would still take 1 second, because the other second is untouched. So halving server time cannot possibly reach 1 second. The trap answer dies at the extreme.",
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Calibration is trainable: estimate everyday quantities before looking them up, such as steps in your commute or messages in a group chat per day, and score yourself on the power of ten rather than the exact number. A week of that and magnitude checks start running on instinct.",
+          },
+        ],
+      },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "Dimensional analysis generalises the units check: multiply and divide the units alone and see whether the answer's units come out right. Requests per second times seconds gives requests; kilobytes divided by kilobytes per image gives images. If the units cannot produce the answer's units, no arithmetic can rescue the number, and you know before computing anything.",
+          },
+        ],
+      },
     },
     {
       type: "misconception",
@@ -385,6 +425,16 @@ export const uie1Seed: SectionSeed = {
           text: "A wrong turn narrated is recoverable: 'that gives the wrong magnitude, so my unit conversion is off, let me redo it' is a strong moment, not a weak one. Silence followed by a wrong answer offers an evaluator nothing to credit. Narration is not decoration on the routine; it is how the routine is scored.",
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "The four beats adapt to format. On a whiteboard, restate in writing at the top and let the plan become headings. In a pairing session, narrate at decision points rather than continuously. In a written take-home, the beats become sections, and the verify beat becomes a short list of the cases you checked. Same routine, different surface.",
+          },
+        ],
+      },
     },
 
     {

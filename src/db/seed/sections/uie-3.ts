@@ -250,6 +250,26 @@ export const uie3Seed: SectionSeed = {
           ],
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "The full trigger list for stacking contexts is longer than transform and opacity: `filter`, `will-change`, `isolation: isolate`, `position: fixed`, and a positioned element with any z-index all create one. `isolation: isolate` is the deliberate version: it fences a component's internal layers so no inner z-index can escape and fight the page.",
+          },
+        ],
+      },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "The platform now offers an exit from the stacking game entirely: the top layer. A `<dialog>` opened with `showModal()` and elements using the popover attribute render above every stacking context on the page, with no z-index at all. This is why modern modals reach for `<dialog>` where older codebases portalled DOM nodes to the end of `<body>`: the browser now owns the layer that always wins.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
@@ -321,6 +341,16 @@ export const uie3Seed: SectionSeed = {
           ],
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Two companions finish the flexbox model. `flex-wrap: wrap` turns one line into many, and once there are multiple lines, `align-content` distributes the lines themselves, a property that visibly does nothing until wrapping starts. And truncation inside flex needs `min-width: 0` on the shrinking child, because the default minimum refuses to compress below the content, which is why long unbroken text blows out flex rows.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
@@ -465,6 +495,16 @@ export const uie3Seed: SectionSeed = {
           },
         ],
       },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "Two modern tools push past breakpoints. `clamp(1rem, 0.8rem + 1vw, 1.5rem)` declares fluid type: a floor, a scaling middle and a ceiling in one declaration, no queries. And container queries, `@container`, let a component respond to the space its parent gives it rather than to the viewport, which is what component libraries always needed: the card decides its own layout in a sidebar versus a main column, wherever the page puts it.",
+          },
+        ],
+      },
     },
     {
       type: "inline_check",
@@ -537,6 +577,26 @@ export const uie3Seed: SectionSeed = {
           ],
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "Two modern selector functions bend the scoring deliberately. `:is()` takes the specificity of its most specific argument, while `:where()` contributes exactly zero, whatever it contains. Libraries write `:where(.btn) svg` so their defaults are beatable by any single class, which is the polite version of the flat-selector discipline.",
+          },
+        ],
+      },
+      deeper: {
+        label: "Go deeper",
+        minutes: 3,
+        body: [
+          {
+            type: "p",
+            text: "Cascade layers reorder the contest itself: rules inside `@layer` lose to rules in later layers regardless of specificity, so `@layer reset, library, app` guarantees app styles win over library styles even against higher scores. Design systems increasingly ship inside a named layer for exactly this reason: the consumer's unlayered styles beat them by architecture instead of by escalation.",
+          },
+        ],
+      },
     },
     {
       type: "misconception",
@@ -606,6 +666,16 @@ export const uie3Seed: SectionSeed = {
           text: "Evaluations probe these because they are cheap at build time and expensive to retrofit, and because a candidate who ships them by habit needs no policing later. This platform practises the same habits it teaches: the lessons you are reading honour reduced motion and keep focus visible.",
         },
       ],
+      explore: {
+        label: "Explore further",
+        minutes: 2,
+        body: [
+          {
+            type: "p",
+            text: "One CSS idiom completes the kit: the visually-hidden pattern, a class that collapses an element to a pixel off-screen while leaving it in the accessibility tree. It carries text that only assistive tech needs, such as a link's fuller context. Its mirror is `aria-hidden`, which removes decorative elements from the tree while leaving them visible. One hides from eyes, the other from readers; mixing them up inverts the audience.",
+          },
+        ],
+      },
     },
 
     {
