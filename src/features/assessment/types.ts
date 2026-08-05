@@ -28,6 +28,16 @@ export type AssessmentCategory =
   | "web_accessibility"
   | "css_positioning"
   | "responsive_design"
+  | "js_values_types"
+  | "js_scope_closures"
+  | "js_collections"
+  | "js_dom_events"
+  | "js_errors"
+  | "js_this_binding"
+  | "js_event_loop"
+  | "js_async"
+  | "js_coercion_tricks"
+  | "js_prototypes"
   | "misconceptions";
 
 export type AssessmentFormat = "multiple_choice" | "multiple_select" | "scenario_decision";
@@ -128,4 +138,14 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   web_accessibility: "Accessibility foundations",
   css_positioning: "Flow, positioning and stacking",
   responsive_design: "Responsive design and units",
+  js_values_types: "Values, types and equality",
+  js_scope_closures: "Scope and closures",
+  js_collections: "Arrays, objects and the toolkit",
+  js_dom_events: "The DOM and events",
+  js_errors: "Errors and debugging",
+  js_this_binding: "The this bindings",
+  js_event_loop: "The event loop",
+  js_async: "Promises and async/await",
+  js_coercion_tricks: "Coercion and the trick zoo",
+  js_prototypes: "Prototypes and classes",
 };

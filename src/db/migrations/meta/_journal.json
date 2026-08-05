@@ -57,6 +57,13 @@
       "when": 1785896395389,
       "tag": "0007_smiling_captain_cross",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1785901237704,
+      "tag": "0008_calm_domino",
+      "breakpoints": true
     }
   ]
 }

@@ -53,6 +53,17 @@ export const blueprintCategory = pgEnum("blueprint_category", [
   "web_accessibility",
   "css_positioning",
   "responsive_design",
+  // JavaScript families (UIE-4 Fundamentals, UIE-5 In Depth).
+  "js_values_types",
+  "js_scope_closures",
+  "js_collections",
+  "js_dom_events",
+  "js_errors",
+  "js_this_binding",
+  "js_event_loop",
+  "js_async",
+  "js_coercion_tricks",
+  "js_prototypes",
 ]);
 
 export const questionDifficulty = pgEnum("question_difficulty", [

@@ -22,6 +22,9 @@ import { uie2AssessmentSeed } from "./uie-2-assessment";
 import { uie3Seed } from "./uie-3";
 import { uie3ActivitySeed, uie3CheckSeed } from "./uie-3-activity";
 import { uie3AssessmentSeed } from "./uie-3-assessment";
+import { uie4Seed } from "./uie-4";
+import { uie4ActivitySeed, uie4CheckSeed } from "./uie-4-activity";
+import { uie4AssessmentSeed } from "./uie-4-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -128,6 +131,16 @@ export const sectionBundles: SectionBundle[] = [
     activity: uie3ActivitySeed,
     check: uie3CheckSeed,
     assessment: uie3AssessmentSeed,
+  },
+  {
+    // UIE-4: JavaScript Fundamentals, first of the two JavaScript courses
+    // (fundamentals and depth split so the models settle before the tricky
+    // tier tests them).
+    seed: uie4Seed,
+    status: "published",
+    activity: uie4ActivitySeed,
+    check: uie4CheckSeed,
+    assessment: uie4AssessmentSeed,
   },
 ];
 
