@@ -7,7 +7,7 @@ import {
   ResetProgress,
   PathwayProgress,
   PathwaySections,
-  PilotSectionCard,
+  PilotPathwayCard,
 } from "@/features/progress";
 import { strings } from "@/lib/strings";
 import { PATHWAY_SLUG } from "@/lib/routes";
@@ -39,6 +39,15 @@ export default function PathwayPage() {
   const pilotBundles = sectionBundles.filter(
     (bundle) => bundle.seed.pathway.slug !== PATHWAY_SLUG && bundle.status === "published",
   );
+  const pilotPathways = [
+    ...new Map(pilotBundles.map((b) => [b.seed.pathway.slug, b.seed.pathway])),
+  ].map(([slug, pathway]) => ({
+    pathway,
+    sections: pilotBundles
+      .filter((b) => b.seed.pathway.slug === slug)
+      .sort((a, b) => a.seed.section.position - b.seed.section.position)
+      .map((b) => ({ section: b.seed.section, units: unitsFor(b) })),
+  }));
   const units: Record<string, SectionUnitsData> = Object.fromEntries(
     sectionBundles.map((bundle) => [bundle.seed.section.slug, unitsFor(bundle)]),
   );
@@ -91,13 +100,8 @@ export default function PathwayPage() {
               </TrackedLink>
             </section>
           </TrackOnVisible>
-          {pilotBundles.map((bundle) => (
-            <PilotSectionCard
-              key={bundle.seed.section.slug}
-              pathway={bundle.seed.pathway}
-              section={bundle.seed.section}
-              units={unitsFor(bundle)}
-            />
+          {pilotPathways.map(({ pathway, sections }) => (
+            <PilotPathwayCard key={pathway.slug} pathway={pathway} sections={sections} />
           ))}
           <ReviewSession />
         </div>

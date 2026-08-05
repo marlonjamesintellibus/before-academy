@@ -109,9 +109,14 @@ test("the pilot pathway card leads into a working logic lesson and assessment", 
   // The pilot is present, honestly labelled, and expandable like any section.
   const pilot = page.getByRole("region", { name: "UI Engineer Readiness" });
   await expect(pilot.getByText("Pilot pathway")).toBeVisible();
-  await pilot.getByText("Show the steps").click();
+  await pilot.getByText("Show the steps").first().click();
   await expect(pilot.getByRole("link", { name: /Sweep the edges/ })).toBeVisible();
   await expect(pilot.getByRole("link", { name: /Sound or shaky\?/ })).toBeVisible();
+
+  // The second module carries the real item families.
+  await pilot.getByText("Show the steps").nth(1).click();
+  await expect(pilot.getByRole("link", { name: /Syllogisms: draw the circles/ })).toBeVisible();
+  await expect(pilot.getByRole("link", { name: /The drill room/ })).toBeVisible();
 
   // The lesson serves on the new pathway with its own chrome.
   await pilot

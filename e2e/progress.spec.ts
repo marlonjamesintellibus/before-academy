@@ -179,8 +179,8 @@ test("reset progress clears the section after an explicit confirm", async ({ pag
   // Keep is the default focus; destructive requires an explicit choice
   await expect(page.getByRole("button", { name: "Keep my progress" })).toBeFocused();
   await page.getByRole("button", { name: "Reset everything" }).click();
-  // Seven pathway cards plus the pilot card share the label: all reset.
-  await expect(page.getByText("Not started", { exact: true })).toHaveCount(8);
+  // Seven pathway cards plus the two pilot cards share the label: all reset.
+  await expect(page.getByText("Not started", { exact: true })).toHaveCount(9);
   const cleared = await page.evaluate(
     () => window.localStorage.getItem("ba.v1.lesson.ai-automation-software") === null,
   );

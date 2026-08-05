@@ -265,51 +265,58 @@ export function PathwaySections({ units }: { units: Record<string, SectionUnitsD
  * rows) so the pilot reads as a real course, honestly labelled as a pilot
  * rather than dressed up as a finished pathway.
  */
-export function PilotSectionCard({
+export function PilotPathwayCard({
   pathway,
-  section,
-  units,
+  sections,
 }: {
   pathway: { slug: string; title: string; description: string };
-  section: { slug: string; title: string; description: string };
-  units: SectionUnitsData;
+  sections: {
+    section: { slug: string; title: string; description: string; position: number };
+    units: SectionUnitsData;
+  }[];
 }) {
-  const route = `/learn/${pathway.slug}/${section.slug}`;
   return (
     <section aria-label={pathway.title} className="mt-8">
       <p className="eyebrow">Pilot pathway</p>
       <h2 className="mt-2 font-display text-subheading font-bold">{pathway.title}</h2>
       <p className="mt-1 max-w-[62ch] text-body text-ink-muted">{pathway.description}</p>
-      <div className="panel mt-4 p-6">
-        <Link
-          href={route}
-          onClick={() => track("section_card_clicked", { section: section.slug })}
-          className="group block focus-visible:outline-2 focus-visible:outline-primary"
-        >
-          <div className="flex flex-wrap items-center gap-3">
-            <span
-              aria-hidden="true"
-              className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-primary font-display text-subheading font-bold text-surface-card"
-            >
-              1
-            </span>
-            <span className="flex-1 font-display text-subheading font-bold group-hover:text-primary">
-              {section.title}
-            </span>
-            <ScopedStatusChip slug={section.slug} />
-          </div>
-          <p className="mt-3 text-body text-ink-muted">{section.description}</p>
-        </Link>
-        <details className="group mt-4">
-          <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-body font-semibold text-primary [&::-webkit-details-marker]:hidden">
-            <span aria-hidden="true" className="transition-transform group-open:rotate-90">
-              ▸
-            </span>
-            Show the steps
-          </summary>
-          <GenericSectionUnits slug={section.slug} route={route} data={units} />
-        </details>
-      </div>
+      <ol className="mt-4 flex flex-col gap-4">
+        {sections.map(({ section, units }) => {
+          const route = `/learn/${pathway.slug}/${section.slug}`;
+          return (
+            <li key={section.slug} className="panel p-6">
+              <Link
+                href={route}
+                onClick={() => track("section_card_clicked", { section: section.slug })}
+                className="group block focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="flex h-10 w-10 items-center justify-center rounded-(--radius-chip) bg-primary font-display text-subheading font-bold text-surface-card"
+                  >
+                    {section.position}
+                  </span>
+                  <span className="flex-1 font-display text-subheading font-bold group-hover:text-primary">
+                    {section.title}
+                  </span>
+                  <ScopedStatusChip slug={section.slug} />
+                </div>
+                <p className="mt-3 text-body text-ink-muted">{section.description}</p>
+              </Link>
+              <details className="group mt-4">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-body font-semibold text-primary [&::-webkit-details-marker]:hidden">
+                  <span aria-hidden="true" className="transition-transform group-open:rotate-90">
+                    ▸
+                  </span>
+                  Show the steps
+                </summary>
+                <GenericSectionUnits slug={section.slug} route={route} data={units} />
+              </details>
+            </li>
+          );
+        })}
+      </ol>
     </section>
   );
 }

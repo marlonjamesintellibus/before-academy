@@ -16,6 +16,11 @@ export type AssessmentCategory =
   | "edge_cases"
   | "estimation"
   | "reasoning_communication"
+  | "sequences"
+  | "syllogisms"
+  | "coding_decoding"
+  | "arrangements"
+  | "quantitative_reasoning"
   | "misconceptions";
 
 export type AssessmentFormat = "multiple_choice" | "multiple_select" | "scenario_decision";
@@ -104,4 +109,9 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   edge_cases: "Edge cases",
   estimation: "Estimation and checking",
   reasoning_communication: "Reasoning out loud",
+  sequences: "Number and letter sequences",
+  syllogisms: "Syllogisms and deduction",
+  coding_decoding: "Codes and ciphers",
+  arrangements: "Arrangements and relations",
+  quantitative_reasoning: "Rates, clocks and trap arithmetic",
 };

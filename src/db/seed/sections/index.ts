@@ -16,6 +16,9 @@ import { aia5AssessmentSeed, aia6AssessmentSeed, aia7AssessmentSeed } from "./ba
 import { uie1Seed } from "./uie-1";
 import { uie1ActivitySeed, uie1CheckSeed } from "./uie-1-activity";
 import { uie1AssessmentSeed } from "./uie-1-assessment";
+import { uie2Seed } from "./uie-2";
+import { uie2ActivitySeed, uie2CheckSeed } from "./uie-2-activity";
+import { uie2AssessmentSeed } from "./uie-2-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -104,6 +107,15 @@ export const sectionBundles: SectionBundle[] = [
     activity: uie1ActivitySeed,
     check: uie1CheckSeed,
     assessment: uie1AssessmentSeed,
+  },
+  {
+    // UIE-2: the GQ item families themselves. UIE-1 teaches the routine;
+    // this is what the logical ability round actually asks.
+    seed: uie2Seed,
+    status: "published",
+    activity: uie2ActivitySeed,
+    check: uie2CheckSeed,
+    assessment: uie2AssessmentSeed,
   },
 ];
 

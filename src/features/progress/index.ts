@@ -9,7 +9,7 @@ export { SectionUnits } from "./components/section-units";
 export { PathwayProgress } from "./components/pathway-progress";
 export {
   PathwaySections,
-  PilotSectionCard,
+  PilotPathwayCard,
   type SectionUnitsData,
 } from "./components/pathway-sections";
 export { SkillMap } from "./components/skill-map";

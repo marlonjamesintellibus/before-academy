@@ -39,6 +39,12 @@ export const blueprintCategory = pgEnum("blueprint_category", [
   "edge_cases",
   "estimation",
   "reasoning_communication",
+  // Aptitude item families (UIE-2 Logical Ability): the classic GQ formats.
+  "sequences",
+  "syllogisms",
+  "coding_decoding",
+  "arrangements",
+  "quantitative_reasoning",
 ]);
 
 export const questionDifficulty = pgEnum("question_difficulty", [
