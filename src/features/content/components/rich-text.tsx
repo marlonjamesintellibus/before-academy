@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { PublishedSection, RichText } from "../types";
 import { GlossaryChip } from "./glossary-chip";
+import { CodeBlock, InlineCode } from "@/components/ui/code";
 
 /**
  * Rich text renderer. Inline [[term]] markers become glossary chips
@@ -14,7 +15,8 @@ export function renderChipText(
   const parts = text.split(/(\[\[[^\]]+\]\])/g);
   return parts.map((part, index) => {
     const match = part.match(/^\[\[([^\]]+)\]\]$/);
-    if (!match) return part;
+    // Non-chip segments may carry `backtick` spans of inline code.
+    if (!match) return <InlineCode key={`${keyPrefix}-${index}`} text={part} />;
     const term = match[1] ?? "";
     const entry = glossary[term.toLowerCase()];
     if (!entry) return term;
@@ -58,6 +60,16 @@ export function RichTextView({
                 </li>
               ))}
             </ul>
+          );
+        }
+        if (node.type === "code") {
+          return (
+            <CodeBlock
+              key={key}
+              language={node.language}
+              code={node.code}
+              {...(node.label ? { label: node.label } : {})}
+            />
           );
         }
         return (

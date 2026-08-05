@@ -33,8 +33,46 @@ function richTextStrings(body: RichText): string[] {
   return body.flatMap((node) => {
     if (node.type === "p") return [node.text];
     if (node.type === "ul") return node.items;
+    if (node.type === "code") return []; // code is exempt from copy rules; lintCodeNodes checks its shape
     return [node.text, node.boundary];
   });
+}
+
+const CODE_LANGUAGES = new Set(["html", "css", "js", "jsx", "ts", "tsx"]);
+const CODE_LINE_LIMIT = 90;
+
+/**
+ * Code nodes skip the copy rules (identifiers legitimately contain banned
+ * vocabulary, `test()` above all) and get shape rules instead: a known
+ * language, non-empty content, and lines short enough to read on a phone
+ * without the horizontal scroll doing the teaching.
+ */
+function lintCodeNodes(blockId: string, body: RichText): LintIssue[] {
+  const issues: LintIssue[] = [];
+  for (const node of body) {
+    if (node.type !== "code") continue;
+    if (!CODE_LANGUAGES.has(node.language)) {
+      issues.push({ blockId, message: `unknown code language: ${node.language}` });
+    }
+    if (!node.code.trim()) {
+      issues.push({ blockId, message: "empty code block" });
+    }
+    for (const line of node.code.split("\n")) {
+      if (line.length > CODE_LINE_LIMIT) {
+        issues.push({
+          blockId,
+          message: `code line exceeds ${CODE_LINE_LIMIT} characters: "${line.slice(0, 40)}..."`,
+        });
+        break;
+      }
+    }
+  }
+  return issues;
+}
+
+/** Backtick spans are inline code: exempt from copy rules like code nodes. */
+function stripInlineCode(text: string): string {
+  return text.replace(/`[^`]+`/g, " ");
 }
 
 function learnerStrings(block: LessonBlock): string[] {
@@ -158,9 +196,17 @@ export function lintSection(
     glossary.filter((entry) => entry.chip).map((entry) => entry.term.toLowerCase()),
   );
   for (const block of blocks) {
+    if (block.type === "why_it_matters" || block.type === "takeaway") {
+      issues.push(...lintCodeNodes(block.id, block.body));
+    }
+    if (block.type === "concept") {
+      issues.push(...lintCodeNodes(block.id, block.quick));
+      if (block.explore) issues.push(...lintCodeNodes(block.id, block.explore.body));
+    }
     for (const text of learnerStrings(block)) {
+      const scannable = stripInlineCode(text);
       for (const { pattern, reason } of BANNED_PATTERNS) {
-        const match = text.match(pattern);
+        const match = scannable.match(pattern);
         if (match) {
           issues.push({
             blockId: block.id,

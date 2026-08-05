@@ -19,6 +19,9 @@ import { uie1AssessmentSeed } from "./uie-1-assessment";
 import { uie2Seed } from "./uie-2";
 import { uie2ActivitySeed, uie2CheckSeed } from "./uie-2-activity";
 import { uie2AssessmentSeed } from "./uie-2-assessment";
+import { uie3Seed } from "./uie-3";
+import { uie3ActivitySeed, uie3CheckSeed } from "./uie-3-activity";
+import { uie3AssessmentSeed } from "./uie-3-assessment";
 import {
   aia2CheckSeed,
   aia4CheckSeed,
@@ -116,6 +119,15 @@ export const sectionBundles: SectionBundle[] = [
     activity: uie2ActivitySeed,
     check: uie2CheckSeed,
     assessment: uie2AssessmentSeed,
+  },
+  {
+    // UIE-3: the first code-bearing module, proving the code content model
+    // (RichText code nodes + inline backticks) end to end.
+    seed: uie3Seed,
+    status: "published",
+    activity: uie3ActivitySeed,
+    check: uie3CheckSeed,
+    assessment: uie3AssessmentSeed,
   },
 ];
 

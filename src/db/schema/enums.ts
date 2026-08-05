@@ -45,6 +45,12 @@ export const blueprintCategory = pgEnum("blueprint_category", [
   "coding_decoding",
   "arrangements",
   "quantitative_reasoning",
+  // Web foundations families (UIE-3 HTML & CSS).
+  "semantic_html",
+  "css_box_model",
+  "css_layout",
+  "css_specificity",
+  "web_accessibility",
 ]);
 
 export const questionDifficulty = pgEnum("question_difficulty", [

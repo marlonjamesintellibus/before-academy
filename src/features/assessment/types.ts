@@ -21,6 +21,11 @@ export type AssessmentCategory =
   | "coding_decoding"
   | "arrangements"
   | "quantitative_reasoning"
+  | "semantic_html"
+  | "css_box_model"
+  | "css_layout"
+  | "css_specificity"
+  | "web_accessibility"
   | "misconceptions";
 
 export type AssessmentFormat = "multiple_choice" | "multiple_select" | "scenario_decision";
@@ -114,4 +119,9 @@ export const CATEGORY_DISPLAY: Record<AssessmentCategory, string> = {
   coding_decoding: "Codes and ciphers",
   arrangements: "Arrangements and relations",
   quantitative_reasoning: "Rates, clocks and trap arithmetic",
+  semantic_html: "Semantic HTML",
+  css_box_model: "The box model",
+  css_layout: "Flexbox and grid",
+  css_specificity: "Specificity and the cascade",
+  web_accessibility: "Accessibility foundations",
 };

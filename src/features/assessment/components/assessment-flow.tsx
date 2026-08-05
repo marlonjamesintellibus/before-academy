@@ -1,5 +1,6 @@
 "use client";
 
+import { InlineCode } from "@/components/ui/code";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -436,7 +437,9 @@ function QuestionCard({
   const multi = question.format === "multiple_select";
   return (
     <div className="mt-4 rounded-(--radius-control) border border-surface-alt p-6">
-      <p className="text-body font-semibold">{question.stem}</p>
+      <p className="text-body font-semibold">
+        <InlineCode text={question.stem} />
+      </p>
       {multi ? (
         <p className="mt-1 text-caption text-ink-muted">Select every answer that applies.</p>
       ) : null}
@@ -472,7 +475,7 @@ function QuestionCard({
                   }}
                   className="accent-primary"
                 />
-                {option.text}
+                <InlineCode text={option.text} />
               </label>
             );
           })}

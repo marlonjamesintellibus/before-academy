@@ -1,5 +1,6 @@
 "use client";
 
+import { InlineCode } from "@/components/ui/code";
 import { useState } from "react";
 import { track } from "@/lib/analytics";
 
@@ -20,7 +21,9 @@ export function HookBlock({
       <p className="text-caption font-bold uppercase tracking-wider text-primary">
         Opening question
       </p>
-      <p className="mt-2 text-subheading font-semibold">{prompt}</p>
+      <p className="mt-2 text-subheading font-semibold">
+        <InlineCode text={prompt} />
+      </p>
       <div className="mt-4 flex flex-wrap gap-3" role="group" aria-label={prompt}>
         {choices.map((choice) => (
           <button
@@ -39,7 +42,7 @@ export function HookBlock({
                 : "border-primary bg-surface-card text-primary hover:bg-sky/40"
             }`}
           >
-            {choice}
+            <InlineCode text={choice} />
           </button>
         ))}
       </div>
@@ -54,7 +57,9 @@ export function HookBlock({
               ? "Exactly. That description does not provide enough information."
               : "That is a reasonable first instinct - now test it against the evidence."}
           </p>
-          <p className="mt-2 text-ink-muted">{reveal}</p>
+          <p className="mt-2 text-ink-muted">
+            <InlineCode text={reveal} />
+          </p>
           <button
             type="button"
             onClick={() => {

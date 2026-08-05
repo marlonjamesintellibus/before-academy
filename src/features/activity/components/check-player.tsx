@@ -1,5 +1,6 @@
 "use client";
 
+import { InlineCode } from "@/components/ui/code";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { PublishedCheckQuestion } from "@/features/content";
@@ -123,7 +124,9 @@ export function CheckPlayer({
       </div>
 
       <div className="panel mt-4 p-6">
-        <p className="text-body font-semibold">{question.stem}</p>
+        <p className="text-body font-semibold">
+          <InlineCode text={question.stem} />
+        </p>
         <fieldset className="mt-5" disabled={answer?.submitted}>
           <legend className="sr-only">Pick an answer</legend>
           <div className="flex flex-col gap-2">
@@ -152,7 +155,7 @@ export function CheckPlayer({
                     className="mt-1 accent-primary"
                   />
                   <span className="flex-1">
-                    {option.text}
+                    <InlineCode text={option.text} />
                     {answer?.submitted && option.correct ? (
                       <span className="ml-2 text-caption font-bold text-success">
                         Correct answer
@@ -296,7 +299,7 @@ function CheckSummary({
             return (
               <li key={question.id} className="text-body">
                 <p className="font-semibold">
-                  {index + 1}. {question.stem}
+                  {index + 1}. <InlineCode text={question.stem} />
                 </p>
                 <p className="mt-1 text-ink-muted">Your answer: {selected?.text ?? "No answer"}</p>
                 {!saved?.correct ? (

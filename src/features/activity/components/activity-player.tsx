@@ -1,5 +1,6 @@
 "use client";
 
+import { InlineCode } from "@/components/ui/code";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { PublishedScenario } from "@/features/content";
@@ -141,7 +142,9 @@ export function ActivityPlayer({
 
       <div className="panel mt-4 p-6">
         <h2 className="sr-only">{scenario.title}</h2>
-        <p className="text-body">{scenario.body}</p>
+        <p className="text-body">
+          <InlineCode text={scenario.body} />
+        </p>
 
         <fieldset className="mt-6" disabled={showFeedback || Boolean(answer)}>
           <legend className={scenario.prompt ? "text-body font-semibold" : "sr-only"}>
@@ -165,7 +168,7 @@ export function ActivityPlayer({
                   onChange={() => setSelected(option.id)}
                   className="accent-primary"
                 />
-                {option.label}
+                <InlineCode text={option.label} />
               </label>
             ))}
           </div>

@@ -222,3 +222,25 @@ test("generic lessons carry the enriched journey: stages, inline checks, predict
   // The trace is playable, and there is exactly one prediction gate, already used.
   await expect(page.getByRole("button", { name: "Play the trace" })).toBeVisible();
 });
+
+test("code blocks render highlighted with copy, and inline code carries stems", async ({
+  page,
+}) => {
+  await page.goto("/learn/ui-engineer-readiness/html-css-foundations");
+
+  // Inline code in the hook prompt.
+  await expect(page.locator("code", { hasText: "<button>" }).first()).toBeVisible();
+
+  // The first concept carries a block-level example: language bar, copy
+  // button, and Prism token spans (proof highlighting actually ran).
+  await goToStage(page, "HTML is meaning");
+  const block = page.locator("figure.code-block").first();
+  await expect(block).toBeVisible();
+  await expect(block.getByRole("button", { name: "Copy code" })).toBeVisible();
+  await expect(block.locator(".token").first()).toBeAttached();
+
+  // Inline code inside an assessment stem end to end.
+  await page.goto("/learn/ui-engineer-readiness/html-css-foundations/assessment");
+  await page.getByRole("button", { name: "Start assessment" }).click();
+  await expect(page.getByText("Question 1 of 6")).toBeVisible();
+});

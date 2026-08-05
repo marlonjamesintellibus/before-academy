@@ -9,6 +9,7 @@ import {
 } from "@/db/seed/sections/banks-5-6-7";
 import { uie1AssessmentSeed } from "@/db/seed/sections/uie-1-assessment";
 import { uie2AssessmentSeed } from "@/db/seed/sections/uie-2-assessment";
+import { uie3AssessmentSeed } from "@/db/seed/sections/uie-3-assessment";
 
 /**
  * The regression this guards: the classic draw hardcoded the first section's
@@ -25,6 +26,7 @@ const banks = [
   aia7AssessmentSeed,
   uie1AssessmentSeed,
   uie2AssessmentSeed,
+  uie3AssessmentSeed,
 ];
 
 describe("generic section draw against every shipped bank", () => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { InlineCode } from "@/components/ui/code";
 import { useEffect, useRef, useState } from "react";
 import type { InlineCheckContent } from "../inline-checks";
 import { track } from "@/lib/analytics";
@@ -19,7 +20,9 @@ export function InlineCheck({ content }: { content: InlineCheckContent }) {
   return (
     <section className="mt-6 rounded-(--radius-card) border border-primary/25 bg-primary-tint p-5">
       <p className="eyebrow">Apply it · quick check</p>
-      <h3 className="mt-2 text-body font-semibold text-ink">{content.prompt}</h3>
+      <h3 className="mt-2 text-body font-semibold text-ink">
+        <InlineCode text={content.prompt} />
+      </h3>
       <fieldset className="mt-4" disabled={submitted}>
         <legend className="sr-only">Choose the best answer</legend>
         <div className="grid gap-2">
@@ -48,7 +51,7 @@ export function InlineCheck({ content }: { content: InlineCheckContent }) {
                   className="mt-1 accent-primary"
                 />
                 <span className="flex-1">
-                  {entry.text}
+                  <InlineCode text={entry.text} />
                   {submitted && isCorrect ? (
                     <span className="ml-2 text-caption font-bold text-success">Correct answer</span>
                   ) : null}

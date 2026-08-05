@@ -92,3 +92,38 @@ h2,
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Code blocks (UI Engineer Readiness modules). Prism token palette on the
+   navy panel, kept inside the design system: sky for keywords/tags, and two
+   quiet accents for strings and values. */
+.code-block .token.comment,
+.code-block .token.prolog,
+.code-block .token.doctype {
+  color: rgb(255 255 255 / 0.55);
+  font-style: italic;
+}
+.code-block .token.keyword,
+.code-block .token.tag,
+.code-block .token.selector,
+.code-block .token.rule {
+  color: var(--color-sky);
+}
+.code-block .token.attr-name,
+.code-block .token.property,
+.code-block .token.function {
+  color: #9ec5ff;
+}
+.code-block .token.string,
+.code-block .token.attr-value,
+.code-block .token.char {
+  color: #b7e3c8;
+}
+.code-block .token.number,
+.code-block .token.unit,
+.code-block .token.boolean {
+  color: #ffd7a1;
+}
+.code-block .token.punctuation,
+.code-block .token.operator {
+  color: rgb(255 255 255 / 0.75);
+}

@@ -8,7 +8,15 @@
 export type RichNode =
   | { type: "p"; text: string }
   | { type: "ul"; items: string[] }
-  | { type: "analogy"; text: string; boundary: string };
+  | { type: "analogy"; text: string; boundary: string }
+  | {
+      /** A highlighted, copyable code example (UI Engineer modules). */
+      type: "code";
+      language: "html" | "css" | "js" | "jsx" | "ts" | "tsx";
+      code: string;
+      /** Optional bar text, e.g. a filename. */
+      label?: string;
+    };
 
 export type RichText = RichNode[];
 
